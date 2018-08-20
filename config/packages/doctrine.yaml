@@ -8,8 +8,13 @@ parameters:
 doctrine:
     dbal:
         # configure these for your database server
+        dbname: handgexpert_1
+        host: localhost
+        port: 3306
+        user: root
+        password: ''
         driver: 'pdo_mysql'
-        server_version: '5.7'
+        server_version: 'mariadb-10.1.30'
         charset: utf8mb4
         default_table_options:
             charset: utf8mb4

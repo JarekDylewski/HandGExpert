@@ -1,0 +1,68 @@
+{% extends 'home.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/registerCss.css') }}">
+{% endblock stylesheets %}
+{% block main %}
+    <div style="height: 35rem" class="container text-white d-flex align-items-center">
+        <div class="row w-100 ml-auto mr-auto">
+            <div class="col-6 p-2 ml-auto mr-auto text-center border article-body rounded">
+                <div class="row w-100 ml-auto mr-auto">
+                    <div class="form-container col-12 pb-4 pt-3 w-100 h-100 mh-100 ml-auto mr-auto pr-0">
+                        {{ form_start(form) }}
+                            <div class="row w-100 ml-auto mr-auto">
+                                <div class="alert-registration col-9 p-1 mb-1 text-danger">
+                                    {{ form_errors(form.username) }}
+                                </div>
+                                <div class="col-4 mr-0 pr-0">
+                                    {{ form_label(form.username) }}
+                                </div>
+                                <div class="col-4 ml-0 pl-0">
+                                    {{ form_widget(form.username) }}
+                                </div>
+                            </div>
+                            <div class="row w-100 ml-auto mr-auto">
+                                <div class="alert-registration col-9 p-1 mb-1 text-danger">
+                                    {{ form_errors(form.email) }}
+                                </div>
+                                <div class="col-4 mr-0 pr-0">
+                                    {{ form_label(form.email) }}
+                                </div>
+                                <div class="col-4 ml-0 pl-0">
+                                    {{ form_widget(form.email) }}
+                                </div>
+                            </div>
+                            <div class="row w-100 ml-auto mr-auto">
+                                <div class="alert-registration col-9 text-danger p-1 mb-1">
+                                    {{ form_errors(form.plainPassword.first) }}
+                                </div>
+                                <div class="col-4 mr-0 pr-0">
+                                    {{ form_label(form.plainPassword.first) }}
+                                </div>
+                                <div class="col-4 ml-0 pl-0">
+                                    {{ form_widget(form.plainPassword.first) }}
+                                </div>
+                            </div>
+                            <div class="row w-100 ml-auto mr-auto">
+                                <div class="alert-registration col-9 p-1 mb-1 text-danger">
+                                    {{ form_errors(form.plainPassword.second) }}
+                                </div>
+                                <div class="col-4 mr-0 pr-0">
+                                    {{ form_label(form.plainPassword.second) }}
+                                </div>
+                                <div class="col-4 ml-0 pl-0">
+                                    {{ form_widget(form.plainPassword.second) }}
+                                </div>
+                            </div>
+                            <div class="col-6 mt-2 ml-auto mr-auto">
+                                <button id="register_button" class="btn btn-success" type="submit">Register!</button>
+                            </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock main %}

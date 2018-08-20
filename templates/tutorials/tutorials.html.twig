@@ -1,0 +1,121 @@
+{% extends 'home.html.twig' %}
+{% block nav %}
+    <ul class="navbar-nav h-100">
+        <li class="nav-item h-100 border-nav border-right-0 border-bottom-0 mt-3">
+            <a class="nav-link h4 m-0 py-0 h-100 p-1" href="{{ path('home') }}">Gun Expert</a>
+        </li>
+        <li class="nav-item border-nav h-100 border-bottom-0 mt-3 nav-background-active">
+            <a class="nav-link h4 m-0 py-0 h-100 p-1" href="{{ path('tutorials',{ page:1}) }}">Tutorials</a>
+        </li>
+    </ul>
+{% endblock %}
+{% block main %}
+    <div class="container text-white tutorials-container">
+        <div class="row mr-auto ml-auto w-75">
+            <nav class="ml-auto mr-auto mt-4" aria-label="...">
+                <ul class="pagination">
+                    <li class="page-item text-center">
+                        <a class="page-link" href="{{ path('tutorials',{page:1}) }}" tabindex="-1"><<</a>
+                    </li>
+                    {% set min = currentPage -4 %}
+                    {% set max = currentPage +4 %}
+                    {% macro pagination(loopIndex, minimum, maximum, currentPage) %}
+                        {% if  loopIndex >=  minimum and loopIndex <= maximum %}
+                            {% if loopIndex == currentPage %}
+                                <li class="page-item active"><a class="page-link" href="{{ path('tutorials',{page:loopIndex}) }}">{{ loopIndex }}</a></li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link" href="{{ path('tutorials',{page:loopIndex}) }}">{{ loopIndex }}</a></li>
+                            {% endif %}
+                        {% endif %}
+                    {% endmacro %}
+                    {% import _self as tutorials %}
+                    {% for i in 1..numberPagination %}
+                        {{ tutorials.pagination(loop.index,min,max,currentPage) }}
+                    {% endfor %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ path('tutorials',{page:numberPagination}) }}">>> </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        {% for cont in content|keys|reverse %}
+        <div class="row w-75 ml-auto mr-auto mt-2">
+            <div class="col-12 article-head rounded border">
+                <div class="row w-100">
+                    <div class="col-12 text-justify text-monospace font-weight-bold">
+                        <a href="{{ path('tutorialShow',{ID:pagesIDToView[cont]}) }}">
+                            <h1 style="font-family: Tahoma, Helvetica, Arial; letter-spacing: 1px" class=" post_title_list p-2 m-0">{{ content[cont].title|capitalize }}</h1>
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4 post_category ml-3 p-1">
+                        {% set categories = content[cont].category|split(',') %}
+                            {% for category in categories %}
+                                <span class="badge badge-primary shadow">
+                                    {{ categories[loop.index0] }}
+                                </span>
+                            {% endfor %}
+                    </div>
+                    <div class="col-3 p-1">
+                        <span class="article-author article-head-text-muted">{{ content[cont].author }}</span>
+                    </div>
+                    <div class="col-2 p-1">
+                        <span class="article-date-created article-head-text-muted">{{ content[cont].creationDate|date("d-m-Y") }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row w-75 border mr-auto ml-auto article-body border-top-0 rounded mb-2">
+            <div class="col-12 px-0">
+                <div class="row w-100 ml-auto mr-auto">
+                    <div class="col-12 article-img d-flex justify-content-center w-100 px-0">
+                        <a class="ml-auto mr-auto" href="{{ path('tutorialShow',{ID:pagesIDToView[cont]}) }}">
+                            <img class="mw-100 mh-100 ml-auto mr-auto thematic-IMG" src="{{ content[cont].URLImg|default(asset('img/noImg.png')) }}" alt="Tutorial topic IMG">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 px-0">
+                <div class="row w-100 ml-auto mr-auto px-2">
+                    <div class="col-12 p-0 text-justify article-body-text-muted">
+                        {{ content[cont].shortDescription|raw }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="row mr-auto ml-auto w-75">
+            <nav class="ml-auto mr-auto pt-1" aria-label="...">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="{{ path('tutorials',{page:1}) }}" tabindex="-1"><<</a>
+                    </li>
+                    {% set min = currentPage -4 %}
+                    {% set max = currentPage +4 %}
+                    {% macro pagination(loopIndex, minimum, maximum, currentPage) %}
+                        {% if  loopIndex >=  minimum and loopIndex <= maximum %}
+                            {% if loopIndex == currentPage %}
+                                <li class="page-item active"><a class="page-link" href="{{ path('tutorials',{page:loopIndex}) }}">{{ loopIndex }}</a></li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link" href="{{ path('tutorials',{page:loopIndex}) }}">{{ loopIndex }}</a></li>
+                            {% endif %}
+                        {% endif %}
+                    {% endmacro %}
+                    {% import _self as tutorials %}
+                    {% for i in 1..numberPagination %}
+                        {{ tutorials.pagination(loop.index,min,max,currentPage) }}
+                    {% endfor %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ path('tutorials',{page:numberPagination}) }}">>> </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+{% endblock main %}
+{% block javascripts %}
+    <script>
+   w
+    {{ parent() }}
+{% endblock javascripts %}

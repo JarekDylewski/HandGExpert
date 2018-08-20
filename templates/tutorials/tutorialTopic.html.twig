@@ -1,0 +1,114 @@
+{% extends 'tutorials/tutorials.html.twig' %}
+{% block main %}
+    <div class="container text-white mt-4">
+        <div class="row w-75 border ml-auto mr-auto rounded">
+            <div class="col-12 article-head">
+                <div class="row w-100">
+                    <div class="col-12 text-justify text-monospace font-weight-bold">
+                        <h1 style="font-family: Tahoma, Helvetica, Arial; letter-spacing: 1px" class="post_title p-2 m-0">{{ tutorialTitle }}</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4 post_category ml-3 p-1">
+                        {% for category in tutorialCategory %}
+                            <span class="badge badge-primary shadow">
+                                {{ tutorialCategory[loop.index0] }}
+                            </span>
+                        {% endfor %}
+                    </div>
+                    <div class="col-3 p-1">
+                        <span class="article-author article-head-text-muted">{{ tutorialAuthor }}</span>
+                    </div>
+                    <div class="col-2 p-1">
+                        <span class="article-date-created article-head-text-muted">{{ tutorialDate|date("d-m-Y") }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row w-75 border mr-auto ml-auto article-body mt-3 rounded">
+            <div class="col-12 px-0">
+                <div class="row w-100 ml-auto mr-auto">
+                    <div class="col-12 article-img d-flex justify-content-center w-100 px-0">
+                        <img class="mw-100 mh-100 thematic-IMG" src="{{ tutorialImg|default(asset('img/noImg.png')) }}" alt="Tutorial topic IMG">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 px-0">
+                <div class="row ml-auto mr-auto px-2">
+                    <div class="col-12 p-0 article-body-text-muted mw-100 text">
+                        {{ tutorialShortDescription|raw }}
+                    </div>
+                </div>
+                <hr class="ml-4 mr-4 border border-white">
+            </div>
+            <div class="col-12 px-2 mt-2">
+                <div class="row w-100 m-0">
+                    <div class="col-12 p-0 ml-auto mr-auto">
+                        {{ tutorialMainContent|raw }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row w-75 border mr-auto ml-auto article-footer mt-3 mb-5 rounded">
+            <div id="similar_topic_area" class="col-12 w-100">
+                <div class="row w-100 ml-auto mr-auto">
+                    <div class="col-12 h3 text-center text-dark-orange">
+                        Similar topics
+                    </div>
+                    {% if categoryList|length == 0 %}
+                    <span class="w-100 h5 border border-info list-group-item-info w-100 rounded text-center p-2">No topics were found!</span>
+                    {% endif %}
+                    {% for category in categoryList|keys %}
+                        {% if loop.index0 < 5 %}
+                        <a class="w-100" href="{{ path('tutorialShow',{ID:categoryList[category].id})}}">
+                            <div class="row w-100 mr-auto ml-auto similar-topics mb-3 shadow">
+                                <div class="col-11 mr-auto ml-auto">
+                                    <span class="h5 pr-3 similar-topics-title">{{ categoryList[category].title|capitalize }}</span>
+                                </div>
+                                <div class="col-11 mr-auto ml-auto">
+                                    <span class="h6 article-head-text-muted pr-3">{{ categoryList[category].author }}</span>
+                                    <span class="h6 article-head-text-muted pr-3">{{ categoryList[category].creationDate|date("d-m-Y") }}</span>
+                                </div>
+                            </div>
+                        </a>
+                        {% endif %}
+                    {% endfor %}
+                    {% if categoryList|length > 5 %}
+                        <div class="col-12 h4 text-center text-dark-orange">
+                            More similar topics
+                        </div>
+                        <button id="more_dropdown_button" type="button" class="w-100 btn btn-block dropdown-toggle shadow similar-topics mb-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">Toggle Dropright</span>
+                        </button>
+                    {% endif %}
+                            <div id="more_dropdown" class="dropdown-menu row w-100 ml-auto mr-auto p-0">
+                                <div class="col-12 w-100 pl-0 pr-2">
+                                    {% for category in categoryList|keys %}
+                                        {% if loop.index0 >= 5 %}
+                                            <a class="w-100 dropdown-item p-0 px-2 similar_topics_dropdown_item" href="{{ path('tutorialShow',{ID:categoryList[category].id})}}">
+                                                <div class="row w-100 mr-auto ml-auto similar-topics mt-3 shadow">
+                                                    <div class="col-11 mr-auto ml-auto">
+                                                        <span class="h5 pr-3">{{ categoryList[category].title|capitalize }}</span>
+                                                    </div>
+                                                    <div class="col-11 mr-auto ml-auto">
+                                                        <span class="h6 article-head-text-muted pr-3  similar-topics-item">{{ categoryList[category].author }}</span>
+                                                        <span class="h6 article-head-text-muted pr-3">{{ categoryList[category].creationDate|date("d-m-Y") }}</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+{% endblock main %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('JS/tutorials/tutorialTopic.js') }}"></script>
+{% endblock javascripts %}
+

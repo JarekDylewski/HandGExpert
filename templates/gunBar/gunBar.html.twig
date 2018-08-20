@@ -1,0 +1,143 @@
+{% extends 'home.html.twig' %}
+{% block gunBar %}
+    <div class="row statistics-panel">
+        <div class="col-7 pr-0">
+            <div class="row">
+                <div class="col-10 w-100 h-100 pr-0" data-toggle="tooltip" data-placement="left" title="Damage: more = better">DMG: <span class="text-orange DMG"> 0 </span></div>
+                <div class="col-10 w-100 h-100 pr-0" data-toggle="tooltip" data-placement="bottom" title="Muzzle velocity: more = better">Muzzle velocity: <span class="text-orange velocity"> 0 </span> m/s</div>
+                <div class="col-10 w-100 h-100 pr-0" data-toggle="tooltip" data-placement="bottom" title="Rate of fire: more = better">Rate of fire: <span class="text-orange rateOfFire"> 0 </span> rpm </div>
+                <div class="col-10 w-100 h-100 pr-0" data-toggle="tooltip" data-placement="bottom" title="Range: more = better">Range: <span class="text-orange range"> 0 </span></div>
+                <div class="col-10 w-100 h-100 pr-0" data-toggle="tooltip" data-placement="bottom" title="Recoil: less = better">Recoil:
+                    <span class="text-orange coneModifier"> 0 </span>
+                </div>
+                <div class="col-10 w-100 h-100 pr-0" data-toggle="tooltip" data-placement="bottom" title="Time to kill: less = better">Time to kill: <span class="text-orange timeToKill"> 0 </span> ms</div>
+                <div class="col-10 w-100 h-100 pr-0" data-toggle="tooltip" data-placement="bottom" title="Costs: less = better">Costs: <span class="text-orange pricePerShot"> 0 </span> per shot </div>
+                <div class="col-10 w-100 h-100 pr-0" data-toggle="tooltip" data-placement="bottom" title="Spawn delay: less = better">Spawn delay: <span class="text-orange"> {{ gunData['managabilitycost'] }} </span> s </div>
+                <hr>
+            </div>
+        </div>
+        <div class="col-5 pr-0 pl-0">
+            <div class="row">
+                <div class="col-10 w-100 h-100 pr-0" data-toggle="tooltip" data-placement="bottom" title="Reload time: less = better">Reload time: <span class="text-orange reloadTime">{{ gunData['reloadtime'] }}</span> s</div>
+                {# tutaj chyba trzeba jakiegos ifa dodac tylko dla broni ktore maja scopa dostepnego<div class="col-10 w-100 h-100 pr-0">Reload time with scope: <span class="text-orange reloadTime">{{ gunData['reloadtimescoped'] }}</span> s</div>#}
+                <div class="col-10 w-100 h-100 pr-0" data-toggle="tooltip" data-placement="bottom" title="Equipment point: less = better">Equipment points: <span class="text-orange">{{ gunData['equipmentPointsCost'] }}</span> </div>
+                <div class="col-10 w-100 h-100 pr-0" data-toggle="tooltip" data-placement="bottom" title="Ammo capacity: more = better">Ammo capacity: <span class="text-orange">{{ gunData['clipsize'] }}</span></div>
+                <div class="col-10 w-100 h-100 pr-0" data-toggle="tooltip" data-placement="bottom" title="Magazines: more = better. (Standard) - is the standard amount of magazines">Magazines: <span class="text-orange reloadTime">{{ gunData['clipCount'] }}</span> (standard)</div>
+                <div class="col-10 w-100 h-100 pr-0" data-toggle="tooltip" data-placement="bottom" title="Equip time: less = better">Equip time: <span class="text-orange reloadTime">{{ gunData['equiptime'] }}</span> s</div>
+                <div class="col-10 w-100 h-100 pr-0" data-toggle="tooltip" data-placement="bottom" title="Additional fatique: less = better">Additional fatique <span class="text-orange reloadTime fatigue">{{ gunData['fatiquePoints'] * 6 }}</span> %</div>
+                <div class="col-10 w-100 h-100 pr-0">Aiming time: <span class="text-orange">{{ 1000 - (gunData['precisionModeAcceleration'])*0.6 }}</span> ms</div>
+                <div class="col-10 w-100 h-100 pr-0">Use while running:
+                    <span class="text-orange reloadTime">
+                         {% if  gunData['usewhilerunning']  == 1 %}
+                            Yes
+                         {% else %}
+                             No
+                         {% endif %}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block modifications %}
+    <div class="list-group mr-3" id="modMenu">
+        {% for ammo in ammoData %}
+            <a href="{{ path('GunListCustomizing',{gunID: slug}) }}" class="list-group-item list-group-item-action p-0">
+                <div class="row"> {#TODO - pozmieniać id na jakieś sensowniejsze, np ammo_mod_ID_0 a potem w js usunac prefix ammo_mod_ID_ tak zeby skrypt dzialal poprawnie #}
+                    <div class="col-9 pr-0 pl-4" id="{{ loop.index0 }}">
+                        <img height="60px" width="107px" src="{{ asset('img/mody/ammo/'~ ammoID[loop.index0] ~'.png') }}" id="{{ loop.index0 }}"> <br>
+                        <span class="mod-menu-ammo-{{ loop.index0 }}" id="{{ loop.index0 }}">{{ ammoData[loop.index0]['name'] }}</span><br>
+                        Price per shot: <span class="text-orange">{{ ammoData[loop.index0]['pricePerShot'] }}</span>
+                    </div>
+                    <div class="col-1 p-0 h-100 w-100">
+                        <img class="w-75 h-75 ammo-dmg-{{ loop.index0 }}" src="{{ asset('img/gunStatistics/dmg.png') }}" alt="Damage" data-toggle="tooltip" data-placement="top" title="Damage">
+                        <img class="w-75 h-75 ammo-velocity-{{ loop.index0 }}" src="{{ asset('img/gunStatistics/velocity.png') }}" alt="Muzzle velocity" data-toggle="tooltip" data-placement="top" title="Muzzle velocity">
+                        <img class="w-75 h-75 ammo-rpm-{{ loop.index0 }}" src="{{ asset('img/gunStatistics/rateOfFire.png') }}" alt="Rate of fire" data-toggle="tooltip" data-placement="top" title="Rate of fire">
+                        <img class="w-75 h-75 ammo-recoil-{{ loop.index0 }}" src="{{ asset('img/gunStatistics/recoil.png') }}" alt="Recoil" data-toggle="tooltip" data-placement="top" title="Recoil">
+                        <img class="w-75 h-75 ammo-range-{{ loop.index0 }}" src="{{ asset('img/gunStatistics/range.png') }}" alt="Range" data-toggle="tooltip" data-placement="top" title="Range">
+                    </div>
+                    <div class="col-2 pr-0 mr-0">
+                        <div class="btn-group dropright h-100 w-100">
+                            <button type="button" class="w-75 btn btn-block dropdown-toggle dropdown-toggle-split dropdown-not-active-{{ loop.index0 }} box-shadow-orange" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="sr-only">Toggle Dropright</span>
+                            </button>
+                            <div class="dropdown-menu row">
+                                <div class="col-12">
+                                    <div class="row dropdown-item p-0">
+                                        <div class="col-8">Muzzle velocity: <span id="ammo-velocity-{{ loop.index0 }}" class="text-orange">{{ ammoData[loop.index0]['speed'] }}</span> m/s</div>
+                                    </div>
+                                    <div class="row dropdown-item p-0">
+                                        <div class="col-8 pb-2">Damage: <span id="ammo-dmg-{{ loop.index0 }}" class="text-orange">{{ ammoData[loop.index0]['damage'] }}</span> (in the body)</div>
+                                    </div>
+                                    <div class="row dropdown-item p-0 pt-2 pb-2 border-top border-bottom border-dark">
+                                        <div class="col-4">DamageNear: <span class="text-orange">{{ ammoData[loop.index0]['damage'] }}</span> RangeNear: <span id="ammo-range-{{ loop.index0 }}" class="text-orange">{{ ammoData[loop.index0]['rangenear'] }}</span></div>
+                                        <div class="col-4">DamageFar: <span class="text-orange">{{ ammoData[loop.index0]['damagefar'] }}</span> RangeFar: <span class="text-orange">{{ ammoData[loop.index0]['rangefar'] }}</span></div>
+                                    </div>
+                                    <div class="row dropdown-item p-0 pt-2">
+                                        <div class="col-8">
+                                            Cone modifier: <span id="ammo-recoil-{{ loop.index0 }}"  class="text-orange">{{ ammoData[loop.index0]['coneModifier'] }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row dropdown-item p-0">
+                                        <div class="col-8">
+                                            Stability modifier: <span class="text-orange">{{ ammoData[loop.index0]['recoilModifier'] }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row dropdown-item p-0 pt-2">
+                                        <div class="col-5"> Max condition: <span class="text-orange">{{ ammoData[loop.index0]['maxCondition'] }}</span></div>
+                                    </div>
+                                    <div class="row dropdown-item p-0">
+                                        <div class="col-5 "> Wear per shot: <span class="text-orange">{{ ammoData[loop.index0]['wearPerShot'] }}</span> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+    <script src="{{ asset('JS/mod_name_list_updater.js') }}"></script>
+    <script src="{{ asset('JS/DMGPanel/damage_button_handling.js') }}"></script>
+    <script src="{{ asset('JS/DMGPanel/bullets_to_kill_button_handling.js') }}"></script>
+    <script src="{{ asset('JS/DMGPanel/chart_button_handling.js') }}"></script>
+    <script src="{{ asset('JS/DMGPanel/DMG_panel.js') }}"></script>
+    <script src="{{ asset('JS/velocity/velocity_button_handling.js') }}"></script>
+    <script src="{{ asset('JS/BulletsToKillCalculation.js') }}"></script>
+    <script src="{{ asset('JS/rateOfFire/rate_of_fire_button_handling.js') }}"></script>
+    <script src="{{ asset('JS/rateOfFire/try_yourself_button_handling.js') }}"></script>
+    <script src="{{ asset('JS/rateOfFire/rate_of_fire_panel.js') }}"></script>
+    <script src="{{ asset('JS/range/range_panel.js') }}"></script>
+    <script src="{{ asset('JS/timeToKill/time_to_kill_panel.js') }}"></script>
+    <script src="{{ asset('JS/costs/costs_panel.js') }}"></script>
+    <script src="{{ asset('JS/recoil/recoil_panel.js') }}"></script>
+    <script src="{{ asset('JS/RecoilCalculations.js') }}"></script>
+    <script src="{{ asset('JS/stats/stats_panel.js') }}"></script>
+    {#Każda broń musi mieć standardowo amunicję, więc przy ładowaniu tej strony (po wybraniu broni z listy) #}
+    {#standardowo 'klikana' jest standardowa amunicja#}
+    {#TODO tutaj też trzeba pamiętać ze nie moze być id=0 (#0) trzeba to zmienić na ammo_lis_id_0 czy cos w tym stylu#}
+    <script>
+        $(document).ready(function () {
+            $('.ammo-tab-list').trigger('click');
+            let IsItClicked = $('a div div span[class*="mod-active"]').html();
+            if(IsItClicked){ //Do nothing
+            }else if(!IsItClicked){
+                //trigger click first modification
+                $('#0').trigger('click');
+            }
+            setTimeout(function () {
+                $('.stats_panel').trigger('click');
+            },500);
+
+
+        });
+
+    </script>
+
+
+{% endblock %}
+{#57 /                       #}

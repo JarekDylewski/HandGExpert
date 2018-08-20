@@ -1,13 +1,888 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %} {{ title }} {% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        <nav>ELO</nav>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>H&GExpert</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('stylesheetMain.css') }}">
+        <link rel="stylesheet" href="{{ asset('twbs/bootstrap/dist/css/bootstrap.css') }}">
+    {% endblock %}
+</head>
+<body>
+{% block body %}
+    {#First navigation#}
+    <div class="sticky-top">
+        <nav class="navbar navbar-expand navbar-light bg-light p-0" data-spy="affix" data-offset-top="197">
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav mt-2 col-sm-4">
+                    <li class="nav-item">
+                        <a class="nav-link navbar-text" href="#">Najczęściej odwiedzany dział</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link navbar-text" href="#">Proponowane</a>
+                    </li>
+                </ul>
+                {#user menu#}
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <img class="border border-primary rounded-circle cursor-pointer ml-automr-0 ml-auto" width="40" height="40" src="{{ asset('img/combatBadges/bronzeFastReload.png') }}">
+                   <div class="mr-5 pr-5">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-light dropdown-toggle text-dark" type="button" id="przykladowaLista"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ app.user.username }}
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="przykladowaLista">
+                            <a href="{{ path('logout') }}" class="dropdown-item text-dark-orange">Logout</a>
+                        </div>
+                    </div>
+                {% else %}
+                    <a href="{{ path('login') }}" class="btn btn-outline-secondary mr-2 text-dark-orange ml-auto"> Log in </a>
+                    <a href="{{ path('user_registration') }}" class="btn btn-outline-secondary mr-5 text-dark-orange"> Registration </a>
+                {% endif %}
+            </div>
+        </nav>
+        {#second navigation#}
+        <nav class="navbar navbar-expand navbar-dark bg-secondary p-0">
+            {#logo and title#}
+            <div class="row w-100 h-100">
+                <div class="col-2 ml-auto mr-auto ">
+                    <a class="navbar-brand " href="/">
+                        <img src="{{ asset('img/logo.png') }}" width="124" height="40"
+                             class="d-inline-block align-top" alt="HadGexpertLogo">
+                    </a>
+                </div>
+                <div class="col-8 align-self-center align-content-center h-100">
+                    {% block nav %}
+                    <ul class="navbar-nav h-100">
+                        <li class="nav-item h-100 border-nav border-right-0 border-bottom-0 mt-3 nav-background-active">
+                            <a class="nav-link h4 m-0 py-0 h-100 p-1" href="{{ path('home') }}">Gun Expert</a>
+                        </li>
+                        <li class="nav-item border-nav h-100 border-bottom-0 mt-3">
+                            <a class="nav-link h4 m-0 py-0 h-100 p-1" href="{{ path('tutorials',{ page:1}) }}">Tutorials</a>
+                        </li>
+                    </ul>
+                    {% endblock %}
+                </div>
+            </div>
+        </nav>
+    </div>
+{% block main %}
+    {#main space#}
+    {#left bar#}
+    <div class="container no-gutters text-white ">
+        <div class="row no-gutters">
+{#-----------Glowny#}
+            <div class="col-12 mt-5 ml-5 mr-0 border border-right-0 border-bottom-0">
+                {#---------------Semi auto#}
+                <div class="nav p-2">
+                    <div class="btn-group pr-1 ">
+                        <button type="button" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            Semi-auto
+                        </button>
+                        <div class="dropdown-menu menu-background gun-list ">
+                            {#m1Garand#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:40}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/usa.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/m1Garand.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">M1 Garand</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#m1Carabine#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:16}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/usa.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/m1Carabine.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">M1 Carabine</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#m1a1Carabine#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:56}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/usa.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0 ">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/m1a1Carabine.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">M1A1 Carabine</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#g43#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:44}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/germany.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0 ">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/g43.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">G43</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#SVT-40#}
+                            <a class="dropdown-item pl-2" href="14">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/zsrr.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0 ">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/svt-40.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">SVT-40</b>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    {#Bolt action#}
+                    <div class="btn-group pr-1 ">
+                        <button type="button" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            Bolt action
+                        </button>
+                        <div class="dropdown-menu menu-background gun-list ">
+                            {#Spriengfield M1903#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:46}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/usa.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/springfieldM1903.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">Spriengfield <br>M1903</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#kurz#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:43}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/germany.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/karabiner98Kurz.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">Karabiner <br> 98 Kurz</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#mosin 1891#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:12}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/zsrr.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/mosin-nagant_1891-30.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">mosin-nagant <br> 1891-30</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#PTRD#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:34}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/zsrr.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/ptrd1941.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">PTRD 1941</b>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    {#------------assault rifle#}
+                    <div class="btn-group pr-1 ">
+                        <button type="button" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            Assault
+                        </button>
+                        <div class="dropdown-menu menu-background gun-list ">
+                            {#m1/m2#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:50}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/usa.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/m1m2carabine.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">m1/m2 Carabine</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#stg44#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:49}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/germany.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/stg44.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">STG 44</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#AVS#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:54}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/zsrr.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/avs.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">AVS-36</b>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    {#-------------------SMG#}
+                    <div class="btn-group pr-1 ">
+                        <button type="button" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            SMG
+                        </button>
+                        <div class="dropdown-menu menu-background gun-list-overflow">
+                            {#m3GreaseGun#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:5}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/usa.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/m3GreaseGun.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">M3 Grease Gun</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#Tommy gun#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:32}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/usa.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/thompsonm1a1.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">Thompson M1A1</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#mp34#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:6}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/germany.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/mp34.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">MP 34</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#mp40#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:31}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/germany.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/mp40.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">MP 40</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#ppd-40#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:24}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/zsrr.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/ppd-40.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">PPD-40</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#PPSh-41#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:33}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/zsrr.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/ppsh-41.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">PPSh-41</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#pps-43#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:57}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/zsrr.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/pps-43.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">PPS-43</b>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    {#-------------------LGM#}
+                    <div class="btn-group pr-1">
+                        <button type="button" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            LGM
+                        </button>
+                        <div class="dropdown-menu menu-background gun-list-overflow">
+                            {#Bar#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:45}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/usa.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/m1918Bar.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">M1918 Bar</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#m1919#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:62}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/usa.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/m1919.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">M1919</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#Johnson#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:66}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/usa.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/JohnsonM1941.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">Johnson M1941</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#mg34#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:63}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/germany.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/mg34.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">Mg 34</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#mg42#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:61}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/germany.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/mg42.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">Mg 42</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#fg42#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:47}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/germany.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/fg42.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">FG 42</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#degtyarev DP 28#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:9}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/zsrr.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/degtyarevDp28.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">Degtyarev DP 28</b>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    {#------------------pistols#}
+                    <div class="btn-group pr-1">
+                        <button type="button" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            Handguns
+                        </button>
+                        <div class="dropdown-menu menu-background gun-list-overflow">
+                            {#1903 Pocket hamerless#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:76}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/usa.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/1903pocketHammerless.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">1903<br>Pocket hamerless</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#1911 Pistol#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:20}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/usa.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/1911pistol.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">1911 Pistol</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#1917 revolver#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:8}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/usa.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/m1917Revolver.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">1917 Revolver</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#Model 1934#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:77}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/germany.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/model1934.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">Model 1934</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#PistolC96#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:21}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/germany.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/pistolC96.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">Pistol C96</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#P08 Parabellum#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:7}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/germany.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/p08Parabellum.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">P08 Parabellum</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#P38Parabellum#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:67}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/germany.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/p38Parabellum.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">P08 Parabellum</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#KorovinTk#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:90}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/zsrr.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/korovinTk.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">Korovin TK</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#Tula Tokarev 33#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:22}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/zsrr.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/tulaTokarev33.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">Tula Tokarev 33</b>
+                                    </div>
+                                </div>
+                            </a>
+                            {#Nagant 1895#}
+                            <a class="dropdown-item pl-2" href="{{ path('GunList',{gunID:58}) }}">
+                                <div class="row">
+                                    <div class="col-2 align-self-center">
+                                        <img src="{{ asset('img/country/zsrr.png') }}">
+                                    </div>
+                                    <div class="col-6 pl-0 pr-0">
+                                        <img class="" width="150" height="75"
+                                             src="{{ asset('img/gun_ribbons/nagantM1895.png') }}">
+                                    </div>
+                                    <div class="col-3 align-self-center pl-0">
+                                        <b class="">Nagant 1895</b>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="input-group col-4">
+                    <div  class="pr-1 search-dropdown">
+                        <input id="search_gun" type="text" class="active cursor-text btn btn-outline-light dropdown-toggle text-black-50" placeholder="Find gun" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false"
+                        >
+                        <img class="cursor-pointer border border-green loupe" src="{{ asset('img/lupa.png') }}">
+                        <div id="search-dropdown-parent" class="search-dropdown dropdown-menu bg-dark search-list-overflow">
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                {#---------------Modlist#}
+
+                <div class="row">
+                    <div class="col-4 ml-2 pr-0">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item pr-1 ammo-nav">
+                                <a class="nav-link p-0" id="home-tab" data-toggle="tab" href="#ammo" role="tab"
+                                   aria-controls="home" aria-selected="true">
+                                    <img class="ammo-tab-list" width="40px" height="40px" src="{{ asset('img/mody/ammo.png') }}">
+                                </a>
+                            </li>
+                            <li class="nav-item pr-1">
+                                <a class="nav-link p-0" id="profile-tab" data-toggle="tab" href="#crosshair" role="tab"
+                                   aria-controls="profile" aria-selected="false"><img width="40px" height="40px"
+                                                                                      src="{{ asset('img/mody/crosshair.png') }}"></a>
+                            </li>
+                            <li class="nav-item pr-1">
+                                <a class="nav-link p-0" id="contact-tab" data-toggle="tab" href="#trigger" role="tab"
+                                   aria-controls="contact" aria-selected="false"><img width="40px" height="40px"
+                                                                                      src="{{ asset('img/mody/trigger.png') }}"></a>
+                            </li>
+                            <li class="nav-item pr-1">
+                                <a class="nav-link p-0" id="contact-tab" data-toggle="tab" href="#spring" role="tab"
+                                   aria-controls="contact" aria-selected="false"><img width="40px" height="40px"
+                                                                                      src="{{ asset('img/mody/spring.png') }}"></a>
+                            </li>
+                            <li class="nav-item pr-1">
+                                <a class="nav-link p-0" id="contact-tab" data-toggle="tab" href="#barrel" role="tab"
+                                   aria-controls="contact" aria-selected="false"><img width="40px" height="40px"
+                                                                                      src="{{ asset('img/mody/barrel.png') }}"></a>
+                            </li>
+                        </ul>
+                        {#value tab#}
+                        <div class="tab-content" id="myTabContent">
+                            {#------------------------------ammo value#}
+                            <div class="tab-pane fade show" id="ammo" role="tabpanel" aria-labelledby="home-tab">
+                                    {% block modifications %}
+                                    {% endblock %}
+                            </div>
+                            <div class="tab-pane fade" id="crosshair" role="tabpanel" aria-labelledby="profile-tab">
+                                <div class="list-group">
+                                    <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis
+                                        in</a>
+                                    <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
+                                    <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur
+                                        ac</a>
+                                    <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at
+                                        eros</a>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="trigger" role="tabpanel" aria-labelledby="contact-tab">.3..
+                            </div>
+                            <div class="tab-pane fade" id="spring" role="tabpanel" aria-labelledby="contact-tab">.4..
+                            </div>
+                            <div class="tab-pane fade" id="barrel" role="tabpanel" aria-labelledby="contact-tab">.5..
+                            </div>
+
+                        </div>
+                    </div>
+                    {#------------------    gun bar#}
+                    <div class="col-7 pr-0 mt-4 pt-1 border gun-bar">
+                        <div class="row">
+                            <div class="col-5">
+                                <h5 class="card-title">{{ gunData['name']|default('Choose a weapon') }}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    {#W twigu nie ma instrukcji switch narazie uzyje if #}
+                                    {% if gunData['weaponcategoryid'] is not defined %}
+                                        from the menu
+                                    {% elseif gunData['weaponcategoryid'] == 11 %}
+                                        Semi auto riffle
+                                    {% elseif  gunData['weaponcategoryid'] == 12 %}
+                                        Bolt action riffle
+                                    {% elseif gunData['weaponcategoryid'] == 13 %}
+                                        Assault riffle
+                                    {% elseif gunData['weaponcategoryid'] == 14 %}
+                                        Light machine gun
+                                    {% elseif gunData['weaponcategoryid'] == 16%}
+                                        Submachine gun
+                                    {% elseif gunData['weaponcategoryid'] == 17%}
+                                        Handgun
+                                    {% else %}
+                                        from the menu
+                                    {% endif %}
+
+                                </h6>
+                            </div>
+                            <div class="col-3 align-self-center pl-5">
+                                    <a href="{{ path('GunList',{gunID:slug|default(40)}) }}">
+                                        <button class="btn btn-outline-light" type="button">
+                                        Reset settings
+                                        </button>
+                                    </a>
+                            </div>
+                            <div class="col-3 align-self-center">
+                                <button class="btn btn-outline-light" type="button">Proposed</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5 ml-3 mr-3 border-top">
+                                {% block gunImg %}
+                                    <img class=" w-100 h-100"
+                                         src="{{ asset('img/gunsByID/'~ img|default(0) ~'.png') }}">
+                                {% endblock %}
+                            </div>
+                            <div class="col-4 pl-0">
+                                <div class=" p-0 pr-2 mod-name-small">
+                                    <img class="border-bottom border-left mod-icon-small"
+                                         src="{{ asset('img/mody/ammo.png') }}">
+                                    <span class="js-mod-name-list-ammo"></span>
+                                </div>
+                                <div class=" p-0 pr-2 mod-name-small">
+                                    <img class="border-bottom border-left mod-icon-small"
+                                         src="{{ asset('img/mody/crosshair.png') }}">
+                                    <span class="js-mod-name-list-crosshair"></span>
+
+                                </div>
+                                <div class=" p-0 pr-2 mod-name-small">
+                                    <img class="border-bottom border-left mod-icon-small"
+                                         src="{{ asset('img/mody/trigger.png') }}">
+                                    <span class="js-mod-name-list-trigger"></span>
+                                </div>
+                                <div class=" p-0 pr-2 mod-name-small">
+                                    <img class="border-bottom border-left mod-icon-small"
+                                         src="{{ asset('img/mody/spring.png') }}">
+                                    <span class="js-mod-name-list-spring"></span>
+                                </div>
+                                <div class=" p-0 pr-2 mod-name-small">
+                                    <img class="border-bottom border-left mod-icon-small"
+                                         src="{{ asset('img/mody/barrel.png') }}">
+                                    <span class="js-mod-name-list-barrel"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row w-100 h-50 mt-3">
+                            <div class="col-3 p-0 pl-1 pr-3 h-100">
+                                <ul class="list-group h-50">
+                                    <li class="list-group-item-action list-unstyled list-item-statistics btn-outline-light mt-0 stats_panel">
+                                        <img width="30px" height="30px" src="{{ asset('img/gunStatistics/stats.png') }}">
+                                        Stats
+                                    </li>
+                                    <li class="list-group-item-action list-unstyled list-item-statistics btn-outline-light mt-0 DMG_panel">
+                                        <img width="30px" height="30px" src="{{ asset('img/gunStatistics/dmg.png') }}">
+                                        DMG
+                                    </li>
+                                    <li class="list-group-item-action list-unstyled list-item-statistics mt-1 velocity_panel">
+                                        <img width="30px" height="30px" src="{{ asset('img/gunStatistics/velocity.png') }}">
+                                        Velocity
+                                    </li>
+                                    <li class="list-group-item-action list-unstyled list-item-statistics mt-1 rate_of_fire_panel">
+                                        <img width="30px" height="30px" src="{{ asset('img/gunStatistics/rateOfFire.png') }}">
+                                        Rate of fire
+                                    </li>
+                                    <li class="list-group-item-action list-unstyled list-item-statistics mt-1 recoil_panel">
+                                        <img width="30px" height="30px" src="{{ asset('img/gunStatistics/recoil.png') }}">
+                                        Recoil
+                                    </li>
+                                    <li class="list-group-item-action list-unstyled list-item-statistics mt-1 time_to_kill_panel">
+                                        <img width="30px" height="30px" src="{{ asset('img/gunStatistics/timeToKill.png') }}">
+                                        Time to kill
+                                    </li>
+                                    <li class="list-group-item-action list-unstyled list-item-statistics mt-1 border-bottom-0 costs_panel">
+                                        <img width="30px" height="30px" src="{{ asset('img/gunStatistics/costs.png') }}">
+                                        Cost
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-9 pr-0 border-left h-100 cursor-arrow" id="statisticsPanelArea">
+                                {% block damagePanel %}
+                                    {% block gunBar %}
+
+                                    {% endblock %}
+                                {% endblock %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+    </div>
+{% endblock main %}
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('JS/CollectingStatistics.js') }}"></script>
+    <script src="{{ asset('JS/DamageCalculation.js') }}"></script>
+    <script src="{{ asset('JS/ImpactOfTheBadge.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous">
+    </script>
+    <script href="{{ asset('twbs/bootstrap/dist/js/bootstrap.js') }}"></script>
+    <script src="{{ asset('jquery/jquery-3.3.1.js') }}"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+            integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+            crossorigin="anonymous">
+    </script>
+    <script src="{{ asset('JS/profit_calculations.js') }}"></script>
+    <script src="{{ asset('JS/StatisticsPanelTemplates.js') }}"></script>
+    <script src="{{ asset('JS/search_gunBar.js') }}"></script>
+    <script src="{{ asset('ckeditor/ckeditor/ckeditor.js') }}"></script>
+    <script src ={{ asset('JS/CKEDITOR.js') }}></script>
+{% endblock %}
+</body>
 </html>
