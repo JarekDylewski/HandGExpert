@@ -13,7 +13,7 @@
 {% block body %}
     {#First navigation#}
     <div class="sticky-top">
-        <nav class="navbar navbar-expand navbar-light bg-light p-0" data-spy="affix" data-offset-top="197">
+        <nav class="navbar navbar-expand bg-light p-0" data-spy="affix" data-offset-top="197">
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav mt-2 col-sm-4">
                     <li class="nav-item">
@@ -27,19 +27,20 @@
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <img class="border border-primary rounded-circle cursor-pointer ml-automr-0 ml-auto" width="40" height="40" src="{{ asset('img/combatBadges/bronzeFastReload.png') }}">
                    <div class="mr-5 pr-5">
-                    <div class="dropdown">
-                        <button class="btn btn-outline-light dropdown-toggle text-dark" type="button" id="przykladowaLista"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{ app.user.username }}
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="przykladowaLista">
-                            <a href="{{ path('logout') }}" class="dropdown-item text-dark-orange">Logout</a>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-light dropdown-toggle text-dark" type="button" id="przykladowaLista"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ app.user.username }}
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="przykladowaLista">
+                                <a href="{{ path('logout') }}" class="dropdown-item text-dark-orange">Logout</a>
+                            </div>
                         </div>
-                    </div>
                 {% else %}
                     <a href="{{ path('login') }}" class="btn btn-outline-secondary mr-2 text-dark-orange ml-auto"> Log in </a>
                     <a href="{{ path('user_registration') }}" class="btn btn-outline-secondary mr-5 text-dark-orange"> Registration </a>
                 {% endif %}
+                    </div>
             </div>
         </nav>
         {#second navigation#}
