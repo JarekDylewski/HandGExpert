@@ -1,4 +1,4 @@
-Projekt ####HandGExpert powstał z myślą o społeczności gry Heroes and Generals, zamysł projektu to przedstawienie graczom w prosty i przejrzysty sposób wszelkich danych dotyczących broni (w przyszłości może nawet pojazdów) w przyjemnym i czytelnym interfejsie.
+Projekt HandGExpert powstał z myślą o społeczności gry Heroes and Generals, zamysł projektu to przedstawienie graczom w prosty i przejrzysty sposób wszelkich danych dotyczących broni (w przyszłości może nawet pojazdów) w przyjemnym i czytelnym interfejsie.
 Kolejny zamysł to dodanie na strone bardzo 'technicznych' poradników do gry, czyli poradniki jak wykorzystać wiedzę techniczną na własną korzyść (nie chodzi o exploity)
 Gracz może sprawdzić statystyki spośród 36 broni palnych dostępnych w grze.
 ### Statystyki takie jak:  
