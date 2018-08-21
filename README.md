@@ -23,7 +23,7 @@ Ile obrażeń zadaje pocisk w daną część ciała (uwzględniając zmniejszeni
 Ile potrzeba czasu na zabicie przeciwnika (uwzględniając czas lotu pocisku)  
 Ile czasu potrzebuje pocisk na przeleceniu X metrów  
 Ile czasu broń potrzebuje na opróżnienie magazynku  
-Jaki wpływ na rozrzut ma staniem, kucanie, leżenie czy strzelanie z biodra.  
+Jaki wpływ na rozrzut ma stanie, kucanie, leżenie czy strzelanie z biodra.  
 O ile zwiększa koszta eksploatacji dany modyfikator.  
 
 
