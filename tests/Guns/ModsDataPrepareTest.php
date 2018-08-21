@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: DzaroD
- * Date: 2018-07-30
- * Time: 15:43
- */
 
 namespace App\Tests\Guns;
 
