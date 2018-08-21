@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: DzaroD
- * Date: 2018-08-13
- * Time: 17:25
- */
 
 namespace App\Tutorials;
 

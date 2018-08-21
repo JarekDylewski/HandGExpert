@@ -34,16 +34,16 @@ class HomeController extends Controller
         $Weapon = new PrepareData($gunID);//1 [id]
         $ModsDataPrepare = new ModsDataPrepare($Weapon);
         $gunData = $Weapon->getGunsData();//Tablica z danymi broni
-        $ammoModsArray=$ModsDataPrepare->prepareModID('ammo'); //Tablica z ID amunicji
-        $ammoData=$ModsDataPrepare->prepareModData($ammoModsArray,'getAmmoData');
+        $ammoModsArray = $ModsDataPrepare->prepareModID('ammo'); //Tablica z ID amunicji
+        $ammoData = $ModsDataPrepare->prepareModData($ammoModsArray, 'getAmmoData');
 
-        return $this->render('gunBar/gunBar.html.twig',[
-            'gunData'=>$gunData,
-            'ammoData'=>$ammoData,
-            'img'=>$gunID,
-            'ammoID'=>$ammoModsArray,
-            'slug'=>$gunID,
-            ]);
+        return $this->render('gunBar/gunBar.html.twig', [
+            'gunData' => $gunData,
+            'ammoData' => $ammoData,
+            'img' => $gunID,
+            'ammoID' => $ammoModsArray,
+            'slug' => $gunID,
+        ]);
     }
 
     /**
@@ -55,15 +55,16 @@ class HomeController extends Controller
         $Weapon = new PrepareData($gunID);//1 [id]
         $ModsDataPrepare = new ModsDataPrepare($Weapon);
         $gunData = $Weapon->getGunsData();//Tablica z danymi broni
-        $ammoModsArray=$ModsDataPrepare->prepareModID('ammo'); //Tablica z ID amunicji
-        $ammoData=$ModsDataPrepare->prepareModData($ammoModsArray,'getAmmoData');
+        $ammoModsArray = $ModsDataPrepare->prepareModID('ammo'); //Tablica z ID amunicji
+        $ammoData = $ModsDataPrepare->prepareModData($ammoModsArray, 'getAmmoData');
 
         return new JsonResponse([
-            'gunData'=>$gunData,
-            'ammoData'=>$ammoData,
-            'img'=>$gunID
+            'gunData' => $gunData,
+            'ammoData' => $ammoData,
+            'img' => $gunID
         ]);
     }
+
     /**
      * @Route("/GunList/search", name="GunListSearch")
      */
@@ -72,11 +73,11 @@ class HomeController extends Controller
         $gunData = new PrepareData();
         $datas = $gunData->getGunsData('all');
         $name = [];
-        foreach($datas as $data => $value){
-           $name[$data] = $datas[$data]['name'];
+        foreach ($datas as $data => $value) {
+            $name[$data] = $datas[$data]['name'];
         }
         return new JsonResponse([
-            'name'=>$name
+            'name' => $name
         ]);
     }
 }
