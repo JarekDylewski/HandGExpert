@@ -5,11 +5,12 @@ namespace App\Tutorials;
 
 class TopicValidator
 {
-    function deleteObjDuplicateFromArray($array, $keep_key_assoc = false){
+    function deleteObjDuplicateFromArray($array, $keep_key_assoc = false)
+    {
         $duplicate_keys = array();
         $tmp = array();
 
-        foreach ($array as $key => $val){
+        foreach ($array as $key => $val) {
             // convert objects to arrays, in_array() does not support objects
             if (is_object($val))
                 $val = (array)$val;

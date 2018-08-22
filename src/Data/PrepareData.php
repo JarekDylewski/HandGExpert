@@ -47,12 +47,13 @@ class PrepareData
      */
     private $gunID;
 
-    public function __construct(int $gunId=1)
+    public function __construct(int $gunId = 1)
     {
         $this->gunID = $gunId;
     }
 
-    public function getAmmoData():array
+//prepare necessary data for ammo mod informations by $ginID
+    public function getAmmoData(): array
     {
         $ammoArray = array(
             1 => array('type' => '35', 'name' => 'S.m.K L\'spur', 'speed' => '852', 'rangemax' => '1000', 'damage' => '47', 'damagefar' => '35', 'rangenear' => '64', 'rangefar' => '160', 'maxCondition' => '5000', 'wearPerShot' => '1', 'projectileType' => '0', 'coneModifier' => '1', 'recoilModifier' => '1', 'cartridgeTypeID' => '4', 'masterName' => 'Ammunition_Bullet_Medium_01A', 'pricePerShot' => '', 'ammoType' => ''),
@@ -209,20 +210,19 @@ class PrepareData
 //prepare necessary data for guns informations
 //and return array by gunID
     /**
-     * @param string|int $IDOrAllGunsData set 'all' for all arrays, int with gun ID
-     * @return array|mixed|string
+     * @param string|int $idOrAllGunsData set 'all' for all arrays, int with gun ID
+     * @return array
      * @throws PrepareData "there is no ID smaller than 0" if set number less then 0;
      * @throws PrepareData "you can set only string "all" (or "not defined" but then ID is set from the constructor)"
      * @throws PrepareData "in "getGunsData" method there is no array with ID:[set ID]"
      * @throws PrepareData "in "getGunsData" method there is no array with ID:[set ID]"
-     * @return array array with guns data
      */
-    public function getGunsData($IDOrAllGunsData = 'not defined'):array
+    public function getGunsData($idOrAllGunsData = 'not defined'): array
     {
-        if($IDOrAllGunsData<0){
+        if ($idOrAllGunsData < 0) {
             throw new \Exception('there is no ID smaller than 0');
         }
-        if(is_string($IDOrAllGunsData) && $IDOrAllGunsData !=='all' && $IDOrAllGunsData !=='not defined'){
+        if (is_string($idOrAllGunsData) && $idOrAllGunsData !== 'all' && $idOrAllGunsData !== 'not defined') {
             throw new \Exception('you can set only string "all" (or "not defined" but then ID is set from the constructor)');
         }
         $gunsArray = array(
@@ -264,22 +264,22 @@ class PrepareData
             90 => array('name' => 'Korovin TK', 'camerarecoilright' => '0.05', 'camerarecoilup' => '0.89', 'camerarecoilvariance' => '0.1', 'swaystandmode' => '1.2', 'swaycrouchmode' => '0.7', 'swaypronemode' => '0.5', 'swayprecisionmodifier' => '0.6', 'aimpenaltyprecisionmodifier' => '0.3', 'aimpenaltyperbullet' => '2.2', 'aimpenaltyturn' => '0.001', 'aimpenaltycontractionpersec' => '15', 'baseconefire' => '0.25', 'recoiltime' => '0.2', 'chambertime' => '0', 'reloadtime' => '3', 'clipsize' => '8', 'respawntime' => '10', 'effectscopemindist' => '25', 'aimfov1' => '50', 'aimfov2' => '50', 'aimfov3' => '50', 'equiptime' => '0.3', 'swayspeed' => '1', 'reloadtimescoped' => '3', 'usewhilerunning' => '1', 'proneandaimonly' => '0', 'clipCount' => '3', 'factiontemplateid' => '3', 'weaponcategoryid' => '17', 'equipmentPointsCost' => '1', 'fatiquePoints' => '1', 'canAdjustClipCount' => '1', 'managabilitycost' => '0', 'ItemType' => '4', 'precisionModeAcceleration' => '1500', 'bobCatagoryToken' => '[BobPistol]', 'ammoSpeedMod' => '1', 'ammoRangeMaxMod' => '1', 'ammoDamageMod' => '1', 'ammoDamageFarMod' => '1', 'ammoRangeNearMod' => '1', 'ammoRangeFarMod' => '1', 'catridgeTypeID' => '51', 'extraBulletTracer' => '', 'fireModeAuto' => 'FAŁSZ', 'fireModeSingle' => 'PRAWDA', 'masterId' => '90', 'ammoID' => '160.157.158.159', 'pricePerShot' => '1'),
         );
 
-        if($IDOrAllGunsData === 'all'){
+        if ($idOrAllGunsData === 'all') {
             $gunsArrayFinal = $gunsArray;
-        }else if($IDOrAllGunsData === 'not defined'){
-            if(!isset($gunsArray[$this->gunID])){
-                throw new \Exception('in "getGunsData" method there is no array with ID: '.$this->gunID);
+        } else if ($idOrAllGunsData === 'not defined') {
+            if (!isset($gunsArray[$this->gunID])) {
+                throw new \Exception('in "getGunsData" method there is no array with ID: ' . $this->gunID);
             }
             $gunsArrayFinal = $gunsArray[$this->gunID];
 
-        }else{
-            if(!isset($gunsArray[$IDOrAllGunsData])){
-                throw new \Exception('in "getGunsData" method there is no array with ID: '.$IDOrAllGunsData);
+        } else {
+            if (!isset($gunsArray[$idOrAllGunsData])) {
+                throw new \Exception('in "getGunsData" method there is no array with ID: ' . $idOrAllGunsData);
             }
-            if($gunsArray[$IDOrAllGunsData]<0){
+            if ($gunsArray[$idOrAllGunsData] < 0) {
                 throw new \Exception('ID must be >= 0 ');
             }
-            $gunsArrayFinal = $gunsArray[$IDOrAllGunsData];
+            $gunsArrayFinal = $gunsArray[$idOrAllGunsData];
 
         }
 

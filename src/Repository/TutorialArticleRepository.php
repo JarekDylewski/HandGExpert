@@ -18,61 +18,34 @@ class TutorialArticleRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, TutorialArticle::class);
     }
+
     /**
      * @param $category
      * @return TutorialArticle[]
      */
-    public function findSameCategory($category,$queryLimit): array
+    public function findSameCategory($category, $queryLimit): array
     {
         $queryBuilder = $this->createQueryBuilder('c')
             ->andWhere('c.category LIKE :category')
-            ->setParameter('category', '%'.$category.'%')
+            ->setParameter('category', '%' . $category . '%')
             ->setMaxResults($queryLimit)
             ->orderBy('c.category', 'ASC')
             ->getQuery();
 
         return $queryBuilder->execute();
     }
+
     /**
      * @param $what {string} - what you want find SELECT $what FROM (...)
      * @return TutorialArticle[]
      */
-    public function select($what,$order = 'DESC'): array
+    public function select($what, $order = 'DESC'): array
     {
         $queryBuilder = $this->createQueryBuilder('w')
-            ->select('w.'.$what)
-            ->orderBy('w.'.$what,$order)
+            ->select('w.' . $what)
+            ->orderBy('w.' . $what, $order)
             ->getQuery();
 
         return $queryBuilder->execute();
     }
-
-//    /**
-//     * @return TutorialArticle[] Returns an array of TutorialArticle objects
-//     */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?TutorialArticle
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
