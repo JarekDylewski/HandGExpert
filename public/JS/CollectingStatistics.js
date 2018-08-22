@@ -1,6 +1,5 @@
 //TODO zastosowac wzorzec singleton
-function CollectingStatistics()
-{
+function CollectingStatistics() {
     let DMG = 0;
     let DMGFar = 0;
     let MuzzleVelocity = 0;
@@ -24,7 +23,6 @@ function CollectingStatistics()
     //for recoil panel
     let positionMode = 0;
     let whenAiming = 1;
-
 
 
     //price
@@ -115,8 +113,10 @@ function CollectingStatistics()
         return recoilModifier;
     };
     this.setSwayStandModeWeapon = function (sway) {
-        if(sway){ swayStandModeWeapon = sway
-        }else{swayStandModeWeapon = 0;
+        if (sway) {
+            swayStandModeWeapon = sway
+        } else {
+            swayStandModeWeapon = 0;
             console.log('nie ustawiono swayStandModeWeapon')
         }
     };
@@ -124,8 +124,10 @@ function CollectingStatistics()
         return swayStandModeWeapon;
     };
     this.setSwayCrouchModeWeapon = function (sway) {
-        if(sway){ swayCrouchModeWeapon = sway
-        }else{swayCrouchModeWeapon = 0;
+        if (sway) {
+            swayCrouchModeWeapon = sway
+        } else {
+            swayCrouchModeWeapon = 0;
             console.log('nie ustawiono swayCrouchModeWeapon')
         }
     };
@@ -133,8 +135,10 @@ function CollectingStatistics()
         return swayCrouchModeWeapon;
     };
     this.setSwayProneModeWeapon = function (sway) {
-        if(sway){ swayProneModeWeapon = sway
-        }else{swayProneModeWeapon = 0;
+        if (sway) {
+            swayProneModeWeapon = sway
+        } else {
+            swayProneModeWeapon = 0;
             console.log('nie ustawiono swayProneModeWeapon')
         }
     };
@@ -142,8 +146,10 @@ function CollectingStatistics()
         return swayProneModeWeapon;
     };
     this.setSwayPrecisionModifierWeapon = function (swayMod) {
-        if(swayMod){ swayPrecisionModifierWeapon = swayMod
-        }else{swayPrecisionModifierWeapon = 0;
+        if (swayMod) {
+            swayPrecisionModifierWeapon = swayMod
+        } else {
+            swayPrecisionModifierWeapon = 0;
             console.log('nie ustawiono swayPrecisionModifierWeapon')
         }
     };
@@ -151,8 +157,10 @@ function CollectingStatistics()
         return swayPrecisionModifierWeapon;
     };
     this.setBaseConefireWeapon = function (baseConefire) {
-        if(baseConefire){ baseConefireWeapon = baseConefire
-        }else{baseConefireWeapon = 0;
+        if (baseConefire) {
+            baseConefireWeapon = baseConefire
+        } else {
+            baseConefireWeapon = 0;
             console.log('nie ustawiono baseConefireWeapon')
         }
     };
@@ -174,17 +182,21 @@ function CollectingStatistics()
     };
     //Stability----------------------------------------------------------------------
     this.setCameraRecoilRightWeapon = function (recoil) {
-        if(recoil){ cameraRecoilRightWeapon = recoil
-        }else{cameraRecoilRightWeapon = 0;
+        if (recoil) {
+            cameraRecoilRightWeapon = recoil
+        } else {
+            cameraRecoilRightWeapon = 0;
             console.log('nie ustawiono cameraRecoilRightWeapon')
         }
     };
     this.getCameraRecoilRightWeapon = function () {
         return cameraRecoilRightWeapon;
     };
-    this.setCameraRecoilUpWeapon= function (recoil) {
-        if(recoil){ cameraRecoilUpWeapon = recoil
-        }else{cameraRecoilUpWeapon = 0;
+    this.setCameraRecoilUpWeapon = function (recoil) {
+        if (recoil) {
+            cameraRecoilUpWeapon = recoil
+        } else {
+            cameraRecoilUpWeapon = 0;
             console.log('nie ustawiono cameraRecoilUpWeapon')
         }
     };
@@ -192,8 +204,10 @@ function CollectingStatistics()
         return cameraRecoilUpWeapon;
     };
     this.setCameraRecoilVarianceWeapon = function (recoil) {
-        if(recoil){ cameraRecoilVarianceWeapon = recoil
-        }else{cameraRecoilVarianceWeapon = 0;
+        if (recoil) {
+            cameraRecoilVarianceWeapon = recoil
+        } else {
+            cameraRecoilVarianceWeapon = 0;
             console.log('nie ustawiono cameraRecoilVarianceWeapon')
         }
     };
@@ -215,43 +229,61 @@ function CollectingStatistics()
     // };
     //Price Per shot mods
     this.setWeaponPricePerShot = function (price) {
-        if(price){return weaponPricePerShot = price
-        }else{return weaponPricePerShot = 0}
+        if (price) {
+            return weaponPricePerShot = price
+        } else {
+            return weaponPricePerShot = 0
+        }
     };
     this.getWeaponPricePerShot = function () {
         return weaponPricePerShot;
     };
     this.setAmmoPricePerShot = function (price) {
-        if(price){ ammoPricePerShot = price
-        }else{ ammoPricePerShot = 0}
+        if (price) {
+            ammoPricePerShot = price
+        } else {
+            ammoPricePerShot = 0
+        }
     };
     this.getAmmoPricePerShot = function () {
         return ammoPricePerShot;
     };
     this.setCrosshairPricePerShot = function (price) {
-        if(price){ crosshairPricePerShot = price
-        }else{ crosshairPricePerShot = 0}
+        if (price) {
+            crosshairPricePerShot = price
+        } else {
+            crosshairPricePerShot = 0
+        }
     };
     this.getCrosshairPricePerShot = function () {
         return crosshairPricePerShot;
     };
     this.setTriggerPricePerShot = function () {
-        if(price){ triggerPricePerShot = price
-        }else{ triggerPricePerShot = 0}
+        if (price) {
+            triggerPricePerShot = price
+        } else {
+            triggerPricePerShot = 0
+        }
     };
     this.getTriggerPricePerShot = function () {
         return triggerPricePerShot;
     };
     this.setSpringPricePerShot = function (price) {
-        if(price){ springPricePerShot = price
-        }else{ springPricePerShot = 0}
+        if (price) {
+            springPricePerShot = price
+        } else {
+            springPricePerShot = 0
+        }
     };
     this.getSpringPricePerShot = function () {
         return springPricePerShot;
     };
     this.setBarrelPricePerShot = function (price) {
-        if(price){ barrelPricePerShot = price
-        }else{ barrelPricePerShot = 0}
+        if (price) {
+            barrelPricePerShot = price
+        } else {
+            barrelPricePerShot = 0
+        }
     };
     this.getBarrelPricePerShot = function () {
         return barrelPricePerShot;
@@ -259,17 +291,17 @@ function CollectingStatistics()
     //  Przyklad sumowania modyfikacji i amunicji
     this.getPricePerShot = function () {
         let pricePerShotFinal = parseFloat(ammoPricePerShot) + parseFloat(weaponPricePerShot) + parseFloat(crosshairPricePerShot) + parseFloat(triggerPricePerShot) + parseFloat(springPricePerShot) + parseFloat(barrelPricePerShot);
-        return Math.round(pricePerShotFinal*1000)/1000;
+        return Math.round(pricePerShotFinal * 1000) / 1000;
     };
     this.setReloadTime = function (rt) {
-        reloadTime=rt;
+        reloadTime = rt;
         return reloadTime;
     };
     this.getReloadTime = function () {
         return reloadTime;
     };
     this.setSpawnDelay = function (delay) {
-        spawnDelay=delay;
+        spawnDelay = delay;
         return spawnDelay;
     };
     this.getSpawnDelay = function () {

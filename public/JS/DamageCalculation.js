@@ -1,5 +1,4 @@
-function DamageCalculation(damage)
-{
+function DamageCalculation(damage) {
     this.damage = damage;
     let heavySet = 0;
     let multiplier = 1;
@@ -19,13 +18,13 @@ function DamageCalculation(damage)
      * @param {number} multiplier  head = 4, body = 1, arms = 0.5, legs = 0.8
      * @returns {number} damage
      */
-    this.getDamageHHeavySet = function (heavySet,multiplier) {
+    this.getDamageHHeavySet = function (heavySet, multiplier) {
         var damageAbsorb = 1;
         damageAbsorb = damageAbsorb - 0.05 * heavySet;
-        var dmg = Math.round((damage * damageAbsorb) * multiplier*100)/100;
+        var dmg = Math.round((damage * damageAbsorb) * multiplier * 100) / 100;
         return dmg;
     };
-    this.setHeavySet = function(heavyS) {
+    this.setHeavySet = function (heavyS) {
         heavySet = heavyS;
     };
     this.getHeavySet = function () {
@@ -35,7 +34,7 @@ function DamageCalculation(damage)
         multiplier = multiplierBodyPart;
     };
     this.getBodyHit = function f() {
-    return multiplier;
+        return multiplier;
     };
 
 }
