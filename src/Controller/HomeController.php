@@ -2,16 +2,12 @@
 
 namespace App\Controller;
 
-
 use App\Data\PrepareData;
-use App\Guns\DataFilter;
 use App\Guns\ModsDataPrepare;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class HomeController extends Controller
 {
@@ -31,11 +27,11 @@ class HomeController extends Controller
      */
     public function dataPreparation($gunID)
     {
-        $Weapon = new PrepareData($gunID);//1 [id]
-        $ModsDataPrepare = new ModsDataPrepare($Weapon);
-        $gunData = $Weapon->getGunsData();//Tablica z danymi broni
-        $ammoModsArray = $ModsDataPrepare->prepareModID('ammo'); //Tablica z ID amunicji
-        $ammoData = $ModsDataPrepare->prepareModData($ammoModsArray, 'getAmmoData');
+        $weapon = new PrepareData($gunID);
+        $modsDataPrepare = new ModsDataPrepare($weapon);
+        $gunData = $weapon->getGunsData();//Tablica z danymi broni
+        $ammoModsArray = $modsDataPrepare->prepareModID('ammo'); //Tablica z ID amunicji
+        $ammoData = $modsDataPrepare->prepareModData($ammoModsArray, 'getAmmoData');
 
         return $this->render('gunBar/gunBar.html.twig', [
             'gunData' => $gunData,
@@ -53,10 +49,10 @@ class HomeController extends Controller
     public function jsonData($gunID)
     {
         $Weapon = new PrepareData($gunID);//1 [id]
-        $ModsDataPrepare = new ModsDataPrepare($Weapon);
+        $modsDataPrepare = new ModsDataPrepare($Weapon);
         $gunData = $Weapon->getGunsData();//Tablica z danymi broni
-        $ammoModsArray = $ModsDataPrepare->prepareModID('ammo'); //Tablica z ID amunicji
-        $ammoData = $ModsDataPrepare->prepareModData($ammoModsArray, 'getAmmoData');
+        $ammoModsArray = $modsDataPrepare->prepareModID('ammo'); //Tablica z ID amunicji
+        $ammoData = $modsDataPrepare->prepareModData($ammoModsArray, 'getAmmoData');
 
         return new JsonResponse([
             'gunData' => $gunData,
