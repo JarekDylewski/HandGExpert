@@ -4,7 +4,7 @@ namespace App\Guns;
 
 use App\Data\PrepareData;
 
-class ModsDataPrepare
+class ModsDataProvider
 {
     private $PrepareData;
 
