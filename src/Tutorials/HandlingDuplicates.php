@@ -3,7 +3,7 @@
 namespace App\Tutorials;
 
 
-class TopicValidator
+class HandlingDuplicates
 {
     function deleteObjDuplicateFromArray($array, $keep_key_assoc = false)
     {
