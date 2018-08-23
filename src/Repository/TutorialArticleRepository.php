@@ -20,14 +20,15 @@ class TutorialArticleRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $category
-     * @return TutorialArticle[]
+     * @param String $categoryName
+     * @param Int $queryLimit
+     * @return array
      */
-    public function findSameCategory($category, $queryLimit): array
+    public function findSameCategory(String $categoryName, Int $queryLimit): array
     {
         $queryBuilder = $this->createQueryBuilder('c')
             ->andWhere('c.category LIKE :category')
-            ->setParameter('category', '%' . $category . '%')
+            ->setParameter('category', '%' . $categoryName . '%')
             ->setMaxResults($queryLimit)
             ->orderBy('c.category', 'ASC')
             ->getQuery();
@@ -36,14 +37,15 @@ class TutorialArticleRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $what {string} - what you want find SELECT $what FROM (...)
-     * @return TutorialArticle[]
+     * @param String $whatSelect - what you want find SELECT $what FROM (...)
+     * @param String $order - ASC or DESC
+     * @return array
      */
-    public function select($what, $order = 'DESC'): array
+    public function select(String $whatSelect, String $order = 'DESC'): array
     {
         $queryBuilder = $this->createQueryBuilder('w')
-            ->select('w.' . $what)
-            ->orderBy('w.' . $what, $order)
+            ->select('w.' . $whatSelect)
+            ->orderBy('w.' . $whatSelect, $order)
             ->getQuery();
 
         return $queryBuilder->execute();
