@@ -5,10 +5,6 @@ function ImpactOfTheBadge() {
     // 2 - silver
     // 3 - gold
     this.getFastReloadImpact = function (reloadTime, badgeLevel) {
-        let RT = reloadTime;
-        let BL = badgeLevel;
-        let finalReloadTime = RT * (1 - (BL * 0.05));
-        // console.log(finalReloadTime);
-        return finalReloadTime;
+        return reloadTime * (1 - (badgeLevel * 0.05));
     }
 }
