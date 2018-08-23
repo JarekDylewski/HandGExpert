@@ -2,7 +2,7 @@
 function CollectingStatistics() {
     let DMG = 0;
     let DMGFar = 0;
-    let MuzzleVelocity = 0;
+    let muzzleVelocity = 0;
     let rateOfFire = 0;
     let rangeNear = 0;
     let rangeFar = 0;
@@ -50,49 +50,41 @@ function CollectingStatistics() {
 
     this.setDamage = function (damage) {
         DMG = damage;
-        return DMG;
     };
     this.getDamage = function () {
-        return DMG;
     };
     this.setDamageFar = function (damage) {
         DMGFar = damage;
-        return DMGFar;
     };
     this.getDamageFar = function () {
         return DMGFar;
     };
     this.setMuzzleVelocity = function (velocity) {
-        MuzzleVelocity = velocity;
-        return MuzzleVelocity;
+        muzzleVelocity = velocity;
     };
     this.getMuzzleVelocity = function () {
-        return MuzzleVelocity;
+        return muzzleVelocity;
     };
     this.setRateOfFire = function (rpm) {
         rateOfFire = rpm;
-        return rateOfFire;
     };
     this.getRateOfFire = function () {
         return rateOfFire;
     };
     this.setRangeNear = function (range) {
         rangeNear = range;
-        return rangeNear;
     };
     this.getRangeNear = function () {
         return rangeNear;
     };
     this.setRangeFar = function (range) {
         rangeFar = range;
-        return rangeFar;
     };
     this.getRangeFar = function () {
         return rangeFar;
     };
     this.setRangeMax = function (range) {
         rangeMax = range;
-        return rangeMax;
     };
     this.getRangeMax = function () {
         return rangeMax;
@@ -100,18 +92,17 @@ function CollectingStatistics() {
     //Precision-----------------------------------------------------------------------------
     this.setConeModifier = function (modifier) {
         coneModifier = modifier;
-        return coneModifier;
     };
     this.getConeModifier = function () {
         return coneModifier;
     };
     this.setRecoilModifier = function (modifier) {
         recoilModifier = modifier;
-        return recoilModifier;
     };
     this.getRecoilModifier = function () {
         return recoilModifier;
     };
+    //TODO pokasowac te instrukcje warunkowe, prawdopodobnie miały być getterach
     this.setSwayStandModeWeapon = function (sway) {
         if (sway) {
             swayStandModeWeapon = sway
@@ -218,15 +209,10 @@ function CollectingStatistics() {
     //-------------------------------------------------------------------------------
     this.setTimeToKill = function (ttk) {
         timeToKill = ttk;
-        return timeToKill;
     };
     this.getTimeToKill = function () {
         return timeToKill;
     };
-    // this.setPricePerShot = function (price) {
-    //     pricePerShot = parseFloat(price);
-    //     return pricePerShot;
-    // };
     //Price Per shot mods
     this.setWeaponPricePerShot = function (price) {
         if (price) {
@@ -288,70 +274,60 @@ function CollectingStatistics() {
     this.getBarrelPricePerShot = function () {
         return barrelPricePerShot;
     };
-    //  Przyklad sumowania modyfikacji i amunicji
     this.getPricePerShot = function () {
         let pricePerShotFinal = parseFloat(ammoPricePerShot) + parseFloat(weaponPricePerShot) + parseFloat(crosshairPricePerShot) + parseFloat(triggerPricePerShot) + parseFloat(springPricePerShot) + parseFloat(barrelPricePerShot);
         return Math.round(pricePerShotFinal * 1000) / 1000;
     };
     this.setReloadTime = function (rt) {
         reloadTime = rt;
-        return reloadTime;
     };
     this.getReloadTime = function () {
         return reloadTime;
     };
     this.setSpawnDelay = function (delay) {
         spawnDelay = delay;
-        return spawnDelay;
     };
     this.getSpawnDelay = function () {
         return spawnDelay;
-    }
+    };
     this.setEquipmentPointsCost = function (eqp) {
         equipmentPoints = eqp;
-        return equipmentPoints;
     };
     this.getEquipmentPoints = function () {
         return equipmentPoints;
     };
     this.setAmmoCapacity = function (aCapacity) {
         ammoCapacity = aCapacity;
-        return ammoCapacity;
     };
     this.getAmmoCapacity = function () {
         return ammoCapacity;
     };
     this.setMagazines = function (clipsize) {
         magazines = clipsize;
-        return magazines;
     };
     this.getMagazines = function () {
         return magazines;
     };
     this.setEquipTime = function (eqTime) {
         equipTime = eqTime;
-        return equipTime;
     };
     this.getEquipTime = function () {
         return equipTime;
     };
     this.setAdditionalFatique = function (afatique) {
         additionalFatique = afatique;
-        return additionalFatique;
     };
     this.getAdditionalFatuque = function () {
         return additionalFatique;
     };
     this.setAimingTime = function (time) {
         aimingTime = time;
-        return aimingTime;
     };
     this.getAimingTime = function () {
         return aimingTime;
     };
     this.setUseWhileRunning = function (useWR) {
         useWhileRunning = useWR;
-        return useWhileRunning;
     };
     this.getUseWhileRunning = function () {
         return useWhileRunning;
@@ -359,29 +335,22 @@ function CollectingStatistics() {
 //------------------ Chart data
     this.setRangeForDMGChart = function (range) {
         rangeForDMGChart = range;
-        return rangeForDMGChart;
     };
     this.getRangeForDMGChart = function () {
         return rangeForDMGChart;
     };
     this.setDamageFarForDMGChart = function (damage) {
         damageFarForDMGChart = damage;
-        return damageFarForDMGChart;
     };
     this.getDamageFarForDMGChart = function () {
         return damageFarForDMGChart;
     };
     this.setDamageNearForDMGChart = function (damage) {
         damageNearForDMGChart = damage;
-        return damageNearForDMGChart;
     };
     this.getDamageNearForDMGChart = function () {
         return damageNearForDMGChart;
     };
-//---------------- Rate of fire button Data
-//     this.setRateOfFireForRPMButton(rpm){
-//         rateOfFireForRPMButton = rpm;
-//     }
 }
 
 // var CollectingStatistics = (function () {
