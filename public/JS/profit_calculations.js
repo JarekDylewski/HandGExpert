@@ -1,12 +1,16 @@
+//TODO Wydzielić do jakiegoś obiektu aby mozna to było wykorzystać ponownie
 $(document).ready(function () {
     //dodanie etykiet (podpowiedzi) wysuwających się po najechaniu
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     });
-    //sprawdzanie co daje jakie profity (dodaje/usuwa czerwone/zielone bordery
-    $('.ammo-nav').on('click', 'img', function (update) {
+    //sprawdzanie co daje jakie profity (dodaje/usuwa czerwone/zielone bordery)
+    $('.ammo-nav').on('click', 'img', function () {
+        let modsCount = $('#modMenu a').length;
+        console.log(modsCount);
         //velocity muzzle velocity
-        for (var i = 0; i < 5; i++) {
+        for (let i = 0; i < modsCount; i++) {
+            console.log(i)
             if ($('#ammo-velocity-' + i).html() > $('#ammo-velocity-0').html()) {
                 $('.ammo-velocity-' + i).addClass('border-green');
             } else if ($('#ammo-velocity-' + i).html() == $('#ammo-velocity-0').html()) {
@@ -16,7 +20,7 @@ $(document).ready(function () {
             }
         }
         //damage dmg
-        for (var i = 0; i < 5; i++) {
+        for (let i = 0; i < modsCount; i++) {
             if ($('#ammo-dmg-' + i).html() > $('#ammo-dmg-0').html()) {
                 $('.ammo-dmg-' + i).addClass('border-green');
             } else if ($('#ammo-dmg-' + i).html() == $('#ammo-dmg-0').html()) {
@@ -26,7 +30,7 @@ $(document).ready(function () {
             }
         }
         //range
-        for (var i = 0; i < 5; i++) {
+        for (let i = 0; i < modsCount; i++) {
             if ($('#ammo-range-' + i).html() > $('#ammo-range-0').html()) {
                 $('.ammo-range-' + i).addClass('border-green');
             } else if ($('#ammo-range-' + i).html() == $('#ammo-range-0').html()) {
@@ -35,7 +39,8 @@ $(document).ready(function () {
                 $('.ammo-range-' + i).addClass('border-red');
             }
         }
-        for (var i = 0; i < 5; i++) {
+        //recoil
+        for (let i = 0; i < modsCount; i++) {
             if ($('#ammo-recoil-' + i).html() < $('#ammo-recoil-0').html()) {
                 $('.ammo-recoil-' + i).addClass('border-green');
             } else if ($('#ammo-recoil-' + i).html() == $('#ammo-recoil-0').html()) {
@@ -44,5 +49,7 @@ $(document).ready(function () {
                 $('.ammo-recoil-' + i).addClass('border-red');
             }
         }
+
     });
+
 });
