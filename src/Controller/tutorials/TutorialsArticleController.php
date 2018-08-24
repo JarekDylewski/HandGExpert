@@ -3,7 +3,8 @@
 namespace App\Controller\tutorials;
 
 use App\Entity\TutorialArticle;
-use App\Tutorials\TopicValidator;
+use App\Tutorials\HandlingDuplicates;
+use App\Tutorials\Pagination;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -17,33 +18,22 @@ class TutorialsArticleController extends Controller
      */
     public function tutorials($page)
     {
-        $currentPage = $page;
         $allTutorialsArticleID = $this->getDoctrine()
             ->getRepository(TutorialArticle::class)
             ->select('id');
-        $numberPagination = count($allTutorialsArticleID) / 5;
-        //zaokrąglenie w górę
-        if (is_float($numberPagination)) {
-            $numberPagination = ceil($numberPagination);
-        };
-        $countAllTutorialsArticleID = count($allTutorialsArticleID);
-        $pagesToFindStart = $countAllTutorialsArticleID - ($page * 5) + 1; // 5  //59
-        $pageToFindEnd = $countAllTutorialsArticleID - ($page * 5) + 6; // 0 //63
-        $pagesToFind = [];
-        for ($i = $pagesToFindStart; $i < $pageToFindEnd; $i++) {
-            $pageToFind[] = $i;
-        }
-
+        $pagination = new Pagination($allTutorialsArticleID, 5);
+        $listOfPagesIdToFind = $pagination->paginate($page);
+        $numberPagination = $pagination->getNumberPagination();
         $content = $this->getDoctrine()
             ->getRepository(TutorialArticle::class)
-            ->findBy(array('id' => $pageToFind));
+            ->findBy(array('id' => $listOfPagesIdToFind));
+
         return $this->render('tutorials/tutorials.html.twig', [
             'ID' => $allTutorialsArticleID,
             'numberPagination' => $numberPagination,
-            'currentPage' => $currentPage,
+            'currentPage' => $page,
             'content' => $content,
-            'pagesIDToView' => $pageToFind
-
+            'pagesIDToView' => $listOfPagesIdToFind
         ]);
     }
 
@@ -184,7 +174,7 @@ class TutorialsArticleController extends Controller
         }
 
         //kasowanie duplikatów
-        $validator = new TopicValidator();
+        $validator = new HandlingDuplicates();
         $simplerCategoryList = $validator->deleteObjDuplicateFromArray($simplerCategoryList);
 
         return $this->render('tutorials/tutorialTopic.html.twig', [
