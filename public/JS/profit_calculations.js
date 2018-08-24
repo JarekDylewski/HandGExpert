@@ -7,10 +7,8 @@ $(document).ready(function () {
     //sprawdzanie co daje jakie profity (dodaje/usuwa czerwone/zielone bordery)
     $('.ammo-nav').on('click', 'img', function () {
         let modsCount = $('#modMenu a').length;
-        console.log(modsCount);
         //velocity muzzle velocity
         for (let i = 0; i < modsCount; i++) {
-            console.log(i)
             if ($('#ammo-velocity-' + i).html() > $('#ammo-velocity-0').html()) {
                 $('.ammo-velocity-' + i).addClass('border-green');
             } else if ($('#ammo-velocity-' + i).html() == $('#ammo-velocity-0').html()) {
