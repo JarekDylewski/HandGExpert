@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TutorialArticleRepository")
+ *
  */
 class TutorialArticle
 {
@@ -18,36 +20,47 @@ class TutorialArticle
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(min = 3, max = 60)
+     *
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(min = 3, max = 60)
      */
     private $category;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min = 0, max = 40)
      */
     private $author;
 
     /**
+     * @Assert\DateTime()
      * @ORM\Column(type="date")
      */
     private $creationDate;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(min = 0, max = 255)
      */
     private $URLImg;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\Length(min = 0, max = 500)
      */
     private $shortDescription;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="text")
+     * @Assert\Length(min = 20)
      */
     private $mainTopic;
 
