@@ -5,10 +5,24 @@
             <div class="col-6 p-2 ml-auto mr-auto text-center border article-body rounded">
                 <div class="row w-100 ml-auto mr-auto">
                     <div class="col-12 pb-4 pt-3 w-100">
-                        <span id="tutorial_message" class="alert w-100">
-                            {{ message }}
+                        <span id="tutorial_message" class="alert w-100 mw-100">
+                            {{ message|raw }}
                         </span>
                     </div>
+                    <div class="col-10 pb-4 pt-3 w-100 text-left ml-auto mr-auto">
+                        {% if errors is defined %}
+                            {% for error in errors %}
+                                <span class="w-100 mw-100">
+                                <span class="text-dark-orange">
+                                {{ error.propertyPath|replace({
+                                    'mainTopic':'Main content','creationDate':'Creation date',
+                                    'URLIMG':'URL to main IMG','shortDescription':'Short description of the topic'
+                                })|title }}
+                                </span> - {{ error.message }}</span><br>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
                     <div class="col-3 px-0 ml-auto mr-2">
                         <a href="{{ path(''~href1~'') }}" class="btn btn-block btn-danger w-100">{{ option1 }}</a>
                     </div>
