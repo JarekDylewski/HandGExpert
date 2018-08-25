@@ -1,4 +1,10 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: DzaroD
+ * Date: 2018-08-16
+ * Time: 21:37
+ */
 
 namespace App\Entity;
 
@@ -26,12 +32,13 @@ class User implements UserInterface, \Serializable
     /**
      * @ORM\Column(type="string", length=191, unique=true)
      * @Assert\NotBlank()
+     * @Assert\Length(min=3, max=20)
      */
     private $username;
 
     /**
      * @Assert\NotBlank()
-     * @Assert\Length(max=4096)
+     * @Assert\Length(min=5, max=40)
      */
     private $plainPassword;
 
@@ -44,6 +51,7 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="string", length=191, unique=true)
      * @Assert\NotBlank()
      * @Assert\Email()
+     * @Assert\Length(min=3, max=60)
      */
     private $email;
 
