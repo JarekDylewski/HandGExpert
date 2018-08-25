@@ -2,13 +2,16 @@
 
 namespace App\Controller\tutorials;
 
+use App\Tutorials\Pagination;
 use App\Entity\TutorialArticle;
 use App\Tutorials\HandlingDuplicates;
-use App\Tutorials\Pagination;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class TutorialsArticleController extends Controller
 {
@@ -50,78 +53,61 @@ class TutorialsArticleController extends Controller
      * @Route("/Tutorials/newArticle/approval", name="approvalTutorialArticle")
      *
      */
-    public function approvalTutorialArticle()
+    public function approvalTutorialArticle(ValidatorInterface $validator, Request $request)
     {
-        $dataValidate = true;
         $currentDate = new \DateTime('now');
-        if ($currentDate === null) {
-            $dataValidate = false;
-        }
-        $title = $_POST['tutorial_title'];
-        $titleLen = strlen($title);
-        if ($title === "" || !isset($title) || is_null($title) || $titleLen > 60) {
-            $dataValidate = false;
-        }
-        $category = $_POST['tutorial_category'];
-        $categoryLen = strlen($category);
-        if ($category === "" || !isset($category) || is_null($category) || $categoryLen > 45) {
-            $dataValidate = false;
-        }
-        $author = $_POST['tutorial_author'];
-        $authorLen = strlen($author);
-        if ($authorLen > 40) {
-            $dataValidate = false;
-        }
-        $imgUrl = $_POST['tutorial_img'];
-        $imgUrlLen = strlen($imgUrl);
-        if ($imgUrlLen > 255) {
-            $dataValidate = false;
-        }
-        $shortDescription = $_POST['ckeditorShortDesciption'];
-        $mainContent = $_POST['ckeditorMainContent'];
-        if ($mainContent === "" || !isset($mainContent) || is_null($mainContent)) {
-            $dataValidate = false;
-        }
-        if ($dataValidate === true) {
-            $tutorialEntity = new TutorialArticle();
-            $entityMenager = $this->getDoctrine()->getManager();
 
-            $tutorialEntity->setTitle($title);
-            $tutorialEntity->setCategory($category);
-            $tutorialEntity->setAuthor($author);
-            $tutorialEntity->setCreationDate($currentDate);
-            $tutorialEntity->setURLImg($imgUrl);
-            $tutorialEntity->setShortDescription($shortDescription);
-            $tutorialEntity->setMainTopic($mainContent);
+        $title = $request->request->get('tutorial_title');
+        $category = $request->request->get('tutorial_category');
+        $author = $request->request->get('tutorial_author');
+        $imgUrl = $request->request->get('tutorial_img');
+        $shortDescription = $request->request->get('ckeditorShortDesciption');
+        $mainContent = $request->request->get('ckeditorMainContent');
 
-            $entityMenager->persist($tutorialEntity);
-            $entityMenager->flush();
-            $succesMessage = 'Added successfully!';
+        $tutorialEntity = new TutorialArticle();
+        $entityMenager = $this->getDoctrine()->getManager();
 
-            $allTutorialsArticleID = $this->getDoctrine()
-                ->getRepository(TutorialArticle::class)
-                ->select('id');
-            $lastTopic = count($allTutorialsArticleID);
+        $tutorialEntity->setTitle($title);
+        $tutorialEntity->setCategory($category);
+        $tutorialEntity->setAuthor($author);
+        $tutorialEntity->setCreationDate($currentDate);
+        $tutorialEntity->setURLImg($imgUrl);
+        $tutorialEntity->setShortDescription($shortDescription);
+        $tutorialEntity->setMainTopic($mainContent);
 
-            return $this->render('tutorials/tutorialArticleAddedNotAdded.html.twig', [
-                'message' => $succesMessage,
-                'option1' => 'Back to tutorials',
-                'option2' => 'Show topic',
-                'href1' => 'tutorials',
-                'href2' => 'tutorialShow',
-                'ID' => $lastTopic
-            ]);
+        $validationErrors = $validator->validate($tutorialEntity);
 
-        } else if ($dataValidate === false) {
-            $failureMessage = 'Something is wrong! Please complete the fields with *';
+        if (count($validationErrors) > 0) {
+            $failureMessage = 'Something is wrong! Please complete the fields with <span style="color:red;font-size: 30px;">*';
             return $this->render('tutorials/tutorialArticleAddedNotAdded.html.twig', [
                 'message' => $failureMessage,
                 'option1' => 'Home',
                 'option2' => 'Back to editor',
                 'href1' => 'home',
-                'href2' => 'addNewArticle'
+                'href2' => 'addNewArticle',
+                'errors' => $validationErrors,
             ]);
         }
+
+        $entityMenager->persist($tutorialEntity);
+        $entityMenager->flush();
+        $succesMessage = 'Added successfully!';
+
+        $allTutorialsArticleID = $this->getDoctrine()
+            ->getRepository(TutorialArticle::class)
+            ->select('id');
+        $lastTopic = count($allTutorialsArticleID);
+
+        return $this->render('tutorials/tutorialArticleAddedNotAdded.html.twig', [
+            'message' => $succesMessage,
+            'option1' => 'Back to tutorials',
+            'option2' => 'Show topic',
+            'href1' => 'tutorials',
+            'href2' => 'tutorialShow',
+            'ID' => $lastTopic
+        ]);
+
+
     }
 
     /**
