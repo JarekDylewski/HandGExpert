@@ -26,16 +26,20 @@ class FileGunRepository implements GunRepositoryInterface
         return $this->guns;
     }
 
-    public function save(Gun $gun)
+    public function findById(int $id): array
     {
-        $this->guns[] = $gun;
+        return $this->guns[$id];
     }
 
-    public function delete(string $name)
+    //TODO rozbudować obiekt Gun tak aby wystarczyło tutaj podac obiekt gun i go zapisac
+    public function save(array $data, int $gunId = null)
     {
-        $this->guns = array_filter($this->guns, function (Gun $gun) use ($name) {
-            return $gun->getName() !== $name;
-        });
+        $this->guns[$gunId] = $data;
+    }
+
+    public function delete(int $id)
+    {
+        unset($this->guns[$id]);
     }
 
     public function __destruct()
