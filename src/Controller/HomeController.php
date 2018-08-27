@@ -3,7 +3,8 @@
 namespace App\Controller;
 
 use App\Data\PrepareData;
-use App\Guns\ModsDataPrepare;
+use App\Guns\FileGunRepository;
+use App\Guns\ModsDataProvider;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -27,9 +28,10 @@ class HomeController extends Controller
      */
     public function dataPreparation($gunID)
     {
-        $weapon = new PrepareData($gunID);
-        $modsDataPrepare = new ModsDataPrepare($weapon);
-        $gunData = $weapon->getGunsData();//Tablica z danymi broni
+        $gunRepo = new FileGunRepository('../src/Data/gunsData.ser');
+        $weapon = $gunRepo->findById($gunID);
+        $modsDataPrepare = new ModsDataProvider($weapon);
+        $gunData = $gunRepo->findAll();//Tablica z danymi broni
         $ammoModsArray = $modsDataPrepare->prepareModID('ammo'); //Tablica z ID amunicji
         $ammoData = $modsDataPrepare->prepareModData($ammoModsArray, 'getAmmoData');
 
@@ -49,7 +51,7 @@ class HomeController extends Controller
     public function jsonData($gunID)
     {
         $Weapon = new PrepareData($gunID);//1 [id]
-        $modsDataPrepare = new ModsDataPrepare($Weapon);
+        $modsDataPrepare = new ModsDataProvider($Weapon);
         $gunData = $Weapon->getGunsData();//Tablica z danymi broni
         $ammoModsArray = $modsDataPrepare->prepareModID('ammo'); //Tablica z ID amunicji
         $ammoData = $modsDataPrepare->prepareModData($ammoModsArray, 'getAmmoData');
