@@ -30,7 +30,6 @@ $(document).ready(function () {
        let aiming = statistics.getWhenAiming();
        let swayprecisionModifier = statistics.getSwayPrecisionModifierWeapon(); // sway kiedy celujesz ( klikasz ppm)
        let coneModifier = statistics.getConeModifier();
-       console.log(aiming);
        let sw = 0;
        //TODO trzeba to i tak pozmieniac bo wyciagam tutaj tylko statystyki z broni a potrzeba z broni i z wszystkich modyfikacji
        //TODO czyli cos w rodzaju, cameraRecoilUPFinal, cameraRecoilRightFinal, cameraRecoilVarianceFinal
