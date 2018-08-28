@@ -31,12 +31,11 @@ class HomeController extends Controller
         $gunRepo = new FileGunRepository('../src/Data/gunsData.ser');
         $weapon = $gunRepo->findById($gunID);
         $modsDataPrepare = new ModsDataProvider($weapon);
-        $gunData = $gunRepo->findAll();//Tablica z danymi broni
         $ammoModsArray = $modsDataPrepare->prepareModID('ammo'); //Tablica z ID amunicji
-        $ammoData = $modsDataPrepare->prepareModData($ammoModsArray, 'getAmmoData');
+        $ammoData = $modsDataPrepare->prepareModData($ammoModsArray, '../src/Data/ammoData.ser');
 
         return $this->render('gunBar/gunBar.html.twig', [
-            'gunData' => $gunData,
+            'gunData' => $weapon,
             'ammoData' => $ammoData,
             'img' => $gunID,
             'ammoID' => $ammoModsArray,
@@ -50,14 +49,14 @@ class HomeController extends Controller
      */
     public function jsonData($gunID)
     {
-        $Weapon = new PrepareData($gunID);//1 [id]
-        $modsDataPrepare = new ModsDataProvider($Weapon);
-        $gunData = $Weapon->getGunsData();//Tablica z danymi broni
+        $gunRepo = new FileGunRepository('../src/Data/gunsData.ser');
+        $weapon = $gunRepo->findById($gunID);
+        $modsDataPrepare = new ModsDataProvider($weapon);
         $ammoModsArray = $modsDataPrepare->prepareModID('ammo'); //Tablica z ID amunicji
-        $ammoData = $modsDataPrepare->prepareModData($ammoModsArray, 'getAmmoData');
+        $ammoData = $modsDataPrepare->prepareModData($ammoModsArray, '../src/Data/ammoData.ser');
 
         return new JsonResponse([
-            'gunData' => $gunData,
+            'gunData' => $weapon,
             'ammoData' => $ammoData,
             'img' => $gunID
         ]);
