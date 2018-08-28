@@ -2,7 +2,6 @@
 
 namespace App\Guns;
 
-use App\Data\PrepareData;
 
 class ModsDataProvider
 {
@@ -13,6 +12,11 @@ class ModsDataProvider
         $this->gunsData = $gunsData;
     }
 
+    /**
+     * @param string $modificationType
+     * @return array $modsIdList[]
+     * @throws \Exception
+     */
     public function prepareModID(string $modificationType): array
     {
         $gunData = $this->gunsData;
@@ -23,15 +27,15 @@ class ModsDataProvider
         return $modsID;
     }
 
-    public function prepareModData(array $modsID, string $getMethodFromPrepareDataObject): array
+    public function prepareModData(array $modsIdList, string $pathToModsFile): array
     {
-        $prepareData = new PrepareData();
-        $modsCount = count($modsID);
+        $ammoRepository = new FileAmmoRepository($pathToModsFile);
+        $modsCount = count($modsIdList);
 
-        $modsArray = $prepareData->$getMethodFromPrepareDataObject();
+        $modsArray = $ammoRepository->findAll();
         for ($i = 0; $i < $modsCount; $i++) {
-            $listOfMods[$i] = $modsArray[$modsID[$i]];
+            $modsList[$i] = $modsArray[$modsIdList[$i]];
         }
-        return $listOfMods;
+        return $modsList;
     }
 }
