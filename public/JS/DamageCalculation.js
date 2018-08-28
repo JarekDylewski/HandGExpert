@@ -19,10 +19,9 @@ function DamageCalculation(damage) {
      * @returns {number} damage
      */
     this.getDamageHHeavySet = function (heavySet, multiplier) {
-        var damageAbsorb = 1;
+        let damageAbsorb = 1;
         damageAbsorb = damageAbsorb - 0.05 * heavySet;
-        var dmg = Math.round((damage * damageAbsorb) * multiplier * 100) / 100;
-        return dmg;
+        return Math.round((damage * damageAbsorb) * multiplier * 100) / 100;
     };
     this.setHeavySet = function (heavyS) {
         heavySet = heavyS;
