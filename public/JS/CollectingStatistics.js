@@ -52,6 +52,7 @@ function CollectingStatistics() {
         DMG = damage;
     };
     this.getDamage = function () {
+        return DMG;
     };
     this.setDamageFar = function (damage) {
         DMGFar = damage;
