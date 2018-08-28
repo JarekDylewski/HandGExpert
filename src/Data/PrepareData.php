@@ -282,7 +282,6 @@ class PrepareData
             $gunsArrayFinal = $gunsArray[$idOrAllGunsData];
 
         }
-
         return $gunsArrayFinal;
     }
 
