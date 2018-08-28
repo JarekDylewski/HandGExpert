@@ -6,16 +6,16 @@ use App\Data\PrepareData;
 
 class ModsDataProvider
 {
-    private $PrepareData;
+    private $gunsData;
 
-    public function __construct(PrepareData $PrepareData)
+    public function __construct(array $gunsData)
     {
-        $this->PrepareData = $PrepareData;
+        $this->gunsData = $gunsData;
     }
 
     public function prepareModID(string $modificationType): array
     {
-        $gunData = $this->PrepareData->getGunsData();
+        $gunData = $this->gunsData;
         if (!isset($gunData[$modificationType . 'ID'])) {
             throw new \Exception('array does not have ' . $modificationType . 'ID key');
         }
@@ -25,9 +25,10 @@ class ModsDataProvider
 
     public function prepareModData(array $modsID, string $getMethodFromPrepareDataObject): array
     {
+        $prepareData = new PrepareData();
         $modsCount = count($modsID);
 
-        $modsArray = $this->PrepareData->$getMethodFromPrepareDataObject();
+        $modsArray = $prepareData->$getMethodFromPrepareDataObject();
         for ($i = 0; $i < $modsCount; $i++) {
             $listOfMods[$i] = $modsArray[$modsID[$i]];
         }
