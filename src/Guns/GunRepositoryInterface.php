@@ -8,7 +8,7 @@ interface GunRepositoryInterface
 {
     public function findAll(): array;
 
-    public function save();
+    public function save(array $data);
 
-    public function delete();
+    public function delete(int $id);
 }
