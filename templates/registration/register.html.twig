@@ -12,13 +12,13 @@
                         {{ form_start(form) }}
                             <div class="row w-100 ml-auto mr-auto">
                                 <div class="alert-registration col-9 p-1 mb-1 text-danger">
-                                    {{ form_errors(form.username) }}
+                                    {{ form_errors(form.userName) }}
                                 </div>
                                 <div class="col-4 mr-0 pr-0">
-                                    {{ form_label(form.username) }}
+                                    {{ form_label(form.userName) }}
                                 </div>
                                 <div class="col-4 ml-0 pl-0">
-                                    {{ form_widget(form.username) }}
+                                    {{ form_widget(form.userName) }}
                                 </div>
                             </div>
                             <div class="row w-100 ml-auto mr-auto">
@@ -54,6 +54,18 @@
                                     {{ form_widget(form.plainPassword.second) }}
                                 </div>
                             </div>
+                        {% if errors is defined %}
+                            {% for error in errors %}
+                                <div class="row w-100 ml-auto mr-auto">
+                                    {% if error.propertyPath == 'plainPassword' %}
+                                        <span class="text-danger">Password: {{ error.message }}</span><br>
+                                    {% else %}
+                                        <span class="text-danger"> {{ error.message }}</span><br>
+                                    {% endif %}
+
+                                </div>
+                            {% endfor %}
+                        {% endif %}
                             <div class="col-6 mt-2 ml-auto mr-auto">
                                 <button id="register_button" class="btn btn-success" type="submit">Register!</button>
                             </div>
