@@ -3,7 +3,6 @@
 namespace App\Controller\tutorials;
 
 use App\Tutorials\ArticleManager;
-use App\Tutorials\Pagination;
 use App\Entity\TutorialArticle;
 use App\Tutorials\HandlingDuplicates;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
@@ -11,8 +10,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class TutorialsArticleController extends Controller
 {
@@ -30,7 +27,28 @@ class TutorialsArticleController extends Controller
     public function tutorials($page)
     {
         $content = $this->articleManager->getPaginatedArticlesMenuList($page, TutorialArticle::class);
-
+////        $allTutorialsArticleID = $this->getDoctrine()
+////            ->getRepository(TutorialArticle::class)
+////            ->select('id');
+//        $allTutorialsArticleID = $this->articleManager->getAllTutorialsArticleID();
+//        $pagination = new Pagination($allTutorialsArticleID, 5);
+//        //$listOfPagesIdToFind = $pagination->paginate($page);
+//
+//        $listOfPagesIdToFind = $this->articleManager->getListOfPagesIdToFind();
+//        //$countPagination = $pagination->getNumberPagination();
+//        //$countPagination = $this->articleManager->getCountPagination();
+//        $countPagination = $this->articleManager->getCountPagination();
+////        $content = $this->getDoctrine()
+////            ->getRepository(TutorialArticle::class)
+////            ->findBy(array('id' => $listOfPagesIdToFind));
+//
+//        return $this->render('tutorials/tutorials.html.twig', [
+//            'ID' => $allTutorialsArticleID,
+//            'countPagination' => $countPagination,
+//            'currentPage' => $page,
+//            'content' => $content,
+//            'pagesIDToView' => $listOfPagesIdToFind
+//        ]);
         return $this->render('tutorials/tutorials.html.twig', [
             'ID' => $this->articleManager->getAllTutorialsArticleID(),
             'countPagination' => $this->articleManager->getCountPagination(),
@@ -46,66 +64,77 @@ class TutorialsArticleController extends Controller
      */
     public function addNewTutorialArticle()
     {
-        return $this->render('tutorials/addNewTutorialArticle.html.twig', []);
+        return $this->render('tutorials/addNewTutorialArticle.html.twig', ['pathToRouteWhereFormSend' => 'approvalTutorialArticle']);
     }
 
     /**
      * @Route("/Tutorials/newArticle/approval", name="approvalTutorialArticle")
      *
      */
-    public function approvalTutorialArticle(ValidatorInterface $validator, Request $request)
+    public function approvalTutorialArticle(Request $request)
     {
-        $currentDate = new \DateTime('now');
 
-        $title = $request->request->get('tutorial_title');
-        $category = $request->request->get('tutorial_category');
-        $author = $request->request->get('tutorial_author');
-        $imgUrl = $request->request->get('tutorial_img');
-        $shortDescription = $request->request->get('ckeditorShortDesciption');
-        $mainContent = $request->request->get('ckeditorMainContent');
+        $content = $this->articleManager->addArticle(
+            $request->request->get('tutorial_title'),
+            $request->request->get('tutorial_category'),
+            $request->request->get('tutorial_author'),
+            $request->request->get('tutorial_img'),
+            $request->request->get('ckeditorShortDesciption'),
+            $request->request->get('ckeditorMainContent'),
+            TutorialArticle::class
+        );
 
-        $tutorialEntity = new TutorialArticle();
-        $entityMenager = $this->getDoctrine()->getManager();
+        return $this->render('tutorials/tutorialArticleAddedNotAdded.html.twig', $content);
 
-        $tutorialEntity->setTitle($title);
-        $tutorialEntity->setCategory($category);
-        $tutorialEntity->setAuthor($author);
-        $tutorialEntity->setCreationDate($currentDate);
-        $tutorialEntity->setURLImg($imgUrl);
-        $tutorialEntity->setShortDescription($shortDescription);
-        $tutorialEntity->setMainTopic($mainContent);
+//        $title = $request->request->get('tutorial_title');
+//        $category = $request->request->get('tutorial_category');
+//        $author = $request->request->get('tutorial_author');
+//        $imgUrl = $request->request->get('tutorial_img');
+//        $shortDescription = $request->request->get('ckeditorShortDesciption');
+//        $mainContent = $request->request->get('ckeditorMainContent');
 
-        $validationErrors = $validator->validate($tutorialEntity);
-
-        if (count($validationErrors) > 0) {
-            $failureMessage = 'Something is wrong! Please complete the fields with <span style="color:red;font-size: 30px;">*';
-            return $this->render('tutorials/tutorialArticleAddedNotAdded.html.twig', [
-                'message' => $failureMessage,
-                'option1' => 'Home',
-                'option2' => 'Back to editor',
-                'href1' => 'home',
-                'href2' => 'addNewArticle',
-                'errors' => $validationErrors,
-            ]);
-        }
-
-        $entityMenager->persist($tutorialEntity);
-        $entityMenager->flush();
-        $succesMessage = 'Added successfully!';
-
-        $allTutorialsArticleID = $this->getDoctrine()
-            ->getRepository(TutorialArticle::class)
-            ->select('id');
-        $lastTopic = count($allTutorialsArticleID);
-
-        return $this->render('tutorials/tutorialArticleAddedNotAdded.html.twig', [
-            'message' => $succesMessage,
-            'option1' => 'Back to tutorials',
-            'option2' => 'Show topic',
-            'href1' => 'tutorials',
-            'href2' => 'tutorialShow',
-            'ID' => $lastTopic
-        ]);
+//        $tutorialEntity = new TutorialArticle();
+//        $entityMenager = $this->getDoctrine()->getManager();
+//
+//        $tutorialEntity->setTitle($title);
+//        $tutorialEntity->setCategory($category);
+//        $tutorialEntity->setAuthor($author);
+//        $tutorialEntity->setCreationDate($currentDate);
+//        $tutorialEntity->setURLImg($imgUrl);
+//        $tutorialEntity->setShortDescription($shortDescription);
+//        $tutorialEntity->setMainTopic($mainContent);
+//
+//        $validationErrors = $validator->validate($tutorialEntity);
+//
+//        if (count($validationErrors) > 0) {
+//            $failureMessage = 'Something is wrong! Please complete the fields with <span style="color:red;font-size: 30px;">*';
+//            return $this->render('tutorials/tutorialArticleAddedNotAdded.html.twig', [
+//                'message' => $failureMessage,
+//                'option1' => 'Home',
+//                'option2' => 'Back to editor',
+//                'href1' => 'home',
+//                'href2' => 'addNewArticle',
+//                'errors' => $validationErrors,
+//            ]);
+//        }
+//
+//        $entityMenager->persist($tutorialEntity);
+//        $entityMenager->flush();
+//        $succesMessage = 'Added successfully!';
+//
+//        $allTutorialsArticleID = $this->getDoctrine()
+//            ->getRepository(TutorialArticle::class)
+//            ->select('id');
+//        $lastTopic = count($allTutorialsArticleID);
+//
+//        return $this->render('tutorials/tutorialArticleAddedNotAdded.html.twig', [
+//            'message' => $succesMessage,
+//            'option1' => 'Back to tutorials',
+//            'option2' => 'Show topic',
+//            'href1' => 'tutorials',
+//            'href2' => 'tutorialShow',
+//            'ID' => $lastTopic
+//        ]);
 
 
     }
