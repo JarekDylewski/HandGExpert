@@ -29,11 +29,11 @@
                         {% endif %}
                     {% endmacro %}
                     {% import _self as tutorials %}
-                    {% for i in 1..numberPagination %}
+                    {% for i in 1..countPagination %}
                         {{ tutorials.pagination(loop.index,min,max,currentPage) }}
                     {% endfor %}
                     <li class="page-item">
-                        <a class="page-link" href="{{ path('tutorials',{page:numberPagination}) }}">>> </a>
+                        <a class="page-link" href="{{ path('tutorials',{page:countPagination}) }}">>> </a>
                     </li>
                 </ul>
             </nav>
@@ -103,11 +103,11 @@
                         {% endif %}
                     {% endmacro %}
                     {% import _self as tutorials %}
-                    {% for i in 1..numberPagination %}
+                    {% for i in 1..countPagination %}
                         {{ tutorials.pagination(loop.index,min,max,currentPage) }}
                     {% endfor %}
                     <li class="page-item">
-                        <a class="page-link" href="{{ path('tutorials',{page:numberPagination}) }}">>> </a>
+                        <a class="page-link" href="{{ path('tutorials',{page:countPagination}) }}">>> </a>
                     </li>
                 </ul>
             </nav>
