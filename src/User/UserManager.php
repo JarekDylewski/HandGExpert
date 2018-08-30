@@ -11,7 +11,6 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationExtension;
 use Symfony\Component\Form\Forms;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -31,24 +30,33 @@ class UserManager
         $this->validator = $validator;
     }
 
-    public function registerUser(Request $request)
+    public function registerUser($password, $userName, $email)
     {
+
         $user = new User();
         $formFactory = Forms::createFormFactoryBuilder()
             ->addExtension(new HttpFoundationExtension())
             ->getFormFactory();
 
+        $user->setUsername($userName);
+        $user->setEmail($email);
+        $user->setPlainPassword($password);
         $form = $formFactory->create(UserType::class, $user);
-        $form->handleRequest($request);
+
         $validationErrors = $this->validator->validate($user);
-        //if ($this->managerRegistry->getRepository(User::class)->findBy($user->getEmail()))
-        if ($form->isSubmitted() && $form->isValid()) {
+
+        if (isset($password) && isset($userName) && isset($email)) {
+            $form->submit('user');
+        }
+
+        if ($form->isSubmitted() && count($validationErrors) === 0) {
             $password = $this->passwordEncoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
 
             $entityManager = $this->managerRegistry->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
+
         };
 
         $dispatcher = new EventDispatcher();
