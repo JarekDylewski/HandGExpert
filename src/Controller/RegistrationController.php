@@ -22,21 +22,13 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request)
     {
-        $form = $this->userManager->registerUser($request);
+        //TODO przerobić system rejestrowania - łącznie z widokiem
+        $form = $this->userManager->registerUser(
+            $request->get('user')['plainPassword']['first'],
+            $request->get('user')['userName'],
+            $request->get('user')['email']
+        );
 
-//        $user = new User();
-//        $form = $this->createForm(UserType::class, $user);
-//
-//        $form->handleRequest($request);
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
-//            $user->setPassword($password);
-//
-//            $entityManager = $this->getDoctrine()->getManager();
-//            $entityManager->persist($user);
-//            $entityManager->flush();
-//
-//        };
 
         return $this->render(
             'registration/register.html.twig',
