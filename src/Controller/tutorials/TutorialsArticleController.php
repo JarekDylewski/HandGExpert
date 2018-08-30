@@ -2,6 +2,7 @@
 
 namespace App\Controller\tutorials;
 
+use App\Tutorials\ArticleManager;
 use App\Tutorials\Pagination;
 use App\Entity\TutorialArticle;
 use App\Tutorials\HandlingDuplicates;
@@ -15,28 +16,27 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class TutorialsArticleController extends Controller
 {
+    private $articleManager;
+
+    public function __construct(ArticleManager $articleManager)
+    {
+        $this->articleManager = $articleManager;
+    }
+
     /**
      * @Route("/Tutorials/{page}",name="tutorials",defaults={"page":1})
      * @Cache(expires="tomorrow", public=true)
      */
     public function tutorials($page)
     {
-        $allTutorialsArticleID = $this->getDoctrine()
-            ->getRepository(TutorialArticle::class)
-            ->select('id');
-        $pagination = new Pagination($allTutorialsArticleID, 5);
-        $listOfPagesIdToFind = $pagination->paginate($page);
-        $numberPagination = $pagination->getNumberPagination();
-        $content = $this->getDoctrine()
-            ->getRepository(TutorialArticle::class)
-            ->findBy(array('id' => $listOfPagesIdToFind));
+        $content = $this->articleManager->getPaginatedArticlesMenuList($page, TutorialArticle::class);
 
         return $this->render('tutorials/tutorials.html.twig', [
-            'ID' => $allTutorialsArticleID,
-            'numberPagination' => $numberPagination,
+            'ID' => $this->articleManager->getAllTutorialsArticleID(),
+            'countPagination' => $this->articleManager->getCountPagination(),
             'currentPage' => $page,
             'content' => $content,
-            'pagesIDToView' => $listOfPagesIdToFind
+            'pagesIDToView' => $this->articleManager->getListOfPagesIdToFind()
         ]);
     }
 
