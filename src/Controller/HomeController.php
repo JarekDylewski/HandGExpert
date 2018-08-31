@@ -2,9 +2,8 @@
 
 namespace App\Controller;
 
-use App\Data\PrepareData;
 use App\Guns\FileGunRepository;
-use App\Guns\ModsDataProvider;
+use App\Guns\GunManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -12,6 +11,15 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class HomeController extends Controller
 {
+    private $gunRepository;
+    private $gunManager;
+
+    public function __construct(GunManager $gunManager)
+    {
+        $this->gunRepository = new FileGunRepository('../src/Data/gunsData.ser');
+        $this->gunManager = $gunManager;
+    }
+
     /**
      * @Route("/", name="home")
      */
@@ -28,19 +36,12 @@ class HomeController extends Controller
      */
     public function dataPreparation($gunID)
     {
-        $gunRepo = new FileGunRepository('../src/Data/gunsData.ser');
-        $weapon = $gunRepo->findById($gunID);
-        $modsDataPrepare = new ModsDataProvider($weapon);
-        $ammoModsArray = $modsDataPrepare->prepareModID('ammo'); //Tablica z ID amunicji
-        $ammoData = $modsDataPrepare->prepareModData($ammoModsArray, '../src/Data/ammoData.ser');
+        //TODO uporządkować to powtórzenie tej samej zmiennej w szablonie (chodzi o img i slug)
+        $data = $this->gunManager->getAllDataForView($gunID);
+        $data['img'] = $gunID;
+        $data['slug'] = $gunID;
 
-        return $this->render('gunBar/gunBar.html.twig', [
-            'gunData' => $weapon,
-            'ammoData' => $ammoData,
-            'img' => $gunID,
-            'ammoID' => $ammoModsArray,
-            'slug' => $gunID,
-        ]);
+        return $this->render('gunBar/gunBar.html.twig', $data);
     }
 
     /**
@@ -49,17 +50,10 @@ class HomeController extends Controller
      */
     public function jsonData($gunID)
     {
-        $gunRepo = new FileGunRepository('../src/Data/gunsData.ser');
-        $weapon = $gunRepo->findById($gunID);
-        $modsDataPrepare = new ModsDataProvider($weapon);
-        $ammoModsArray = $modsDataPrepare->prepareModID('ammo'); //Tablica z ID amunicji
-        $ammoData = $modsDataPrepare->prepareModData($ammoModsArray, '../src/Data/ammoData.ser');
+        $data = $this->gunManager->getAllDataForView($gunID);
+        $data['img'] = $gunID;
 
-        return new JsonResponse([
-            'gunData' => $weapon,
-            'ammoData' => $ammoData,
-            'img' => $gunID
-        ]);
+        return new JsonResponse($data);
     }
 
     /**
@@ -67,14 +61,10 @@ class HomeController extends Controller
      */
     public function gunListSearch()
     {
-        $gunData = new PrepareData();
-        $datas = $gunData->getGunsData('all');
-        $name = [];
-        foreach ($datas as $data => $value) {
-            $name[$data] = $datas[$data]['name'];
-        }
+        $value = $this->gunRepository->findColumn('name');
+
         return new JsonResponse([
-            'name' => $name
+            'name' => $value
         ]);
     }
 }
