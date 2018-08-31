@@ -4,7 +4,6 @@ namespace App\Controller\tutorials;
 
 use App\Tutorials\ArticleManager;
 use App\Entity\TutorialArticle;
-use App\Tutorials\HandlingDuplicates;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -27,28 +26,7 @@ class TutorialsArticleController extends Controller
     public function tutorials($page)
     {
         $content = $this->articleManager->getPaginatedArticlesMenuList($page, TutorialArticle::class);
-////        $allTutorialsArticleID = $this->getDoctrine()
-////            ->getRepository(TutorialArticle::class)
-////            ->select('id');
-//        $allTutorialsArticleID = $this->articleManager->getAllTutorialsArticleID();
-//        $pagination = new Pagination($allTutorialsArticleID, 5);
-//        //$listOfPagesIdToFind = $pagination->paginate($page);
-//
-//        $listOfPagesIdToFind = $this->articleManager->getListOfPagesIdToFind();
-//        //$countPagination = $pagination->getNumberPagination();
-//        //$countPagination = $this->articleManager->getCountPagination();
-//        $countPagination = $this->articleManager->getCountPagination();
-////        $content = $this->getDoctrine()
-////            ->getRepository(TutorialArticle::class)
-////            ->findBy(array('id' => $listOfPagesIdToFind));
-//
-//        return $this->render('tutorials/tutorials.html.twig', [
-//            'ID' => $allTutorialsArticleID,
-//            'countPagination' => $countPagination,
-//            'currentPage' => $page,
-//            'content' => $content,
-//            'pagesIDToView' => $listOfPagesIdToFind
-//        ]);
+
         return $this->render('tutorials/tutorials.html.twig', [
             'ID' => $this->articleManager->getAllTutorialsArticleID(),
             'countPagination' => $this->articleManager->getCountPagination(),
@@ -86,57 +64,6 @@ class TutorialsArticleController extends Controller
 
         return $this->render('tutorials/tutorialArticleAddedNotAdded.html.twig', $content);
 
-//        $title = $request->request->get('tutorial_title');
-//        $category = $request->request->get('tutorial_category');
-//        $author = $request->request->get('tutorial_author');
-//        $imgUrl = $request->request->get('tutorial_img');
-//        $shortDescription = $request->request->get('ckeditorShortDesciption');
-//        $mainContent = $request->request->get('ckeditorMainContent');
-
-//        $tutorialEntity = new TutorialArticle();
-//        $entityMenager = $this->getDoctrine()->getManager();
-//
-//        $tutorialEntity->setTitle($title);
-//        $tutorialEntity->setCategory($category);
-//        $tutorialEntity->setAuthor($author);
-//        $tutorialEntity->setCreationDate($currentDate);
-//        $tutorialEntity->setURLImg($imgUrl);
-//        $tutorialEntity->setShortDescription($shortDescription);
-//        $tutorialEntity->setMainTopic($mainContent);
-//
-//        $validationErrors = $validator->validate($tutorialEntity);
-//
-//        if (count($validationErrors) > 0) {
-//            $failureMessage = 'Something is wrong! Please complete the fields with <span style="color:red;font-size: 30px;">*';
-//            return $this->render('tutorials/tutorialArticleAddedNotAdded.html.twig', [
-//                'message' => $failureMessage,
-//                'option1' => 'Home',
-//                'option2' => 'Back to editor',
-//                'href1' => 'home',
-//                'href2' => 'addNewArticle',
-//                'errors' => $validationErrors,
-//            ]);
-//        }
-//
-//        $entityMenager->persist($tutorialEntity);
-//        $entityMenager->flush();
-//        $succesMessage = 'Added successfully!';
-//
-//        $allTutorialsArticleID = $this->getDoctrine()
-//            ->getRepository(TutorialArticle::class)
-//            ->select('id');
-//        $lastTopic = count($allTutorialsArticleID);
-//
-//        return $this->render('tutorials/tutorialArticleAddedNotAdded.html.twig', [
-//            'message' => $succesMessage,
-//            'option1' => 'Back to tutorials',
-//            'option2' => 'Show topic',
-//            'href1' => 'tutorials',
-//            'href2' => 'tutorialShow',
-//            'ID' => $lastTopic
-//        ]);
-
-
     }
 
     /**
@@ -145,63 +72,9 @@ class TutorialsArticleController extends Controller
      */
     public function showTutorialArticle($ID)
     {
-        $tutorialArticle = $this->getDoctrine()
-            ->getRepository(TutorialArticle::class)
-            ->find($ID);
-        if (!$tutorialArticle) {
-            throw $this->createNotFoundException(
-                'not found article ' . $ID
-            );
-        }
-        $tutorialID = $tutorialArticle->getID();
-        $tutorialTitle = $tutorialArticle->getTitle();
-        $tutorialCategory = $tutorialArticle->getCategory();
-        $tutorialCategoryArray = explode(",", $tutorialCategory);
-        foreach ($tutorialCategoryArray as $key => $value) {
-            $tutorialCategoryArray[$key] = trim($value);
-        }
-        $tutorialAuthor = $tutorialArticle->getAuthor();
-        $tutorialDate = $tutorialArticle->getCreationDate();
-        $tutorialImg = $tutorialArticle->getURLImg();
-        $tutorialShortDescription = $tutorialArticle->getShortDescription();
-        $tutorialMainContent = $tutorialArticle->getMainTopic();
+        $articleToShow = $this->articleManager->showArticle($ID, TutorialArticle::class);
 
-        $CategoryList = [];
-        foreach ($tutorialCategoryArray as $key => $value) {
-            $sameCategory = $this->getDoctrine()
-                ->getRepository(TutorialArticle::class)
-                ->findSameCategory($value, 6);
-            $CategoryList[] = $sameCategory;
-        }
-        //rozbicie na prostszą tablice
-        $simplerCategoryList = [];
-        foreach ($CategoryList as $key => $value) {
-            foreach ($value as $k => $v) {
-                $simplerCategoryList[] = $value[$k];
-            }
-        }
-
-        //kasowanie tematu który aktualnie przegląda użytkownik
-        foreach ($simplerCategoryList as $key => $value) {
-            if ($value->getID() === $tutorialID) {
-                unset($simplerCategoryList[$key]);
-            }
-        }
-
-        //kasowanie duplikatów
-        $validator = new HandlingDuplicates();
-        $simplerCategoryList = $validator->deleteObjDuplicateFromArray($simplerCategoryList);
-
-        return $this->render('tutorials/tutorialTopic.html.twig', [
-            'tutorialTitle' => $tutorialTitle,
-            'tutorialCategory' => $tutorialCategoryArray,
-            'tutorialAuthor' => $tutorialAuthor,
-            'tutorialDate' => $tutorialDate,
-            'tutorialImg' => $tutorialImg,
-            'tutorialShortDescription' => $tutorialShortDescription,
-            'tutorialMainContent' => $tutorialMainContent,
-            'categoryList' => $simplerCategoryList
-        ]);
+        return $this->render('tutorials/tutorialTopic.html.twig', $articleToShow);
     }
 
 }
