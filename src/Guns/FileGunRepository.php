@@ -31,7 +31,17 @@ class FileGunRepository implements GunRepositoryInterface
         return $this->guns[$id];
     }
 
-    //TODO rozbudować obiekt Gun tak aby wystarczyło tutaj podac obiekt gun i go zapisac
+    public function findColumn(string $columnName): array
+    {
+        $datas = $this->findAll();
+        $name = [];
+        foreach ($datas as $data => $value) {
+            $name[$data] = $datas[$data][$columnName];
+        }
+        return $name;
+    }
+
+    //TODO rozbudować obiekt Gun tak aby wystarczyło tutaj podac ten obiekt i nim manipulować
     public function save(array $data, int $gunId = null)
     {
         $this->guns[$gunId] = $data;
