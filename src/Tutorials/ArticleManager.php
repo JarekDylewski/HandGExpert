@@ -53,9 +53,15 @@ class ArticleManager implements ArticleManagerInterface
         return $this->countPagination;
     }
 
-    public function addArticle($title, $category, $author, $imgUrl, $shortDescription, $mainContent, $persistentObject)
-    {
-        $currentDate = new \DateTime('now');
+    public function addArticle(
+        string $title,
+        string $category,
+        string $author,
+        string $imgUrl,
+        string $shortDescription,
+        string $mainContent,
+        $persistentObject
+    ): array {
 
         $tutorialEntity = new TutorialArticle();
         $entityMenager = $this->doctrineManager->getManager();
@@ -63,6 +69,7 @@ class ArticleManager implements ArticleManagerInterface
         $tutorialEntity->setTitle($title);
         $tutorialEntity->setCategory($category);
         $tutorialEntity->setAuthor($author);
+        $currentDate = new \DateTime('now');
         $tutorialEntity->setCreationDate($currentDate);
         $tutorialEntity->setURLImg($imgUrl);
         $tutorialEntity->setShortDescription($shortDescription);
@@ -101,30 +108,12 @@ class ArticleManager implements ArticleManagerInterface
         ];
     }
 
-    public function showArticle(Int $Id, $persistentObject)
+    public function findSameTipics(array $valuesToFind, Int $currentlyViewedArticleId, $persistentObject): array
     {
-        $tutorialArticle = $this->doctrineManager
-            ->getRepository($persistentObject)
-            ->find($Id);
-
-        $tutorialID = $tutorialArticle->getID();
-        $tutorialTitle = $tutorialArticle->getTitle();
-        $tutorialCategory = $tutorialArticle->getCategory();
-        $tutorialCategoryArray = explode(",", $tutorialCategory);
-        foreach ($tutorialCategoryArray as $key => $value) {
-            $tutorialCategoryArray[$key] = trim($value);
-        }
-        $tutorialAuthor = $tutorialArticle->getAuthor();
-        $tutorialDate = $tutorialArticle->getCreationDate();
-        $tutorialImg = $tutorialArticle->getURLImg();
-        $tutorialShortDescription = $tutorialArticle->getShortDescription();
-        $tutorialMainContent = $tutorialArticle->getMainTopic();
-
-        //TODO wydzielić znajdowanie podobnych tematów do osobnej usługi
         $CategoryList = [];
-        foreach ($tutorialCategoryArray as $key => $value) {
+        foreach ($valuesToFind as $key => $value) {
             $sameCategory = $this->doctrineManager
-                ->getRepository(TutorialArticle::class)
+                ->getRepository($persistentObject)
                 ->findSameCategory($value, 6);
             $CategoryList[] = $sameCategory;
         }
@@ -138,14 +127,40 @@ class ArticleManager implements ArticleManagerInterface
 
         //kasowanie tematu który aktualnie przegląda użytkownik
         foreach ($simplerCategoryList as $key => $value) {
-            if ($value->getID() === $tutorialID) {
+            if ($value->getID() === $currentlyViewedArticleId) {
                 unset($simplerCategoryList[$key]);
             }
         }
 
         //kasowanie duplikatów
         $validator = new HandlingDuplicates();
-        $simplerCategoryList = $validator->deleteObjDuplicateFromArray($simplerCategoryList);
+        $similarTopics = $validator->deleteObjDuplicateFromArray($simplerCategoryList);
+
+        return $similarTopics;
+    }
+
+    public function showArticle(Int $Id, $persistentObject): array
+    {
+        $tutorialArticle = $this->doctrineManager
+            ->getRepository($persistentObject)
+            ->find($Id);
+
+        $tutorialID = $tutorialArticle->getID();
+        $tutorialTitle = $tutorialArticle->getTitle();
+        $tutorialCategory = $tutorialArticle->getCategory();
+        $tutorialCategoryArray = explode(",", $tutorialCategory);
+
+        foreach ($tutorialCategoryArray as $key => $value) {
+            $tutorialCategoryArray[$key] = trim($value);
+        }
+
+        $tutorialAuthor = $tutorialArticle->getAuthor();
+        $tutorialDate = $tutorialArticle->getCreationDate();
+        $tutorialImg = $tutorialArticle->getURLImg();
+        $tutorialShortDescription = $tutorialArticle->getShortDescription();
+        $tutorialMainContent = $tutorialArticle->getMainTopic();
+
+        $simimarTopics = $this->findSameTipics($tutorialCategoryArray, $tutorialID, TutorialArticle::class);
 
         return [
             'tutorialTitle' => $tutorialTitle,
@@ -155,7 +170,7 @@ class ArticleManager implements ArticleManagerInterface
             'tutorialImg' => $tutorialImg,
             'tutorialShortDescription' => $tutorialShortDescription,
             'tutorialMainContent' => $tutorialMainContent,
-            'categoryList' => $simplerCategoryList
+            'categoryList' => $simimarTopics
         ];
     }
 
