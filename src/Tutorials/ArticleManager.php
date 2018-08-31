@@ -101,4 +101,62 @@ class ArticleManager implements ArticleManagerInterface
         ];
     }
 
+    public function showArticle(Int $Id, $persistentObject)
+    {
+        $tutorialArticle = $this->doctrineManager
+            ->getRepository($persistentObject)
+            ->find($Id);
+
+        $tutorialID = $tutorialArticle->getID();
+        $tutorialTitle = $tutorialArticle->getTitle();
+        $tutorialCategory = $tutorialArticle->getCategory();
+        $tutorialCategoryArray = explode(",", $tutorialCategory);
+        foreach ($tutorialCategoryArray as $key => $value) {
+            $tutorialCategoryArray[$key] = trim($value);
+        }
+        $tutorialAuthor = $tutorialArticle->getAuthor();
+        $tutorialDate = $tutorialArticle->getCreationDate();
+        $tutorialImg = $tutorialArticle->getURLImg();
+        $tutorialShortDescription = $tutorialArticle->getShortDescription();
+        $tutorialMainContent = $tutorialArticle->getMainTopic();
+
+        //TODO wydzielić znajdowanie podobnych tematów do osobnej usługi
+        $CategoryList = [];
+        foreach ($tutorialCategoryArray as $key => $value) {
+            $sameCategory = $this->doctrineManager
+                ->getRepository(TutorialArticle::class)
+                ->findSameCategory($value, 6);
+            $CategoryList[] = $sameCategory;
+        }
+        //rozbicie na prostszą tablice
+        $simplerCategoryList = [];
+        foreach ($CategoryList as $key => $value) {
+            foreach ($value as $k => $v) {
+                $simplerCategoryList[] = $value[$k];
+            }
+        }
+
+        //kasowanie tematu który aktualnie przegląda użytkownik
+        foreach ($simplerCategoryList as $key => $value) {
+            if ($value->getID() === $tutorialID) {
+                unset($simplerCategoryList[$key]);
+            }
+        }
+
+        //kasowanie duplikatów
+        $validator = new HandlingDuplicates();
+        $simplerCategoryList = $validator->deleteObjDuplicateFromArray($simplerCategoryList);
+
+        return [
+            'tutorialTitle' => $tutorialTitle,
+            'tutorialCategory' => $tutorialCategoryArray,
+            'tutorialAuthor' => $tutorialAuthor,
+            'tutorialDate' => $tutorialDate,
+            'tutorialImg' => $tutorialImg,
+            'tutorialShortDescription' => $tutorialShortDescription,
+            'tutorialMainContent' => $tutorialMainContent,
+            'categoryList' => $simplerCategoryList
+        ];
+    }
+
 }
