@@ -42,7 +42,8 @@
 {% block modifications %}
     <div class="list-group mr-3" id="modMenu">
         {% for ammo in ammoData %}
-            <a href="{{ path('GunListCustomizing',{gunID: slug}) }}" class="list-group-item list-group-item-action p-0">
+            <a href="{{ path('GunListCustomizing',{gunID: gunId}) }}"
+               class="list-group-item list-group-item-action p-0">
                 <div class="row"> {#TODO - pozmieniać id na jakieś sensowniejsze, np ammo_mod_ID_0 a potem w js usunac prefix ammo_mod_ID_ tak zeby skrypt dzialal poprawnie #}
                     <div class="col-9 pr-0 pl-4" id="{{ loop.index0 }}">
                         <img height="60px" width="107px" src="{{ asset('img/mody/ammo/'~ ammoID[loop.index0] ~'.png') }}" id="{{ loop.index0 }}"> <br>
