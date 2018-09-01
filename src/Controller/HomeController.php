@@ -36,10 +36,7 @@ class HomeController extends Controller
      */
     public function dataPreparation($gunID)
     {
-        //TODO uporządkować to powtórzenie tej samej zmiennej w szablonie (chodzi o img i slug)
         $data = $this->gunManager->getAllDataForView($gunID);
-        $data['img'] = $gunID;
-        $data['slug'] = $gunID;
 
         return $this->render('gunBar/gunBar.html.twig', $data);
     }
@@ -51,7 +48,6 @@ class HomeController extends Controller
     public function jsonData($gunID)
     {
         $data = $this->gunManager->getAllDataForView($gunID);
-        $data['img'] = $gunID;
 
         return new JsonResponse($data);
     }
