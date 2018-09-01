@@ -38,7 +38,10 @@
                         </div>
                 {% else %}
                     <a href="{{ path('login') }}" class="btn btn-outline-secondary mr-2 text-dark-orange ml-auto"> Log in </a>
-                    <a href="{{ path('user_registration') }}" class="btn btn-outline-secondary mr-5 text-dark-orange"> Registration </a>
+                    {#//TODO Dodać informację jeżeli użytkownik jest zalogowany "posiadasz juz konto i aktualnie jestes #}
+                    {#TODO zalogowany na 'nazwa uzytkownika' lecz mozesz utworzyć nowe konto"#}
+                    <a href="{{ path('registration_form') }}" class="btn btn-outline-secondary mr-5 text-dark-orange">
+                        Registration </a>
                 {% endif %}
                     </div>
             </div>
