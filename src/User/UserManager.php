@@ -43,70 +43,39 @@ class UserManager
         $user->setPlainPassword($password);
 
         $validationErrors = $this->validator->validate($user);
+        $passwordError = '';
         if ($password !== $repeatPassword) {
             $passwordError = 'passwords not identical';
         }
-        if (count($validationErrors) > 0) {
-
+        if (count($validationErrors) > 0 || strlen($passwordError) > 0) {
 
             return [
                 'errors' => $validationErrors,
                 'templateName' => 'registration/register.html.twig',
                 'pathToRouteWhereFormSend' => 'user_registration',
-                'message' => 'Woops! Something is wrong!',
-                'passwordError' => $passwordError
+                'message' => 'Whoops! Something is wrong!',
+                'passwordError' => $passwordError,
+                'user' => [
+                    'givenUsername' => $userName,
+                    'givenEmail' => $email
+                ]
             ];
-        } else {
-            if ($validationErrors === 0) {
-                $password = $this->passwordEncoder->encodePassword($user, $user->getPlainPassword());
-                $user->setPassword($password);
-
-                $entityManager = $this->doctrineManager->getManager();
-                $entityManager->persist($user);
-                $entityManager->flush();
-
-                return ['message' => 'Registration success!, check your email to activate confirmation link!'];
-            }
         }
 
+        $password = $this->passwordEncoder->encodePassword($user, $user->getPlainPassword());
+        $user->setPassword($password);
+
+        $entityManager = $this->doctrineManager->getManager();
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        return [
+            'message' => 'Registration success!, check your email to activate confirmation link!',
+            'templateName' => 'home.html.twig'
+        ];
 
 //        $dispatcher = new EventDispatcher();
 //        $event = new UserRegisteredEvent($form);
 //        $dispatcher->dispatch(UserRegisteredEvent::NAME, $event);
-
-        //return ['form' => $form, 'errors' => $validationErrors];
-
-
-//        $user = new User();
-//        $formFactory = Forms::createFormFactoryBuilder()
-//            ->addExtension(new HttpFoundationExtension())
-//            ->getFormFactory();
-//
-//        $user->setUsername($userName);
-//        $user->setEmail($email);
-//        $user->setPlainPassword($password);
-//        $form = $formFactory->create(UserType::class, $user);
-//
-//        $validationErrors = $this->validator->validate($user);
-//
-//        if (isset($password) && isset($userName) && isset($email)) {
-//            $form->submit('user');
-//        }
-//
-//        if ($form->isSubmitted() && count($validationErrors) === 0) {
-//            $password = $this->passwordEncoder->encodePassword($user, $user->getPlainPassword());
-//            $user->setPassword($password);
-//
-//            $entityManager = $this->managerRegistry->getManager();
-//            $entityManager->persist($user);
-//            $entityManager->flush();
-//
-//        };
-//
-//        $dispatcher = new EventDispatcher();
-//        $event = new UserRegisteredEvent($form);
-//        $dispatcher->dispatch(UserRegisteredEvent::NAME, $event);
-//
-//        return ['form' => $form, 'errors' => $validationErrors];
     }
 }
