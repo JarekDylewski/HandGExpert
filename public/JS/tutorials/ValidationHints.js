@@ -8,7 +8,7 @@ function ValidationHints() {
      * @param messageForOne - message near number for 1 or 0
      */
     this.charsLeft = function (classOrIDTextElement, classOrIDContainerForNumber, maxLength, message = ': characters left', messageForOne = ': character left') {
-
+//TODO dodać obliczanie pozostałych znaków po tym jak użytkownik zaznaczy sporą częśc tekstu i ją usunie
         let strLength = $(classOrIDTextElement).val().length + 1;
         if (strLength <= (maxLength - 2)) {
             $(classOrIDContainerForNumber).html(maxLength - strLength + message);
@@ -34,5 +34,13 @@ function ValidationHints() {
                 }
             }
         });
-    }
+    };
+
+    this.minimumCharacterAlert = function (classOrIDTextElement, classOrIDContainerForNumber, minLength, message = 'Min. length is: ') {
+
+        let strLength = $(classOrIDTextElement).val().length;
+        if (strLength < minLength) {
+            $(classOrIDContainerForNumber).html(message + minLength)
+        }
+    };
 }
