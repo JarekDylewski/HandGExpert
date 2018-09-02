@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    let validator = new TopicValidate();
+    let validator = new ValidationHints();
     $('.post_title').on('keypress', function () {
         validator.charsLeft('.post_title', '#title_chars_left', 60);
     });
