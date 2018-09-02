@@ -1,4 +1,4 @@
-function TopicValidate() {
+function ValidationHints() {
 
     /**
      * @param {string} classOrIDTextElement - id or class name element in which the number of characters will be counted
