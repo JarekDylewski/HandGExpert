@@ -69,13 +69,15 @@ class UserManager
         $entityManager->persist($user);
         $entityManager->flush();
 
+        $dispatcher = new EventDispatcher();
+        $event = new UserRegisteredEvent($user);
+        $dispatcher->dispatch(UserRegisteredEvent::NAME, $event);
+
         return [
             'message' => 'Registration success!, check your email to activate confirmation link!',
             'templateName' => 'home.html.twig'
         ];
 
-//        $dispatcher = new EventDispatcher();
-//        $event = new UserRegisteredEvent($form);
-//        $dispatcher->dispatch(UserRegisteredEvent::NAME, $event);
+
     }
 }
