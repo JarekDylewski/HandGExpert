@@ -8,8 +8,8 @@
         <div class="row w-100 ml-auto mr-auto">
             <div class="col-6 p-2 ml-auto mr-auto text-center border article-body rounded">
                 <div class="row w-100 ml-auto mr-auto">
-                    <div class="form-container col-12 pb-4 pt-3 w-100 h-100 mh-100 ml-auto mr-auto pr-0">
-                        <span class="text-info">{{ message|default('') }}</span><br>
+                    <div class="form-container col-12 pb-4 pt-3 w-100 h-100 mh-100 ml-auto mr-auto px-0">
+                        <span class="text-info h5">{{ message|default('') }}</span><br>
                         <span class="text-danger mb-1">{{ passwordError|default('') }}</span><br>
                         {% if errors is defined %}
                             {% for error in errors %}
@@ -19,94 +19,40 @@
                                     })|title }} - {{ error.message }}</span><br>
                             {% endfor %}
                         {% endif %}
-                        <div class="row w-100 ml-auto mr-auto mb-1 ">
-                            <div class="col-12 mr-0 pr-0"><label for="userName"> Username</label></div>
-                        </div>
                         <form action="{{ path(pathToRouteWhereFormSend|default('user_registration')) }}" method="post"
                               id="registrationForm">
-                            <div class="row w-100 ml-auto mr-auto mb-1 ">
-                                <div class="col-4 mr-0 pr-0"><label for="userName"> Username</label></div>
-                                <div class="col-4 col-4 ml-0 pl-0"><input type="text" name="userName" id="userName">
+                            <div class="row w-100 ml-auto mr-auto mb-1 mt-2">
+                                <div class="col-4 mr-0 px-0"><label for="userName"> Username</label></div>
+                                <div class="col-4 col-4 ml-0 px-0"><input class="mw-100" type="text" name="userName"
+                                                                          id="userName" maxlength="20" minlength="3"
+                                                                          value="{{ user.givenUsername|default('') }}">
                                 </div>
+                                <div class="col-4 m-0 p-0 text-secondary" id="username_validation_hints"></div>
                             </div>
-                            <div class="row w-100 ml-auto mr-auto mb-1 ">
-                                <div class="col-4 mr-0 pr-0"><label for="email"> E-mail</label></div>
-                                <div class="col-4 col-4 ml-0 pl-0"><input type="email" name="email" id="email"></div>
+                            <div class="row w-100 ml-auto mr-auto mb-1">
+                                <div class="col-4 mr-0 px-0"><label for="email"> E-mail</label></div>
+                                <div class="col-4 col-4 ml-0 px-0"><input class="mw-100" type="email" name="email"
+                                                                          id="email"
+                                                                          value="{{ user.givenEmail|default('') }}">
+                                </div>
+                                <div class="col-4 m-0 p-0 text-secondary" id="email_validation_hints"></div>
                             </div>
-                            <div class="row w-100 ml-auto mr-auto mb-1 ">
-                                <div class="col-4 mr-0 pr-0"><label for="passwordFirst"> Password</label></div>
-                                <div class="col-4 col-4 ml-0 pl-0"><input type="password" name="plainPassword[first]"
+                            <div class="row w-100 ml-auto mr-auto mb-1">
+                                <div class="col-4 mr-0 px-0"><label for="passwordFirst"> Password</label></div>
+                                <div class="col-4 col-4 ml-0 px-0"><input class="mw-100" type="password"
+                                                                          name="plainPassword[first]"
                                                                           id="passwordFirst"></div>
+                                <div class="col-4 m-0 p-0 text-secondary" id="password_first_validation_hints"></div>
                             </div>
-                            <div class="row w-100 ml-auto mr-auto mb-1 ">
-                                <div class="col-4 mr-0 pr-0"><label for="passwordSecond"> Repeat password</label></div>
-                                <div class="col-4 col-4 ml-0 pl-0"><input type="password" name="plainPassword[second]"
+                            <div class="row w-100 ml-auto mr-auto mb-1">
+                                <div class="col-4 mr-0 px-0"><label for="passwordSecond"> Repeat password</label></div>
+                                <div class="col-4 col-4 ml-0 px-0"><input class="mw-100" type="password"
+                                                                          name="plainPassword[second]"
                                                                           id="passwordSecond"></div>
+                                <div class="col-4 m-0 p-0 text-secondary" id="password_second_validation_hints"></div>
                             </div>
                             <button id="register_button" class="btn btn-success" type="submit">Register!</button>
                         </form>
-
-                        {#{{ form_start(form) }}#}
-                        {#<div class="row w-100 ml-auto mr-auto">#}
-                        {#<div class="alert-registration col-9 p-1 mb-1 text-danger">#}
-                        {#{{ form_errors(form.userName) }}#}
-                        {#</div>#}
-                        {#<div class="col-4 mr-0 pr-0">#}
-                        {#{{ form_label(form.userName) }}#}
-                        {#</div>#}
-                        {#<div class="col-4 ml-0 pl-0">#}
-                        {#{{ form_widget(form.userName) }}#}
-                        {#</div>#}
-                        {#</div>#}
-                        {#<div class="row w-100 ml-auto mr-auto">#}
-                        {#<div class="alert-registration col-9 p-1 mb-1 text-danger">#}
-                        {#{{ form_errors(form.email) }}#}
-                        {#</div>#}
-                        {#<div class="col-4 mr-0 pr-0">#}
-                        {#{{ form_label(form.email) }}#}
-                        {#</div>#}
-                        {#<div class="col-4 ml-0 pl-0">#}
-                        {#{{ form_widget(form.email) }}#}
-                        {#</div>#}
-                        {#</div>#}
-                        {#<div class="row w-100 ml-auto mr-auto">#}
-                        {#<div class="alert-registration col-9 text-danger p-1 mb-1">#}
-                        {#{{ form_errors(form.plainPassword.first) }}#}
-                        {#</div>#}
-                        {#<div class="col-4 mr-0 pr-0">#}
-                        {#{{ form_label(form.plainPassword.first) }}#}
-                        {#</div>#}
-                        {#<div class="col-4 ml-0 pl-0">#}
-                        {#{{ form_widget(form.plainPassword.first) }}#}
-                        {#</div>#}
-                        {#</div>#}
-                        {#<div class="row w-100 ml-auto mr-auto">#}
-                        {#<div class="alert-registration col-9 p-1 mb-1 text-danger">#}
-                        {#{{ form_errors(form.plainPassword.second) }}#}
-                        {#</div>#}
-                        {#<div class="col-4 mr-0 pr-0">#}
-                        {#{{ form_label(form.plainPassword.second) }}#}
-                        {#</div>#}
-                        {#<div class="col-4 ml-0 pl-0">#}
-                        {#{{ form_widget(form.plainPassword.second) }}#}
-                        {#</div>#}
-                        {#</div>#}
-                        {#{% if errors is defined %}#}
-                        {#{% for error in errors %}#}
-                        {#<div class="row w-100 ml-auto mr-auto">#}
-                        {#{% if error.propertyPath == 'plainPassword' %}#}
-                        {#<span class="text-danger">Password: {{ error.message }}</span><br>#}
-                        {#{% else %}#}
-                        {#<span class="text-danger"> {{ error.message }}</span><br>#}
-                        {#{% endif %}#}
-
-                        {#</div>#}
-                        {#{% endfor %}#}
-                        {#{% endif %}#}
-                        {#<div class="col-6 mt-2 ml-auto mr-auto">#}
-                        {#<button id="register_button" class="btn btn-success" type="submit">Register!</button>#}
-                        {#</div>#}
-                        {#{{ form_end(form) }}#}
                     </div>
                 </div>
 
@@ -115,3 +61,8 @@
     </div>
 
 {% endblock main %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('JS/tutorials/ValidationHints.js') }}"></script>
+    <script src="{{ asset('JS/security/registration.js') }}"></script>
+{% endblock javascripts %}
