@@ -5,12 +5,9 @@ namespace App\User;
 
 use App\Entity\User;
 use App\Events\UserRegisteredEvent;
-use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationExtension;
-use Symfony\Component\Form\Forms;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
