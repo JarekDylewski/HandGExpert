@@ -42,7 +42,7 @@ class HomeController extends Controller
     }
 
     /**
-     * @Route("GunList/{gunID}/Customizing", name="GunListCustomizing", requirements={"gunID"="\d+"}))
+     * @Route("GunList/{gunID}/Customizing", name="GunListCustomizing", methods={"GET"}, requirements={"gunID"="\d+"}))
      * @Cache(expires="tomorrow", public=true)
      */
     public function jsonData($gunID)
@@ -53,7 +53,7 @@ class HomeController extends Controller
     }
 
     /**
-     * @Route("/GunList/search", name="GunListSearch")
+     * @Route("/GunList/search", methods={"GET"}, name="GunListSearch",)
      */
     public function gunListSearch()
     {
