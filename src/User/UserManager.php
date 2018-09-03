@@ -77,4 +77,23 @@ class UserManager
 
 
     }
+
+    //TODO podzielic to na dwie metody
+    public function checkUsernameAndEmailInDB($presistentObject, $username, $email): array
+    {
+        $repository = $this->doctrineManager->getRepository($presistentObject);
+        $usernameExists = false;
+        $foundUsername = $repository->findBy(['username' => $username]);
+        if (isset($foundUsername[0])) {
+            $usernameExists = true;
+        }
+        $emailExists = false;
+        $foundEmail = $repository->findBy(['email' => $email]);
+
+        if (isset($foundEmail[0])) {
+            $emailExists = true;
+        }
+
+        return ['username' => $usernameExists, 'email' => $emailExists];
+    }
 }
