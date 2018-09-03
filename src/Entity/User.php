@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: DzaroD
- * Date: 2018-08-16
- * Time: 21:37
- */
 
 namespace App\Entity;
 
@@ -13,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Table(name="app_users")
@@ -32,17 +27,18 @@ class User implements UserInterface, \Serializable
     /**
      * @ORM\Column(type="string", length=191, unique=true)
      * @Assert\NotBlank()
-     * @Assert\Length(min=3, max=20)
+     * @Assert\Length(min = 3, max = 20)
      */
     private $username;
 
     /**
      * @Assert\NotBlank()
-     * @Assert\Length(min=5, max=40)
+     * @Assert\Length(min = 5, max = 40)
      */
     private $plainPassword;
 
     /**
+     * @Assert\Length(min = 5, max = 40)
      * @ORM\Column(type="string", length=64)
      */
     private $password;
@@ -51,7 +47,7 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="string", length=191, unique=true)
      * @Assert\NotBlank()
      * @Assert\Email()
-     * @Assert\Length(min=3, max=60)
+     * @Assert\Length(min = 5, max = 60)
      */
     private $email;
 
