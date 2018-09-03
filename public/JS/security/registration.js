@@ -25,6 +25,16 @@ $(document).ready(function () {
             $(usernameHints).addClass('text-success');
             $(usernameHints).html('OK!')
         }
+
+        $.ajax({
+            url: 'register/whetherUserExists/' + username.val() + '/j',
+            method: 'post'
+        }).done(function (data) {
+            if (data.username === true) {
+                $(usernameHints).html('Username already exists');
+                $(usernameHints).addClass('text-danger');
+            }
+        });
     });
 
     let email = $('#email');
@@ -50,6 +60,15 @@ $(document).ready(function () {
             $(emailHints).addClass('text-success');
             $(emailHints).html('OK!')
         }
+        $.ajax({
+            url: 'register/whetherUserExists/' + 'j/' + email.val(),
+            method: 'post'
+        }).done(function (data) {
+            if (data.email === true) {
+                $(emailHints).html('E-mail already exists');
+                $(emailHints).addClass('text-danger');
+            }
+        });
     });
 
     let passwordFirst = $('#passwordFirst');
