@@ -36,6 +36,13 @@ function ValidationHints() {
         });
     };
 
+    this.validateEmailHint = function (email) {
+        const emailReg = /^[a-z\d]+[\w\d.-]*@(?:[a-z\d]+[a-z\d-]+\.){1,5}[a-z]{2,6}$/i;
+        let emailRegExp = new RegExp(emailReg);
+
+        return emailRegExp.test(email);
+    };
+
     this.minimumCharacterAlert = function (classOrIDTextElement, classOrIDContainerForNumber, minLength, message = 'Min. length is: ') {
 
         let strLength = $(classOrIDTextElement).val().length;
@@ -43,4 +50,22 @@ function ValidationHints() {
             $(classOrIDContainerForNumber).html(message + minLength)
         }
     };
+
+    this.clearHint = function (hintsSpace, somethingIsWrongClassRemove = 'text-danger', everythingIsOkClassRemove = 'text-success', standardTextClass = 'text-secondary') {
+        $(hintsSpace).empty();
+        $(hintsSpace).removeClass(somethingIsWrongClassRemove);
+        $(hintsSpace).removeClass(everythingIsOkClassRemove);
+        $(hintsSpace).addClass(standardTextClass);
+    };
+
+    this.everythingOkHint = function (hintSpace, message = 'OK!', everythingIsOkClass = 'text-success', somethingIsWrongClassRemove = 'text-danger') {
+        $(hintSpace).removeClass(somethingIsWrongClassRemove);
+        $(hintSpace).addClass(everythingIsOkClass);
+        $(hintSpace).html(message)
+    };
+
+    this.somethingIsWrongHint = function (hintSpace, message = '', somethingIsWrongClass = 'text-danger') {
+        $(hintSpace).html(message);
+        $(hintSpace).addClass(somethingIsWrongClass);
+    }
 }
