@@ -78,22 +78,44 @@ class UserManager
 
     }
 
-    //TODO podzielic to na dwie metody
-    public function checkUsernameAndEmailInDB($presistentObject, $username, $email): array
+//    public function checkUsernameAndEmailInDB($presistentObject, $username, $email): array
+//    {
+//        $repository = $this->doctrineManager->getRepository($presistentObject);
+//        $usernameExists = false;
+//        $foundUsername = $repository->findBy(['username' => $username]);
+//        if (isset($foundUsername[0])) {
+//            $usernameExists = true;
+//        }
+//        $emailExists = false;
+//        $foundEmail = $repository->findBy(['email' => $email]);
+//
+//        if (isset($foundEmail[0])) {
+//            $emailExists = true;
+//        }
+//
+//        return ['username' => $usernameExists, 'email' => $emailExists];
+//    }
+
+    public function checkUsernameExists($presistentObject, $username)
     {
-        $repository = $this->doctrineManager->getRepository($presistentObject);
         $usernameExists = false;
-        $foundUsername = $repository->findBy(['username' => $username]);
+        $foundUsername = $this->doctrineManager->getRepository($presistentObject)->findBy(['username' => $username]);
+
         if (isset($foundUsername[0])) {
             $usernameExists = true;
         }
+
+        return ['username' => $usernameExists];
+    }
+
+    public function checkEmailExists($presistentObject, $email)
+    {
         $emailExists = false;
-        $foundEmail = $repository->findBy(['email' => $email]);
+        $foundEmail = $this->doctrineManager->getRepository($presistentObject)->findBy(['email' => $email]);
 
         if (isset($foundEmail[0])) {
             $emailExists = true;
         }
-
-        return ['username' => $usernameExists, 'email' => $emailExists];
+        return ['email' => $emailExists];
     }
 }
