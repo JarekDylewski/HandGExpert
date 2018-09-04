@@ -43,10 +43,15 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * @Route("register/whetherUserExists/{username}/{email}", name="whether_user_exists", methods={"POST"})
+     * @Route("register/whetherUserExists", name="whether_user_exists", methods={"POST"})
      */
-    public function whetherUserExists($username, $email)
+    public function whetherUserExists(Request $request)
     {
-        return new JsonResponse($this->userManager->checkUsernameAndEmailInDB(User::class, $username, $email));
+        return new JsonResponse(
+            array_merge(
+                $this->userManager->checkUsernameExists(User::class, $request->get('username')),
+                $this->userManager->checkEmailExists(User::class, $request->get('email'))
+            )
+        );
     }
 }
