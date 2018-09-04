@@ -4,6 +4,10 @@ $(document).ready(function () {
     let validation = new ValidationHints();
     let username = $('#userName');
     let usernameHints = $('#username_validation_hints');
+    let registrationButton = $('#register_button');
+
+    const emailReg = /^[a-z\d]+[\w\d.-]*@(?:[a-z\d]+[a-z\d-]+\.){1,5}[a-z]{2,6}$/i;
+    let emailRegExp = new RegExp(emailReg);
 
     $(username).focusin(function () {
         $(usernameHints).empty();
@@ -27,8 +31,13 @@ $(document).ready(function () {
         }
 
         $.ajax({
-            url: 'register/whetherUserExists/' + username.val() + '/j',
-            method: 'post'
+            url: 'register/whetherUserExists',
+            method: 'post',
+            dataType: 'json',
+            data: {
+                "username": username.val(),
+                "email": ""
+            }
         }).done(function (data) {
             if (data.username === true) {
                 $(usernameHints).html('Username already exists');
@@ -39,7 +48,6 @@ $(document).ready(function () {
 
     let email = $('#email');
     let emailHints = $('#email_validation_hints');
-
     $(email).focusin(function () {
         $(emailHints).empty();
         $(emailHints).removeClass('text-danger');
@@ -55,14 +63,22 @@ $(document).ready(function () {
         validation.minimumCharacterAlert(email, emailHints, 5);
         if (email.val().length < 5) {
             $(emailHints).addClass('text-danger');
+        } else if (!emailRegExp.test(email.val())) {
+            $(emailHints).html('Invalid e-mail!');
+            $(emailHints).addClass('text-danger');
         } else {
             $(emailHints).removeClass('text-danger');
             $(emailHints).addClass('text-success');
             $(emailHints).html('OK!')
         }
         $.ajax({
-            url: 'register/whetherUserExists/' + 'j/' + email.val(),
-            method: 'post'
+            url: 'register/whetherUserExists',
+            method: 'post',
+            dataType: 'json',
+            data: {
+                "username": "",
+                "email": email.val()
+            }
         }).done(function (data) {
             if (data.email === true) {
                 $(emailHints).html('E-mail already exists');
