@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 class RegistrationController extends AbstractController
 {
@@ -47,11 +48,19 @@ class RegistrationController extends AbstractController
      */
     public function whetherUserExists(Request $request)
     {
-        return new JsonResponse(
-            array_merge(
-                $this->userManager->checkUsernameExists(User::class, $request->get('username')),
-                $this->userManager->checkEmailExists(User::class, $request->get('email'))
-            )
-        );
+        $check = [];
+        if ($request->isXmlHttpRequest()) {
+            switch ($request->get('userParam')) {
+                case 'username':
+                    $check = $this->userManager->checkUsernameExists(User::class, $request->get('username'));
+                    break;
+
+                case 'email':
+                    $check = $this->userManager->checkEmailExists(User::class, $request->get('email'));
+                    break;
+            }
+            return new JsonResponse($check);
+        }
+        return new Response($check, 200);
     }
 }
