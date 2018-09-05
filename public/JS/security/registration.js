@@ -27,7 +27,7 @@ $(document).ready(function () {
             dataType: 'json',
             data: {
                 "username": username.val(),
-                "email": ""
+                "userParam": "username"
             }
         }).done(function (data) {
             if (data.username === true) {
@@ -60,10 +60,11 @@ $(document).ready(function () {
             method: 'post',
             dataType: 'json',
             data: {
-                "username": "",
+                "userParam": "email",
                 "email": email.val()
             }
         }).done(function (data) {
+            console.log(data.email);
             if (data.email === true) {
                 validation.somethingIsWrongHint(emailHints, 'E-mail already exists!');
             }
