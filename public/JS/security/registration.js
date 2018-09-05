@@ -1,6 +1,4 @@
 $(document).ready(function () {
-    //TODO dodać pobieranie uzytkownika i e-maila tak zeby uzytkownik w czasie rzeczywistym
-    //TODO miał potwierdzenie czy nick albo e-mail jest zajęty
     let validation = new ValidationHints();
     let username = $('#userName');
     let usernameHints = $('#username_validation_hints');
