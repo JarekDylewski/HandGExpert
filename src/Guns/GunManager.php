@@ -3,6 +3,8 @@
 namespace App\Guns;
 
 
+use App\Exceptions\src\Data\GunsNotFoundException;
+
 class GunManager
 {
     private $gunRepository;
@@ -14,7 +16,13 @@ class GunManager
 
     public function getAllDataForView(Int $gunID): array
     {
-        $weapon = $this->gunRepository->findById($gunID);
+        try {
+            $weapon = $this->gunRepository->findById($gunID);
+        } catch (GunsNotFoundException $e) {
+            $test = 'test';
+            dump($test);
+        }
+
         $modsDataPrepare = new ModsDataProvider($weapon);
         $ammoModsArray = $modsDataPrepare->prepareModID('ammo');
         $ammoData = $modsDataPrepare->prepareModData($ammoModsArray, '../src/Data/ammoData.ser');
