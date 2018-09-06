@@ -3,6 +3,8 @@
 namespace App\Guns;
 
 
+use App\Exceptions\src\Data\GunsNotFoundException;
+
 class FileGunRepository implements GunRepositoryInterface
 {
     private $dbPath;
@@ -28,6 +30,9 @@ class FileGunRepository implements GunRepositoryInterface
 
     public function findById(int $id): array
     {
+        if (!isset($this->guns[$id])) {
+            throw new GunsNotFoundException('Gun with id: ' . $id . ' not found.', 404);
+        }
         return $this->guns[$id];
     }
 
