@@ -3,6 +3,7 @@
 namespace App\Tests\Guns;
 
 
+use App\Exceptions\src\Data\GunsNotFoundException;
 use App\Guns\FileGunRepository;
 use PHPUnit\Framework\TestCase;
 
@@ -13,7 +14,6 @@ class PrepareDataTest extends TestCase
     protected function setUp()
     {
         $this->PrepareData = new FileGunRepository('src/Data/gunsData.ser');
-
     }
 
     public function testWhatArrayReturnsGetGunsData()
@@ -39,24 +39,9 @@ class PrepareDataTest extends TestCase
 
     public function testGetGunDataWithUndefinedID()
     {
-        $this->expectException('\\Exception');
-        $this->PrepareData->getGunsData(1000);
-        $this->fail('exception expected in "getGunsData" method there is no array with ID');
-    }
-
-    public function testGetGunDataWithIDLessThen0()
-    {
-        $this->expectException('\\Exception');
-        $this->PrepareData->getGunsData(-2);
-        $this->fail('exception expected "ID must be >= 0"');
-    }
-
-    public function testGetGunDataWithPropertyDifferentThanAll()
-    {
-        $this->expectException('\\Exception');
-        $this->PrepareData->getGunsData('wrongString');
-        $this->fail('exception expected "you can set only string "all" (or "not defined" but then ID is set from the constructor)"');
-
+        $this->expectException(GunsNotFoundException::class);
+        $this->PrepareData->findById(1000);
+        $this->fail('exception expected in "findById" method there is no array with ID');
     }
 
     protected function tearDown()
