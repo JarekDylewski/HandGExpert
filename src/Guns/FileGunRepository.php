@@ -28,6 +28,11 @@ class FileGunRepository implements GunRepositoryInterface
         return $this->guns;
     }
 
+    /**
+     * @param int $id
+     * @return array
+     * @throws GunsNotFoundException
+     */
     public function findById(int $id): array
     {
         if (!isset($this->guns[$id])) {
@@ -39,6 +44,7 @@ class FileGunRepository implements GunRepositoryInterface
     public function findColumn(string $columnName): array
     {
         $datas = $this->findAll();
+
         $name = [];
         foreach ($datas as $data => $value) {
             $name[$data] = $datas[$data][$columnName];
