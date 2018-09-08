@@ -15,20 +15,21 @@ class Pagination
     }
 
     /**
-     * @param Int $page
+     * @param Int $currentPage
      * @param Int $limit
      * @return array $listOfPagesIdToFind[]
      */
-    public function paginate(Int $page): array
+    public function paginate(Int $currentPage): array
     {
-        $countAllTutorialsArticlesID = count($this->articlesId);
-        $pagesToFindStart = $countAllTutorialsArticlesID - ($page * $this->pageLimit) + 1; // 5  //59
-        $pageToFindEnd = $countAllTutorialsArticlesID - ($page * $this->pageLimit) + 6; // 0 //63
+        $pageMenu = array_chunk($this->articlesId, $this->pageLimit);
+
+        $pagesForCurrentPage = $pageMenu[$currentPage - 1];
         $listOfPagesIdToFind = [];
-        for ($i = $pagesToFindStart; $i < $pageToFindEnd; $i++) {
-            $listOfPagesIdToFind[] = $i;
+        foreach ($pagesForCurrentPage as $key => $value) {
+            $listOfPagesIdToFind[] = $value['id'];
         }
-        return $listOfPagesIdToFind;
+
+        return array_reverse($listOfPagesIdToFind);
     }
 
     public function getNumberPagination(): int
@@ -40,8 +41,4 @@ class Pagination
         };
         return $numberPagination;
     }
-    // podaje tablicę z id stron do znalezienia
-//$content = $this->getDoctrine()
-//->getRepository(TutorialArticle::class)
-//->findBy(array('id' => $pageToFind));
 }
