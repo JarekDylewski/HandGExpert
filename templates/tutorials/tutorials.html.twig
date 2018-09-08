@@ -63,6 +63,12 @@
                     <div class="col-2 p-1">
                         <span class="article-date-created article-head-text-muted">{{ content[cont].creationDate|date("d-m-Y") }}</span>
                     </div>
+                    <div>
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('tutorialArticleEdit',{ID:pagesIDToView[cont]}) }}"><span
+                                        class="col-2 text-secondary bg-dark rounded">Edit</span></a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
