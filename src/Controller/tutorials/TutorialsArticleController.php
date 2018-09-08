@@ -9,7 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class TutorialsArticleController extends Controller
 {
@@ -19,7 +18,7 @@ class TutorialsArticleController extends Controller
     {
         $this->articleManager = $articleManager;
     }
-//TODO poprawić paginację - kiedy jest tylko jeden art. na stronie ma id -3 co jest oczywiscie błędem
+
     /**
      * @Route("/Tutorials/{page}",name="tutorials",defaults={"page":1})
      * @Cache(expires="tomorrow", public=true)
