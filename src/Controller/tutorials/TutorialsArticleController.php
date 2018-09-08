@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class TutorialsArticleController extends Controller
 {
@@ -18,7 +19,7 @@ class TutorialsArticleController extends Controller
     {
         $this->articleManager = $articleManager;
     }
-
+//TODO poprawić paginację - kiedy jest tylko jeden art. na stronie ma id -3 co jest oczywiscie błędem
     /**
      * @Route("/Tutorials/{page}",name="tutorials",defaults={"page":1})
      * @Cache(expires="tomorrow", public=true)
@@ -58,8 +59,7 @@ class TutorialsArticleController extends Controller
             $request->request->get('tutorial_author'),
             $request->request->get('tutorial_img'),
             $request->request->get('ckeditorShortDesciption'),
-            $request->request->get('ckeditorMainContent'),
-            TutorialArticle::class
+            $request->request->get('ckeditorMainContent')
         );
 
         return $this->render('tutorials/tutorialArticleAddedNotAdded.html.twig', $content);
@@ -77,4 +77,22 @@ class TutorialsArticleController extends Controller
         return $this->render('tutorials/tutorialTopic.html.twig', $articleToShow);
     }
 
+    /**
+     * @Security("has_role('ROLE_ADMIN')")
+     * @Route("/Tutorials/article/{ID}/edit", name="tutorialArticleEdit")
+     */
+    public function editArticle($ID, Request $request)
+    {
+        $editArticle = $this->articleManager->editArticle(
+            $ID,
+            $request->get('tutorial_title'),
+            $request->get('tutorial_category'),
+            $request->get('tutorial_author'),
+            $request->get('tutorial_img'),
+            $request->get('ckeditorShortDesciption'),
+            $request->get('ckeditorMainContent')
+        );
+
+        return $this->render($editArticle['view'], $editArticle);
+    }
 }
