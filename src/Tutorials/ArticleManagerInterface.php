@@ -13,11 +13,10 @@ interface ArticleManagerInterface
         string $author,
         string $imgUrl,
         string $shortDescription,
-        string $mainContent,
-        $persistentObject
+        string $mainContent
     ): array;
 
     public function showArticle(Int $Id, $persistentObject): array;
 
-    public function findSameTipics(array $valuesToFind, Int $currentlyViewedArticleId, $persistentObject): array;
+    public function findSameTopics(array $valuesToFind, Int $currentlyViewedArticleId, $persistentObject): array;
 }
