@@ -59,8 +59,7 @@ class ArticleManager implements ArticleManagerInterface
         string $author,
         string $imgUrl,
         string $shortDescription,
-        string $mainContent,
-        $persistentObject
+        string $mainContent
     ): array {
 
         $tutorialEntity = new TutorialArticle();
@@ -94,7 +93,7 @@ class ArticleManager implements ArticleManagerInterface
         $succesMessage = 'Added successfully!';
 
         $allTutorialsArticleID = $this->doctrineManager
-            ->getRepository($persistentObject)
+            ->getRepository(TutorialArticle::class)
             ->select('id');
         $lastTopic = count($allTutorialsArticleID);
 
@@ -108,7 +107,7 @@ class ArticleManager implements ArticleManagerInterface
         ];
     }
 
-    public function findSameTipics(array $valuesToFind, Int $currentlyViewedArticleId, $persistentObject): array
+    public function findSameTopics(array $valuesToFind, Int $currentlyViewedArticleId, $persistentObject): array
     {
         $CategoryList = [];
         foreach ($valuesToFind as $key => $value) {
@@ -160,7 +159,7 @@ class ArticleManager implements ArticleManagerInterface
         $tutorialShortDescription = $tutorialArticle->getShortDescription();
         $tutorialMainContent = $tutorialArticle->getMainTopic();
 
-        $simimarTopics = $this->findSameTipics($tutorialCategoryArray, $tutorialID, TutorialArticle::class);
+        $simimarTopics = $this->findSameTopics($tutorialCategoryArray, $tutorialID, TutorialArticle::class);
 
         return [
             'tutorialTitle' => $tutorialTitle,
@@ -170,8 +169,73 @@ class ArticleManager implements ArticleManagerInterface
             'tutorialImg' => $tutorialImg,
             'tutorialShortDescription' => $tutorialShortDescription,
             'tutorialMainContent' => $tutorialMainContent,
-            'categoryList' => $simimarTopics
+            'categoryList' => $simimarTopics,
+            'ID' => $Id
         ];
     }
 
+    public function editArticle(
+        int $articleId,
+        string $title = null,
+        string $category = null,
+        string $author = null,
+        string $URLImg = null,
+        string $shortDescription = null,
+        string $mainTopic = null
+    ) {
+        $articleToEdit = $this->doctrineManager->getRepository(TutorialArticle::class)->find($articleId);
+
+        if (!is_null($title)) {
+            $articleToEdit->setTitle($title);
+            $articleToEdit->setCategory($category);
+            $articleToEdit->setAuthor($author);
+            $articleToEdit->setURLImg($URLImg);
+            $articleToEdit->setShortDescription($shortDescription);
+            $articleToEdit->setMainTopic($mainTopic);
+
+            $validationErrors = $this->validator->validate($articleToEdit);
+
+            if (count($validationErrors) > 0) {
+                return [
+                    'view' => 'tutorials/tutorialArticleAddedNotAdded.html.twig',
+                    'message' => 'You entered incorrect changes',
+                    'option1' => 'Home',
+                    'option2' => 'Back',
+                    'href1' => 'home',
+                    'href2' => 'tutorialArticleEdit',
+                    'ID' => $articleId,
+                    'errors' => $validationErrors
+                ];
+
+            } else {
+                $entityManager = $this->doctrineManager->getManager();
+                $entityManager->persist($articleToEdit);
+                $entityManager->flush();
+
+                return [
+                    'view' => 'tutorials/tutorialArticleAddedNotAdded.html.twig',
+                    'message' => "<span class='text-success alert-success'>Success!</span>",
+                    'option1' => 'Home',
+                    'option2' => 'Show topic',
+                    'href1' => 'home',
+                    'href2' => 'tutorialShow',
+                    'ID' => $articleId
+                ];
+            }
+        }
+        return [
+            'view' => 'tutorials/addNewTutorialArticle.html.twig',
+            'article' => [
+                'title' => $articleToEdit->getTitle(),
+                'category' => $articleToEdit->getCategory(),
+                'author' => $articleToEdit->getAuthor(),
+                'creationDate' => $articleToEdit->getCreationDate(),
+                'URLImg' => $articleToEdit->getURLImg(),
+                'shortDescription' => $articleToEdit->getShortDescription(),
+                'mainTopic' => $articleToEdit->getMainTopic()
+            ],
+            'pathToRouteWhereFormSend' => 'tutorialArticleEdit',
+            'ID' => $articleId
+        ];
+    }
 }
