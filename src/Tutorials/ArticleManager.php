@@ -197,7 +197,7 @@ class ArticleManager implements ArticleManagerInterface
 
             if (count($validationErrors) > 0) {
                 return [
-                    'view' => 'tutorials/tutorialArticleAddedNotAdded.html.twig',
+                    'view' => 'tutorials/alertAndChoicePanel.html.twig',
                     'message' => 'You entered incorrect changes',
                     'option1' => 'Home',
                     'option2' => 'Back',
@@ -213,7 +213,7 @@ class ArticleManager implements ArticleManagerInterface
                 $entityManager->flush();
 
                 return [
-                    'view' => 'tutorials/tutorialArticleAddedNotAdded.html.twig',
+                    'view' => 'tutorials/alertAndChoicePanel.html.twig',
                     'message' => "<span class='text-success alert-success'>Success!</span>",
                     'option1' => 'Home',
                     'option2' => 'Show topic',
@@ -236,6 +236,36 @@ class ArticleManager implements ArticleManagerInterface
             ],
             'pathToRouteWhereFormSend' => 'tutorialArticleEdit',
             'ID' => $articleId
+        ];
+    }
+
+    public function deleteArticle(int $articleId, bool $confirm)
+    {
+        if ($confirm === true) {
+            $articleToDelete = $this->doctrineManager->getRepository(TutorialArticle::class)->find($articleId);
+            $entityManager = $this->doctrineManager->getManager();
+            $entityManager->remove($articleToDelete);
+            $entityManager->flush();
+
+            return [
+                'view' => 'tutorials/alertAndChoicePanel.html.twig',
+                'message' => "<span class='text-success'>Success! Article deleted.</span>",
+                'option1' => 'home',
+                'option2' => 'Back to articles',
+                'href1' => 'home',
+                'href2' => 'tutorials'
+            ];
+        }
+
+        return [
+            'view' => 'tutorials/alertAndChoicePanel.html.twig',
+            'message' => "<span class='text-success'>Are you sure?</span>",
+            'option1' => 'NO!',
+            'option2' => 'YES',
+            'href1' => 'home',
+            'href2' => 'tutorialDelete',
+            'ID' => $articleId,
+            'confirm' => true
         ];
     }
 }
