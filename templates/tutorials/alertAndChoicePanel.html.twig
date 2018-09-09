@@ -24,10 +24,11 @@
                     </div>
 
                     <div class="col-3 px-0 ml-auto mr-2">
-                        <a href="{{ path(''~href1~'') }}" class="btn btn-block btn-danger w-100">{{ option1 }}</a>
+                        <a href="{{ path(href1) }}" class="btn btn-block btn-danger w-100">{{ option1 }}</a>
                     </div>
                     <div class="col-3 px-0 ml-2 mr-auto">
-                        <a href="{{ path(href2,{ID:ID|default('')}) }}" class="btn btn-block btn-info w-100">{{ option2 }}</a>
+                        <a href="{{ path(href2,{ID:ID|default(''),confirm:confirm|default(false)}) }}"
+                           class="btn btn-block btn-info w-100">{{ option2 }}</a>
                     </div>
                 </div>
 
