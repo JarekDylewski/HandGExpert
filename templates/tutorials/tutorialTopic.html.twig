@@ -24,8 +24,12 @@
                     </div>
                     <div>
                         {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %}
-                            <a href="{{ path('tutorialArticleEdit',{ID:ID}) }}"><span
-                                        class="col-2 text-secondary bg-dark rounded">Edit</span></a>
+                            <a href="{{ path('tutorialArticleEdit',{ID:ID}) }}">
+                                <span class="col-2 text-secondary bg-dark rounded">Edit</span>
+                            </a>
+                            <a href="{{ path('tutorialDelete',{ID:ID, confirm:confirm|default(false)}) }}">
+                                <span class="col-2 text-dark bg-danger rounded">Delete</span>
+                            </a>
                         {% endif %}
                     </div>
                 </div>
