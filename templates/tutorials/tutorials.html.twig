@@ -38,6 +38,12 @@
                 </ul>
             </nav>
         </div>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %}
+            <div class="row mr-auto ml-auto w-75">
+                <div class="mr-0 ml-auto"><a class="btn btn-outline-info" href="{{ path('addNewArticle') }}">Add topic
+                        <span style="font-size: 20px;" class="font-weight-bold text-success">+</span> </a></div>
+            </div>
+        {% endif %}
         {% for cont in content|keys|reverse %}
         <div class="row w-75 ml-auto mr-auto mt-2">
             <div class="col-12 article-head rounded border">
@@ -65,8 +71,12 @@
                     </div>
                     <div>
                         {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %}
-                            <a href="{{ path('tutorialArticleEdit',{ID:pagesIDToView[cont]}) }}"><span
-                                        class="col-2 text-secondary bg-dark rounded">Edit</span></a>
+                            <a href="{{ path('tutorialArticleEdit',{ID:pagesIDToView[cont]}) }}">
+                                <span class="col-2 text-secondary bg-dark rounded">Edit</span>
+                            </a>
+                            <a href="{{ path('tutorialDelete',{ID:pagesIDToView[cont], confirm:confirm|default(false)}) }}">
+                                <span class="col-2 text-dark bg-danger rounded">Delete</span>
+                            </a>
                         {% endif %}
                     </div>
                 </div>
