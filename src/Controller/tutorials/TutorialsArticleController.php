@@ -61,7 +61,7 @@ class TutorialsArticleController extends Controller
             $request->request->get('ckeditorMainContent')
         );
 
-        return $this->render('tutorials/tutorialArticleAddedNotAdded.html.twig', $content);
+        return $this->render('tutorials/alertAndChoicePanel.html.twig', $content);
 
     }
 
@@ -93,5 +93,16 @@ class TutorialsArticleController extends Controller
         );
 
         return $this->render($editArticle['view'], $editArticle);
+    }
+
+    /**
+     * @Security("has_role('ROLE_ADMIN')")
+     * @Route("/Tutorials/article/{ID}/delete/{confirm}", name="tutorialDelete", defaults={"confirm":false})
+     */
+    public function deleteArticle(int $ID, bool $confirm)
+    {
+        $delete = $this->articleManager->deleteArticle($ID, $confirm);
+
+        return $this->render($delete['view'], $delete);
     }
 }
