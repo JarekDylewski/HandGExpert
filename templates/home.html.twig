@@ -74,10 +74,10 @@
 {% block main %}
     {#main space#}
     {#left bar#}
-    <div class="container no-gutters text-white ">
+    <div class="container-fluid no-gutters text-white ">
         <div class="row no-gutters">
 {#-----------Glowny#}
-            <div class="col-12 mt-5 ml-5 mr-0 border border-right-0 border-bottom-0">
+            <div class="col-8 mt-5 ml-5 mr-0 border border-right-0 border-bottom-0">
                 {#---------------Semi auto#}
                 <div class="nav p-2">
                     <div class="btn-group pr-1 ">
@@ -745,7 +745,7 @@
                     </div>
                     {#------------------    gun bar#}
                     <div class="col-7 pr-0 mt-4 pt-1 border gun-bar">
-                        <div class="row">
+                        <div class="row w-100">
                             <div class="col-5">
                                 <h5 class="card-title">{{ gunData['name']|default('Choose a weapon') }}</h5>
                                 <h6 class="card-subtitle mb-2 text-muted">
@@ -777,8 +777,13 @@
                                         </button>
                                     </a>
                             </div>
-                            <div class="col-3 align-self-center">
+                            <div class="col-2 align-self-center pr-0">
                                 <button class="btn btn-outline-light" type="button">Proposed</button>
+                            </div>
+                            <div class="col-1 align-self-center p-0 mr-0 ml-auto">
+                                <button class="btn btn-light p-0" type="button"><img width="52px" height="40px"
+                                                                                     src="{{ asset('/img/compare.png') }}"
+                                                                                     alt="compare weapon"></button>
                             </div>
                         </div>
                         <div class="row">
@@ -859,12 +864,12 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
 
-    </div>
-    </div>
+                </div>
+
+            </div>
+            <div class="col-3 mt-5 border-top">Miejsce na liste porownywarek</div>
+        </div>
     </div>
 {% endblock main %}
 {% endblock %}
