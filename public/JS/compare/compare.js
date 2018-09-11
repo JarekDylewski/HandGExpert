@@ -1,4 +1,7 @@
 $(document).ready(function () {
+    $('#clear_compare').on('click', function () {
+        localStorage.clear();
+    });
     let iter = 0;
     let weapons = [];
     $('#compare_weapon').on('click', function () {
@@ -20,7 +23,8 @@ $(document).ready(function () {
             "equipTime": objectCopy.getEquipTime(),
             "additionalFatigue": objectCopy.getAdditionalFatuque(),
             "aimingTime": objectCopy.getAimingTime(),
-            "useWhileRunning": objectCopy.getUseWhileRunning()
+            "useWhileRunning": objectCopy.getUseWhileRunning(),
+            "name": $('#weaponName').html()
         };
 
         if (localStorage.getItem('weapons')) {
@@ -42,7 +46,25 @@ $(document).ready(function () {
         }
         weapons[iter] = weaponData;
         localStorage.setItem('weapons', JSON.stringify(weapons));
-
-        //localStorage.clear();
+        console.log(weapons[1].name);
+        if (weapons /*&& length<=3*/) {
+            $('#damage1').html(weapons[1].dmg);
+            $('#muzzleVelocity1').html(weapons[1].muzzleVelocit);
+            $('#rateOfFire1').html(weapons[1].rateOfFire);
+            $('#range1').html(weapons[1].rangeNear);
+            $('#recoil1').html(weapons[1].recoil);
+            $('#timeToKill1').html(weapons[1].timeToKill);
+            $('#costs1').html(weapons[1].costs);
+            $('#spawnDelay1').html(weapons[1].spawnDelay);
+            $('#reloadTime1').html(weapons[1].reloadTime);
+            $('#equipmentPoint1').html(weapons[1].equipmentPoint);
+            $('#ammoCapacity1').html(weapons[1].ammoCapacity);
+            $('#equipTime1').html(weapons[1].equipTime);
+            $('#magazines1').html(weapons[1].magazines);
+            $('#additionalFatigue1').html(weapons[1].additionalFatigue);
+            $('#aimingTime1').html(weapons[1].aimingTime);
+            $('#useWhileRunning1').html(weapons[1].useWhileRunning);
+            $('#compareWeaponName').html(weapons[1].name);
+        }
     });
 });
