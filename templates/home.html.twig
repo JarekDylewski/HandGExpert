@@ -790,7 +790,6 @@
                                                                                                          src="{{ asset('/img/compare.png') }}"
                                                                                                          alt="compare weapon">
                                 </button>
-                                <button style="font-size: 11px" id="clear_compare" class="btn btn-danger">clear</button>
                             </div>
                         </div>
                         <div class="row">
@@ -875,14 +874,18 @@
                 </div>
 
             </div>
-            <div class="col-3 w-100 mt-5 border-top">
+            <div class="col-lg-3 col-md-6 col-sm-12 w-100 mt-5 border-top">
+                <div class="row w-100 p-0 m-0 compare-nav mt-2">
+                    <button id="clear_compare" class="btn btn-outline-danger">clear</button>
+                    <a class="btn btn-outline-info ml-2" href="{{ path('compareWeapons') }}">Compare All</a>
+                </div>
                 <div class="row w-100 p-0 m-0 compareSpace"></div>
-                <div class="row w-100 p-0 m-0 statisticsForTwoWeapons"></div>
-                {#<div class="row w-100 pt-3 compareHeader">
+                <div class="row w-100 p-0 m-0 statisticsForTwoWeapons">
 
                 </div>
+                {#
                 <div class="row w-100 pt-3">
-                    <div class="col-4 p-0 border-bottom">Damage:</div><div id="damage1" class="col-2 border-right border-bottom p-0 text-center">test</div><div id="damage2" class="col-2 border-left border-bottom  p-0 text-center">test</div>
+                    <div class="col-4 p-0 border-bottom">Damage:</div><div id="damage1" class="col-2 border-left border-bottom p-0 text-center">test</div><div id="damage2" class="col-2 border-left border-bottom  p-0 text-center">test</div>
                 </div>
                 <div class="row w-100">
                     <div class="col-4 p-0">Muzzle velocity:</div><div id="muzzleVelocity1" class="col-2 border-right border-bottom  p-0 text-center">test</div><div id="muzzleVelocity2" class="col-2 border-left border-bottom  p-0 text-center">test</div>
@@ -955,6 +958,8 @@
     <script src ={{ asset('JS/CKEDITOR.js') }}></script>
     <script src="{{ asset('JS/compare/compare.js') }}"></script>
     <script src="{{ asset('JS/compare/CompareTemplates.js') }}"></script>
+    <script src="{{ asset('JS/compare/CompareStatistics.js') }}"></script>
+    <script src="{{ asset('JS/ModsAndGunSelectedByUser.js') }}"></script>
 {% endblock %}
 </body>
 </html>
