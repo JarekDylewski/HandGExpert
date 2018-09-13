@@ -1,20 +1,21 @@
 var statistics = new CollectingStatistics();
+var modsAndGunSelectedByUser = new ModsAndGunSelectedByUser();
 var DMGCalculations = new DamageCalculation;
 $(document).ready(function () {
-    $('#modMenu').on('click', 'a', function (update) {
-        update.preventDefault();
-        var $link = $(update.currentTarget);
-        var clickedID = update.target.id;//$(this).attr('id')
-        //var $id = $('img').attr('id');
+    $('#modMenu').on('click', 'a', function (e) {
+        e.preventDefault();
+        var $link = $(e.currentTarget);
+        var clickedID = e.target.id;
 
 
         $.ajax({
-            method: 'GET',
+            method: 'get',
             url: $link.attr('href')
         }).done(function (data) {
+            modsAndGunSelectedByUser.setGunId(data.gunId);
+            modsAndGunSelectedByUser.setAmmoId(data.ammoID[clickedID]);
             let content = $('.js-mod-name-list-ammo').html();
             let clickedContent = data.ammoData[clickedID].name;
-
             let ammoDamageMod = data.gunData.ammoDamageMod;
             let ammoSpeedMod = data.gunData.ammoSpeedMod;
             let ammoRangeNearMod = data.gunData.ammoRangeNearMod;
