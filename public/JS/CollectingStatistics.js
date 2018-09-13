@@ -101,7 +101,7 @@ function CollectingStatistics() {
         recoilModifier = modifier;
     };
     this.getRecoilModifier = function () {
-        return recoilModifier;
+        return parseFloat(recoilModifier);
     };
     //TODO pokasowac te instrukcje warunkowe, prawdopodobnie miały być getterach
     this.setSwayStandModeWeapon = function (sway) {
@@ -283,37 +283,37 @@ function CollectingStatistics() {
         reloadTime = rt;
     };
     this.getReloadTime = function () {
-        return reloadTime;
+        return parseFloat(reloadTime);
     };
     this.setSpawnDelay = function (delay) {
         spawnDelay = delay;
     };
     this.getSpawnDelay = function () {
-        return spawnDelay;
+        return parseFloat(spawnDelay);
     };
     this.setEquipmentPointsCost = function (eqp) {
         equipmentPoints = eqp;
     };
     this.getEquipmentPoints = function () {
-        return equipmentPoints;
+        return parseFloat(equipmentPoints);
     };
     this.setAmmoCapacity = function (aCapacity) {
         ammoCapacity = aCapacity;
     };
     this.getAmmoCapacity = function () {
-        return ammoCapacity;
+        return parseFloat(ammoCapacity);
     };
     this.setMagazines = function (clipsize) {
         magazines = clipsize;
     };
     this.getMagazines = function () {
-        return magazines;
+        return parseFloat(magazines);
     };
     this.setEquipTime = function (eqTime) {
         equipTime = eqTime;
     };
     this.getEquipTime = function () {
-        return equipTime;
+        return parseFloat(equipTime);
     };
     this.setAdditionalFatique = function (afatique) {
         additionalFatique = afatique;
