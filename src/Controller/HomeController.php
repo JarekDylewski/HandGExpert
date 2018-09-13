@@ -37,7 +37,7 @@ class HomeController extends Controller
     public function dataPreparation($gunID)
     {
         $data = $this->gunManager->getAllDataForView($gunID);
-
+        dump($data);
         return $this->render('gunBar/gunBar.html.twig', $data);
     }
 
@@ -49,6 +49,7 @@ class HomeController extends Controller
     {
         $data = $this->gunManager->getAllDataForView($gunID);
 
+        dump($data);
         return new JsonResponse($data);
     }
 
@@ -62,5 +63,13 @@ class HomeController extends Controller
         return new JsonResponse([
             'name' => $value
         ]);
+    }
+
+    /**
+     * @Route("/CompareWeapons", name="compareWeapons")
+     */
+    public function compareWeapons()
+    {
+        return $this->render('compare/comparePanel.html.twig');
     }
 }
