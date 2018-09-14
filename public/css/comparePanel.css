@@ -1,0 +1,13 @@
+.compareDeleteItem {
+    z-index: 2;
+    width: 32px;
+    height: 32px;
+}
+
+.compareDeleteItem:hover {
+    cursor: pointer !important;
+}
+
+.compareDeleteItem:focus {
+    outline: 0px !important;
+}
