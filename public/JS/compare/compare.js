@@ -1,63 +1,8 @@
 $(document).ready(function () {
+    var dataForTemplates = new DataProviderForCompareTemplate();
+    let compareStatistics = new CompareStatistics();
 
-    function insertData(Id, weapons) {
-        $('#damage' + Id).html(weapons[Id].dmg);
-        $('#muzzleVelocity' + Id).html(weapons[Id].muzzleVelocit);
-        $('#rateOfFire' + Id).html(weapons[Id].rateOfFire);
-        $('#range' + Id).html(weapons[Id].rangeNear);
-        $('#recoil' + Id).html(weapons[Id].recoil);
-        $('#timeToKill' + Id).html(weapons[Id].timeToKill);
-        $('#costs' + Id).html(weapons[Id].costs);
-        $('#spawnDelay' + Id).html(weapons[Id].spawnDelay);
-        $('#reloadTime' + Id).html(weapons[Id].reloadTime);
-        $('#equipmentPoint' + Id).html(weapons[Id].equipmentPoint);
-        $('#ammoCapacity' + Id).html(weapons[Id].ammoCapacity);
-        $('#equipTime' + Id).html(weapons[Id].equipTime);
-        $('#magazines' + Id).html(weapons[Id].magazines);
-        $('#additionalFatigue' + Id).html(weapons[Id].additionalFatigue);
-        $('#aimingTime' + Id).html(weapons[Id].aimingTime);
-        $('#useWhileRunning' + Id).html(weapons[Id].useWhileRunning);
-        $('#compareWeaponName' + Id).html(weapons[Id].name);
-        $('#compareAmmoMod' + Id).html(weapons[Id].ammo);
-        $('#compareCrosshairMod' + Id).html(weapons[Id].crosshair);
-        $('#compareTriggerMod' + Id).html(weapons[Id].trigger);
-        $('#compareSpringMod' + Id).html(weapons[Id].spring);
-        $('#compareBarrelMod' + Id).html(weapons[Id].barrel);
-        if ($('#compareWeaponImg' + Id)) {
-            $('#compareWeaponImg' + Id).attr('src', '/img/gunRibbonsByID/' + weapons[Id].gunId + '.png')
-        }
-    }
-
-    let compareTemplates = new CompareTemplates();
-    if (localStorage.getItem('weapons')) {
-        let weapons = JSON.parse(localStorage.getItem('weapons'));
-        let storageLengthVar = weapons.length;
-        if (storageLengthVar <= 3) {
-            compareTemplates.getCompare2('.compareSpace', 1, 6);
-            compareTemplates.getCompare2('.compareSpace', 2, 6);
-            compareTemplates.getStatisticsCompareLegend('.statisticsForTwoWeapons', 4);
-            compareTemplates.getCompareStatistics('.statisticsForTwoWeapons', 1, 2);
-
-
-            //$('.compareWeaponDescriptionContainer2').addClass('pl-1');
-            insertData(1, weapons);
-            if (storageLengthVar > 2) {
-
-                compareTemplates.getCompareStatistics('.statisticsForTwoWeapons', 2, 2);
-                insertData(2, weapons);
-            }
-        } else {
-            let i = 1;
-            while (i < storageLengthVar) {
-                compareTemplates.getCompare2('.compareSpace', i, 6);
-                insertData(i, weapons);
-                i++;
-            }
-            if ($('.compareWeaponDescriptionContainer11')) {
-                $('.compareWeaponDescriptionContainer11').empty()
-            }
-        }
-        let compareStatistics = new CompareStatistics();
+    function compareTwo() {
         compareStatistics.compareTwoStatistics($('#damage1'), $('#damage2'), 'more');
         compareStatistics.compareTwoStatistics($('#muzzleVelocity1'), $('#muzzleVelocity2'), 'more');
         compareStatistics.compareTwoStatistics($('#rateOfFire1'), $('#rateOfFire2'), 'more');
@@ -76,6 +21,36 @@ $(document).ready(function () {
         compareStatistics.compareTwoStatistics($('#useWhileRunning1'), $('#useWhileRunning2'), 'more');
     }
 
+    let compareTemplates = new CompareTemplates();
+    if (localStorage.getItem('weapons')) {
+        let weapons = JSON.parse(localStorage.getItem('weapons'));
+        let storageLengthVar = weapons.length;
+        if (storageLengthVar <= 3) {
+            compareTemplates.getCompare2('.compareSpace', 1, 6);
+            compareTemplates.getCompare2('.compareSpace', 2, 6);
+            compareTemplates.getStatisticsCompareLegend('.statisticsForTwoWeapons', 4);
+            compareTemplates.getCompareStatistics('.statisticsForTwoWeapons', 1, 2);
+
+            dataForTemplates.insertData(1, weapons);
+            if (storageLengthVar > 2) {
+
+                compareTemplates.getCompareStatistics('.statisticsForTwoWeapons', 2, 2);
+                dataForTemplates.insertData(2, weapons);
+                compareTwo();
+            }
+        } else {
+            let i = 1;
+            while (i < storageLengthVar) {
+                compareTemplates.getCompare2('.compareSpace', i, 6);
+                dataForTemplates.insertData(i, weapons);
+                i++;
+            }
+            if ($('.compareWeaponDescriptionContainer11')) {
+                $('.compareWeaponDescriptionContainer11').empty()
+            }
+        }
+    }
+
     $('#clear_compare').on('click', function () {
         localStorage.clear();
         $('.compareSpace').empty();
@@ -83,15 +58,17 @@ $(document).ready(function () {
     });
 
     let iter = 0;
+    var length = 0;
     let weapons = [];
     $('#compare_weapon').on('click', function () {
         let weaponStatisticsCopy = Object.assign({}, statistics);
         let modsAndGunIdCopy = Object.assign({}, modsAndGunSelectedByUser);
         let weaponData = {
             "gunId": modsAndGunIdCopy.getGunId(),
+            "ammoId": modsAndGunIdCopy.getAmmoId(),
             "dmg": weaponStatisticsCopy.getDamage().toFixed(3),
             "dmgFar": weaponStatisticsCopy.getDamageFar().toFixed(3),
-            "muzzleVelocit": Math.round(weaponStatisticsCopy.getMuzzleVelocity()),
+            "muzzleVelocity": Math.round(weaponStatisticsCopy.getMuzzleVelocity()),
             "rateOfFire": weaponStatisticsCopy.getRateOfFire().toFixed(1),
             "rangeNear": weaponStatisticsCopy.getRangeNear().toFixed(1),
             "recoil": weaponStatisticsCopy.getRecoilModifier().toFixed(2),
@@ -115,7 +92,7 @@ $(document).ready(function () {
         };
 
         if (localStorage.getItem('weapons')) {
-            var length = JSON.parse(localStorage.getItem('weapons')).length;
+            length = JSON.parse(localStorage.getItem('weapons')).length;
             var weaponsInStorage = localStorage.getItem('weapons');
             var parseData = JSON.parse(weaponsInStorage);
         }
@@ -134,7 +111,6 @@ $(document).ready(function () {
         weapons[iter] = weaponData;
         localStorage.setItem('weapons', JSON.stringify(weapons));
         if (weapons && localStorage.getItem('weapons')) {
-
             let compareName = $('#compareWeaponName1');
             if (compareName.length < 1) {
                 compareTemplates.getStatisticsCompareLegend('.statisticsForTwoWeapons', 4);
@@ -143,16 +119,17 @@ $(document).ready(function () {
                 compareTemplates.getCompare2('.compareSpace', 2, 6);
                 $('.compareWeaponDescriptionContainer2').addClass('pl-1');
             }
-            insertData(1, weapons);
+            dataForTemplates.insertData(1, weapons);
             if (length === 3) {
                 compareTemplates.getCompareStatistics('.statisticsForTwoWeapons', 2, 2);
-                insertData(2, weapons);
+                dataForTemplates.insertData(2, weapons);
+                compareTwo();
 
             } else if (length > 3 && iter <= 10) {
                 console.log(length);
                 $('.statisticsForTwoWeapons').empty();
                 compareTemplates.getCompare2('.compareSpace', iter, 6);
-                insertData(iter, weapons);
+                dataForTemplates.insertData(iter, weapons);
             }
         }
     });
