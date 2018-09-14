@@ -1,4 +1,8 @@
 {% extends 'home.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/comparePanel.css') }}">
+{% endblock stylesheets %}
 {% block main %}
     <div class="container-fluid no-gutters text-white pl-5 mb-5">
         <div class="row w-100 mt-5">
@@ -8,7 +12,7 @@
                 </div>
             </div>
         </div>
-        <div class="row w-100 mt-5">
+        <div class="row w-100">
             <div class="col-2 ml-auto mr-0 pr-0">
                 <div class="row w-100 compareLegend1 ml-auto mr-0">
 
@@ -27,7 +31,7 @@
                 </div>
             </div>
         </div>
-        <div class="row w-100 mt-5">
+        <div class="row w-100">
             <div class="col-2  ml-auto mr-0 pr-0">
                 <div class="row w-100 compareLegend2 ml-auto mr-0">
 
@@ -56,4 +60,6 @@
     <script src="{{ asset('JS/compare/CompareTemplates.js') }}"></script>
     <script src="{{ asset('JS/compare/CompareStatistics.js') }}"></script>
     <script src="{{ asset('JS/compare/compareAllWeapons.js') }}"></script>
+    <script src="{{ asset('JS/compare/DataProviderForCompareTemplate.js') }}"></script>
+    <script src="{{ asset('JS/Random.js') }}"></script>
 {% endblock javascripts %}
