@@ -2,7 +2,7 @@ function CompareTemplates() {
     this.getCompare1 = function (classOrID, weaponId = 1) {
         $(classOrID).append(`<div class="col-6 p-0 m-0">
         <div id="compareWeaponName${weaponId}" class="row w-100 m-0 border-bottom">
-            Miejsce na nazwe broni
+            ?
         </div>
         <div class="row w-100 m-0">
             <div id="compareAmmoMod${weaponId}" class="col-2"><img width="30px" height="30px" src="/img/mody/ammo.png" alt="ammunation"
@@ -25,47 +25,52 @@ function CompareTemplates() {
     };
 
     this.getCompare2 = function (classOrID, weaponIndexInStorage = 1, boodstrapColSize = 2) {
-        $(classOrID).append(`<div class="col-${boodstrapColSize} p-0 m-0 compareWeaponDescriptionContainer${weaponIndexInStorage}">
+        $(classOrID).append(`<div class="col-${boodstrapColSize} p-0 m-0 compareWeaponDescriptionContainer${weaponIndexInStorage} rounded">
         <div class="row w-100 m-0 border-bottom text-right">
-            <img id="compareWeaponImg${weaponIndexInStorage}" style="opacity: 0.6;" class="position-absolute mb-3" width="150" height="80"
-                 src='/img/gunRibbonsByID/0.png'>
-            <span id="compareWeaponName${weaponIndexInStorage}" style="z-index: 2;" class="w-100 text-right font-size-14 mt-4 pt-4">miejsce na nazwe broni</span>
+            <div class="col-2 ml-auto mr-3 mt-3" style="z-index: 2;">
+                <button id="compareDeleteItem${weaponIndexInStorage}" class="btn-sm btn-outline-danger rounded-circle text-center compareDeleteItem">x</button>
+            </div>
+            
+                <img id="compareWeaponImg${weaponIndexInStorage}" style="opacity: 0.6;" class="position-absolute mb-3" width="150" height="80"
+                     src='/img/gunRibbonsByID/0.png'>
+                <span id="compareWeaponName${weaponIndexInStorage}" style="z-index: 2;" class="w-100 text-right font-size-14 mt-4 pt-4"> ? </span>
+            
         </div>
         <div class="row w-100 m-0 border-bottom">
-            <div class="col-2 ml-0 mr-auto p-0 border-right"><img width="30px" height="30px"
+            <div class="col-2 ml-0 mr-auto p-0 border-right border-left"><img width="30px" height="30px"
                                                                   src='/img/mody/ammo.png'
                                                                   alt="ammo"
                                                                   data-placement="top"
                 ></div>
-            <div id="compareAmmoMod${weaponIndexInStorage}" class="col-10 text-left pl-1">Nazwa moda</div>
+            <div id="compareAmmoMod${weaponIndexInStorage}" class="col-10 text-left pl-1"> - </div>
         </div>
         <div class="row w-100 m-0 border-bottom">
-            <div class="col-2 ml-0 mr-auto p-0 border-right"><img width="30px" height="30px"
+            <div class="col-2 ml-0 mr-auto p-0 border-right border-left"><img width="30px" height="30px"
                                                                   src='/img/mody/crosshair.png'
                                                                   alt="crosshair"
                                                                   data-placement="top"
                 ></div>
-            <div id="compareCrosshairMod${weaponIndexInStorage}" class="col-10 text-left pl-1">Nazwa moda</div>
+            <div id="compareCrosshairMod${weaponIndexInStorage}" class="col-10 text-left pl-1"> - </div>
         </div>
-        <div class="row w-100 m-0 border-bottom">
+        <div class="row w-100 m-0 border-bottom border-left">
             <div class="col-2 ml-0 mr-auto p-0 border-right"><img width="30px" height="30px"
                                                                   src='/img/mody/trigger.png'
                                                                   alt="trigger"></div>
-            <div id="compareTriggerMod${weaponIndexInStorage}" class="col-10 text-left pl-1">Nazwa moda</div>
+            <div id="compareTriggerMod${weaponIndexInStorage}" class="col-10 text-left pl-1"> - </div>
         </div>
-        <div class="row w-100 m-0 border-bottom">
+        <div class="row w-100 m-0 border-bottom border-left">
             <div class="col-2 ml-0 mr-auto p-0 border-right"><img width="30px" height="30px"
                                                                   src='/img/mody/spring.png'
                                                                   alt="spring"
                 ></div>
-            <div id="compareSpringMod${weaponIndexInStorage}" class="col-10 text-left pl-1">Nazwa moda</div>
+            <div id="compareSpringMod${weaponIndexInStorage}" class="col-10 text-left pl-1"> - </div>
         </div>
-        <div class="row w-100 m-0 border-bottom">
+        <div class="row w-100 m-0 border-bottom border-left">
             <div class="col-2 ml-0 mr-auto p-0 border-right"><img width="30px" height="30px"
                                                                   src='/img/mody/barrel.png'
                                                                   alt="barrel"
                 ></div>
-            <div id="compareBarrelMod${weaponIndexInStorage}" class="col-10 text-left pl-1">Nazwa moda</div>
+            <div id="compareBarrelMod${weaponIndexInStorage}" class="col-10 text-left pl-1"> - </div>
         </div>
     </div>`)
     };
