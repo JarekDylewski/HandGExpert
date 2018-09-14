@@ -1,32 +1,21 @@
 $(document).ready(function () {
+    var dataForTemplates = new DataProviderForCompareTemplate();
     if (localStorage.getItem('weapons')) {
-        function insertData(Id, weapons) {
-            $('#damage' + Id).html(weapons[Id].dmg);
-            $('#muzzleVelocity' + Id).html(weapons[Id].muzzleVelocit);
-            $('#rateOfFire' + Id).html(weapons[Id].rateOfFire);
-            $('#range' + Id).html(weapons[Id].rangeNear);
-            $('#recoil' + Id).html(weapons[Id].recoil);
-            $('#timeToKill' + Id).html(weapons[Id].timeToKill);
-            $('#costs' + Id).html(weapons[Id].costs);
-            $('#spawnDelay' + Id).html(weapons[Id].spawnDelay);
-            $('#reloadTime' + Id).html(weapons[Id].reloadTime);
-            $('#equipmentPoint' + Id).html(weapons[Id].equipmentPoint);
-            $('#ammoCapacity' + Id).html(weapons[Id].ammoCapacity);
-            $('#equipTime' + Id).html(weapons[Id].equipTime);
-            $('#magazines' + Id).html(weapons[Id].magazines);
-            $('#additionalFatigue' + Id).html(weapons[Id].additionalFatigue);
-            $('#aimingTime' + Id).html(weapons[Id].aimingTime);
-            $('#useWhileRunning' + Id).html(weapons[Id].useWhileRunning);
-            $('#compareWeaponName' + Id).html(weapons[Id].name);
-            $('#compareAmmoMod' + Id).html(weapons[Id].ammo);
-            $('#compareCrosshairMod' + Id).html(weapons[Id].crosshair);
-            $('#compareTriggerMod' + Id).html(weapons[Id].trigger);
-            $('#compareSpringMod' + Id).html(weapons[Id].spring);
-            $('#compareBarrelMod' + Id).html(weapons[Id].barrel);
-            if ($('#compareWeaponImg' + Id)) {
-                $('#compareWeaponImg' + Id).attr('src', '/img/gunRibbonsByID/' + weapons[Id].gunId + '.png')
-            }
-        }
+
+        var colors = [
+            // '',
+            '#cd4a22',
+            '#db6831',
+            '#e28743',
+            '#dfb562',
+            '#e0d681',
+            '#feffd9',
+            '#aac599',
+            '#90bc85',
+            '#73b43e',
+            '#00873d'
+        ];
+        colors.reverse();
 
         let compareTemplates = new CompareTemplates();
         let weapons = JSON.parse(localStorage.getItem('weapons'));
@@ -44,14 +33,49 @@ $(document).ready(function () {
                 compareTemplates.getCompareStatistics('.compareStatistics2', i, 2)
             }
 
-            insertData(i, weapons);
+            dataForTemplates.insertData(i, weapons);
             i++;
         }
+        if (i > 5) {
+            compareTemplates.getStatisticsCompareLegend('.compareLegend2', 12);
+        }
         compareTemplates.getStatisticsCompareLegend('.compareLegend1', 12);
-        compareTemplates.getStatisticsCompareLegend('.compareLegend2', 12);
         if ($('.compareWeaponDescriptionContainer11')) {
             $('.compareWeaponDescriptionContainer11').remove();
             $('.statisticsFor11').remove();
         }
+        let compareStatistics = new CompareStatistics();
+        compareStatistics.compareAllStatistics(weapons, 'dmg', '#damage', colors);
+        compareStatistics.compareAllStatistics(weapons, 'muzzleVelocity', '#muzzleVelocity', colors);
+        compareStatistics.compareAllStatistics(weapons, 'rateOfFire', '#rateOfFire', colors);
+        compareStatistics.compareAllStatistics(weapons, 'rangeNear', '#range', colors);
+        compareStatistics.compareAllStatistics(weapons, 'recoil', '#recoil', colors, 'less');
+        compareStatistics.compareAllStatistics(weapons, 'timeToKill', '#timeToKill', colors, 'less');
+        compareStatistics.compareAllStatistics(weapons, 'costs', '#costs', colors, 'less');
+        compareStatistics.compareAllStatistics(weapons, 'spawnDelay', '#spawnDelay', colors, 'less');
+        compareStatistics.compareAllStatistics(weapons, 'reloadTime', '#reloadTime', colors, 'less');
+        compareStatistics.compareAllStatistics(weapons, 'equipmentPoint', '#equipmentPoint', colors, 'less');
+        compareStatistics.compareAllStatistics(weapons, 'ammoCapacity', '#ammoCapacity', colors);
+        compareStatistics.compareAllStatistics(weapons, 'equipTime', '#equipTime', colors, 'less');
+        compareStatistics.compareAllStatistics(weapons, 'magazines', '#magazines', colors);
+        compareStatistics.compareAllStatistics(weapons, 'additionalFatigue', '#additionalFatigue', colors, 'less');
+        compareStatistics.compareAllStatistics(weapons, 'aimingTime', '#aimingTime', colors, 'less');
+        for (let i = 0; i < storageLengthVar; i++) {
+            if ($('#useWhileRunning' + i).html() == "Yes") {
+                $('#useWhileRunning' + i).addClass('text-success')
+            } else {
+                $('#useWhileRunning' + i).addClass('text-danger')
+            }
+        }
     }
+
+    let compareDeleteItem = $('.compareDeleteItem');
+    compareDeleteItem.on('mouseover', function () {
+        let itemId = $(this).attr('id').substr(17, 1);
+        $('.compareWeaponDescriptionContainer' + itemId + ',.statisticsFor' + itemId).css('background-color', 'rgba(255,103,93,0.05)');
+    });
+    compareDeleteItem.on('mouseout', function () {
+        let itemId = $(this).attr('id').substr(17, 1);
+        $('.compareWeaponDescriptionContainer' + itemId + ',.statisticsFor' + itemId).css('background-color', '');
+    })
 });
