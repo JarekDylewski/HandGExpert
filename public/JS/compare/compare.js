@@ -117,7 +117,6 @@ $(document).ready(function () {
                 compareTemplates.getCompareStatistics('.statisticsForTwoWeapons', 1, 2);
                 compareTemplates.getCompare2('.compareSpace', 1, 6);
                 compareTemplates.getCompare2('.compareSpace', 2, 6);
-                $('.compareWeaponDescriptionContainer2').addClass('pl-1');
             }
             dataForTemplates.insertData(1, weapons);
             if (length === 3) {
