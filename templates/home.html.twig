@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="{{ asset('css/styleSheets.css') }}">
         <link rel="stylesheet" href="{{ asset('css/comparePanel.css') }}">
         <link rel="stylesheet" href="{{ asset('twbs/bootstrap/dist/css/bootstrap.css') }}">
+        <link rel="stylesheet" href="{{ asset('/icons/css/fontello.css') }}">
     {% endblock %}
 </head>
 <body>
@@ -26,7 +27,8 @@
                 </ul>
                 {#user menu#}
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <img class="border border-primary rounded-circle cursor-pointer ml-automr-0 ml-auto" width="40" height="40" src="{{ asset('img/combatBadges/bronzeFastReload.png') }}">
+                {#<img class="border border-primary rounded-circle cursor-pointer ml-automr-0 ml-auto" width="40" height="40" src="{{ asset('img/combatBadges/bronzeFastReload.png') }}">#}
+                <i class="icon-user ml-automr-0 ml-auto h4"></i>
                    <div class="mr-5 pr-5">
                         <div class="dropdown">
                             <button class="btn btn-outline-light dropdown-toggle text-dark" type="button" id="przykladowaLista"
@@ -34,15 +36,15 @@
                                 {{ app.user.username }}
                             </button>
                             <div class="dropdown-menu" aria-labelledby="przykladowaLista">
-                                <a href="{{ path('logout') }}" class="dropdown-item text-dark-orange">Logout</a>
+                                <a href="{{ path('logout') }}" class="dropdown-item text-dark-orange"><i
+                                            class="icon-logout"></i>Logout</a>
                             </div>
                         </div>
                 {% else %}
-                    <a href="{{ path('login') }}" class="btn btn-outline-secondary mr-2 text-dark-orange ml-auto"> Log in </a>
-                    {#//TODO Dodać informację jeżeli użytkownik jest zalogowany "posiadasz juz konto i aktualnie jestes #}
-                    {#TODO zalogowany na 'nazwa uzytkownika' lecz mozesz utworzyć nowe konto"#}
+                    <a href="{{ path('login') }}" class="btn btn-outline-secondary mr-2 text-dark-orange ml-auto"><i
+                                class="icon-login h5"></i> Log in </a>
                     <a href="{{ path('registration_form') }}" class="btn btn-outline-secondary mr-5 text-dark-orange">
-                        Registration </a>
+                        <i class="icon-user-plus h5"></i>Register </a>
                 {% endif %}
                     </div>
             </div>
@@ -877,11 +879,13 @@
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12 w-100 mt-5 border-top">
                 <div class="row w-100 p-0 m-0 compare-nav mt-2">
-                    <button id="clear_compare" class="btn btn-outline-danger">clear</button>
-                    <a class="btn btn-outline-info ml-2" href="{{ path('compareWeapons') }}">Compare All</a>
+
                 </div>
-                <div class="row w-100 p-0 m-0 compareSpace"></div>
-                <div class="row w-100 p-0 m-0 statisticsForTwoWeapons">
+                <div class="row w-100 p-0 comparison">
+                    <div class="row w-100 p-0 m-0 compareSpace compareWeaponDesc1"></div>
+                    <div class="row w-100 p-0 m-0 statisticsForTwoWeapons compareStatistics1">
+                    </div>
+
 
                 </div>
                 {#
@@ -961,6 +965,7 @@
     <script src="{{ asset('JS/compare/CompareTemplates.js') }}"></script>
     <script src="{{ asset('JS/compare/CompareStatistics.js') }}"></script>
     <script src="{{ asset('JS/compare/DataProviderForCompareTemplate.js') }}"></script>
+    <script src="{{ asset('JS/compare/compareItemDelete.js') }}"></script>
     <script src="{{ asset('JS/ModsAndGunSelectedByUser.js') }}"></script>
 {% endblock %}
 </body>
