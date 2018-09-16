@@ -11,3 +11,11 @@
 .compareDeleteItem:focus {
     outline: 0px !important;
 }
+
+.comparison {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 42rem;
+    margin-top: 2.33rem !important;
+
+}
