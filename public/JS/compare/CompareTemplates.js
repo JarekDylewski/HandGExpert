@@ -116,7 +116,7 @@ function CompareTemplates() {
 
     this.getStatisticsCompareLegend = function (classOrID, boodstrapColSize = 4) {
         $(classOrID).append(`
-            <div class="col-${boodstrapColSize}">
+            <div class="col-${boodstrapColSize} statisticsLegend">
                 <div class="row">
                     <div class="col-12 p-0 border-bottom">Damage:</div>
                     <div class="col-12 p-0 border-bottom">Muzzle velocity:</div>
