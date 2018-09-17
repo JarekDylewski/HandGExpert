@@ -1,4 +1,13 @@
 {% extends 'home.html.twig' %}
+{% block compareButton %}
+    <div class="col-1 align-self-center p-0 mr-0 ml-auto">
+        <button id="compare_weapon" class="btn btn-light p-0" type="button"><img width="52px"
+                                                                                 height="40px"
+                                                                                 src="{{ asset('/img/compare.png') }}"
+                                                                                 alt="compare weapon">
+        </button>
+    </div>
+{% endblock compareButton %}
 {% block gunBar %}
     <div class="row statistics-panel">
         <div class="col-7 pr-0">
@@ -133,12 +142,7 @@
             setTimeout(function () {
                 $('.stats_panel').trigger('click');
             },500);
-
-
         });
-
     </script>
-
-
 {% endblock %}
 {#57 /                       #}
