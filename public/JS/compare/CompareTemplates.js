@@ -78,37 +78,37 @@ function CompareTemplates() {
         $(classOrID).append(`
             <div class="col-${boodstrapColSize} border-right border-left statisticsFor${weaponIndexInStorage}">
                 <div class="row">
-                    <div id="damage${weaponIndexInStorage}" class="col-12 border-bottom p-0 text-center"> - </div>
+                    <div id="damage${weaponIndexInStorage}" class="col-12 border-bottom p-0 text-left"> - </div>
            
-                    <div id="muzzleVelocity${weaponIndexInStorage}" class="col-12 border-bottom  p-0 text-center"> - </div>
+                    <div id="muzzleVelocity${weaponIndexInStorage}" class="col-12 border-bottom  p-0 text-left"> - </div>
                
-                    <div id="rateOfFire${weaponIndexInStorage}" class="col-12 border-bottom  p-0 text-center"> - </div>
+                    <div id="rateOfFire${weaponIndexInStorage}" class="col-12 border-bottom  p-0 text-left"> - </div>
                
-                    <div id="range${weaponIndexInStorage}" class="col-12 border-bottom  p-0 text-center"> - </div>
+                    <div id="range${weaponIndexInStorage}" class="col-12 border-bottom  p-0 text-left"> - </div>
                
-                    <div id="recoil${weaponIndexInStorage}" class="col-12 border-bottom  p-0 text-center"> - </div>
+                    <div id="recoil${weaponIndexInStorage}" class="col-12 border-bottom  p-0 text-left"> - </div>
                
-                    <div id="timeToKill${weaponIndexInStorage}" class="col-12 border-bottom  p-0 text-center"> - </div>
+                    <div id="timeToKill${weaponIndexInStorage}" class="col-12 border-bottom  p-0 text-left"> - </div>
     
-                    <div id="costs${weaponIndexInStorage}" class="col-12 border-bottom  p-0 text-center"> - </div>
+                    <div id="costs${weaponIndexInStorage}" class="col-12 border-bottom  p-0 text-left"> - </div>
                
-                    <div id="spawnDelay${weaponIndexInStorage}" class="col-12 border-bottom  p-0 text-center"> - </div>
+                    <div id="spawnDelay${weaponIndexInStorage}" class="col-12 border-bottom  p-0 text-left"> - </div>
                
-                    <div id="reloadTime${weaponIndexInStorage}" class="col-12 border-bottom  p-0 text-center"> - </div>
+                    <div id="reloadTime${weaponIndexInStorage}" class="col-12 border-bottom  p-0 text-left"> - </div>
                
-                    <div id="equipmentPoint${weaponIndexInStorage}" class="col-12 border-bottom  p-0 text-center"> - </div>
+                    <div id="equipmentPoint${weaponIndexInStorage}" class="col-12 border-bottom  p-0 text-left"> - </div>
                
-                    <div id="ammoCapacity${weaponIndexInStorage}" class="col-12 border-bottom  p-0 text-center"> - </div>
+                    <div id="ammoCapacity${weaponIndexInStorage}" class="col-12 border-bottom  p-0 text-left"> - </div>
                
-                    <div id="magazines${weaponIndexInStorage}" class="col-12 border-bottom  p-0 text-center"> - </div>
+                    <div id="magazines${weaponIndexInStorage}" class="col-12 border-bottom  p-0 text-left"> - </div>
                
-                    <div id="equipTime${weaponIndexInStorage}" class="col-12 border-bottom  p-0 text-center"> - </div>
+                    <div id="equipTime${weaponIndexInStorage}" class="col-12 border-bottom  p-0 text-left"> - </div>
                
-                    <div id="additionalFatigue${weaponIndexInStorage}" class="col-12 border-bottom  p-0 text-center"> - </div>
+                    <div id="additionalFatigue${weaponIndexInStorage}" class="col-12 border-bottom  p-0 text-left"> - </div>
                
-                    <div id="aimingTime${weaponIndexInStorage}" class="col-12 border-bottom  p-0 text-center"> - </div>
+                    <div id="aimingTime${weaponIndexInStorage}" class="col-12 border-bottom  p-0 text-left"> - </div>
                
-                    <div id="useWhileRunning${weaponIndexInStorage}" class="col-12  p-0 text-center"> - </div>
+                    <div id="useWhileRunning${weaponIndexInStorage}" class="col-12  p-0 text-left ml-1"> - </div>
                 </div>
             </div>
         `);
