@@ -60,22 +60,23 @@ $(document).ready(function () {
         }
         compareTemplates.getStatisticsCompareLegend('.compareLegend1', 12);
 
+        let withNumbering = true;
         let compareStatistics = new CompareStatistics();
-        compareStatistics.compareAllStatistics(weapons, 'dmg', '#damage', colors);
-        compareStatistics.compareAllStatistics(weapons, 'muzzleVelocity', '#muzzleVelocity', colors);
-        compareStatistics.compareAllStatistics(weapons, 'rateOfFire', '#rateOfFire', colors);
-        compareStatistics.compareAllStatistics(weapons, 'rangeNear', '#range', colors);
-        compareStatistics.compareAllStatistics(weapons, 'recoil', '#recoil', colors, 'less');
-        compareStatistics.compareAllStatistics(weapons, 'timeToKill', '#timeToKill', colors, 'less');
-        compareStatistics.compareAllStatistics(weapons, 'costs', '#costs', colors, 'less');
-        compareStatistics.compareAllStatistics(weapons, 'spawnDelay', '#spawnDelay', colors, 'less');
-        compareStatistics.compareAllStatistics(weapons, 'reloadTime', '#reloadTime', colors, 'less');
-        compareStatistics.compareAllStatistics(weapons, 'equipmentPoint', '#equipmentPoint', colors, 'less');
-        compareStatistics.compareAllStatistics(weapons, 'ammoCapacity', '#ammoCapacity', colors);
-        compareStatistics.compareAllStatistics(weapons, 'equipTime', '#equipTime', colors, 'less');
-        compareStatistics.compareAllStatistics(weapons, 'magazines', '#magazines', colors);
-        compareStatistics.compareAllStatistics(weapons, 'additionalFatigue', '#additionalFatigue', colors, 'less');
-        compareStatistics.compareAllStatistics(weapons, 'aimingTime', '#aimingTime', colors, 'less');
+        compareStatistics.compareAllStatistics(weapons, 'dmg', '#damage', colors, 'more', withNumbering);
+        compareStatistics.compareAllStatistics(weapons, 'muzzleVelocity', '#muzzleVelocity', colors, 'more', withNumbering);
+        compareStatistics.compareAllStatistics(weapons, 'rateOfFire', '#rateOfFire', colors, 'more', withNumbering);
+        compareStatistics.compareAllStatistics(weapons, 'rangeNear', '#range', colors, 'more', withNumbering);
+        compareStatistics.compareAllStatistics(weapons, 'recoil', '#recoil', colors, 'less', withNumbering);
+        compareStatistics.compareAllStatistics(weapons, 'timeToKill', '#timeToKill', colors, 'less', withNumbering);
+        compareStatistics.compareAllStatistics(weapons, 'costs', '#costs', colors, 'less', withNumbering);
+        compareStatistics.compareAllStatistics(weapons, 'spawnDelay', '#spawnDelay', colors, 'less', withNumbering);
+        compareStatistics.compareAllStatistics(weapons, 'reloadTime', '#reloadTime', colors, 'less', withNumbering);
+        compareStatistics.compareAllStatistics(weapons, 'equipmentPoint', '#equipmentPoint', colors, 'less', withNumbering);
+        compareStatistics.compareAllStatistics(weapons, 'ammoCapacity', '#ammoCapacity', colors, 'more', withNumbering);
+        compareStatistics.compareAllStatistics(weapons, 'equipTime', '#equipTime', colors, 'less', withNumbering);
+        compareStatistics.compareAllStatistics(weapons, 'magazines', '#magazines', colors, 'more', withNumbering);
+        compareStatistics.compareAllStatistics(weapons, 'additionalFatigue', '#additionalFatigue', colors, 'less', withNumbering);
+        compareStatistics.compareAllStatistics(weapons, 'aimingTime', '#aimingTime', colors, 'less', withNumbering);
         for (let i = 0; i < storageLengthVar; i++) {
             if ($('#useWhileRunning' + i).html() == "Yes") {
                 $('#useWhileRunning' + i).addClass('text-success')
