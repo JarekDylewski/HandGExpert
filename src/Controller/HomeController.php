@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Guns\FileGunRepository;
 use App\Guns\GunManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class HomeController extends Controller
 {
@@ -23,7 +25,7 @@ class HomeController extends Controller
     /**
      * @Route("/", name="home")
      */
-    public function showHome()
+    public function showHome(Request $request)
     {
         return $this->render('home.html.twig', [
             'title' => 'H&GExpert',
@@ -37,7 +39,6 @@ class HomeController extends Controller
     public function dataPreparation($gunID)
     {
         $data = $this->gunManager->getAllDataForView($gunID);
-        dump($data);
         return $this->render('gunBar/gunBar.html.twig', $data);
     }
 
@@ -71,5 +72,14 @@ class HomeController extends Controller
     public function compareWeapons()
     {
         return $this->render('compare/comparePanel.html.twig');
+    }
+
+    /**
+     * @Route("/WeaponStorage", name="weaponStorage")
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     */
+    public function weaponStorage()
+    {
+        return $this->render('weaponStorage/weaponStorage.html.twig');
     }
 }
