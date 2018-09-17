@@ -1,6 +1,6 @@
-Projekt HandGExpert powstał z myślą o społeczności gry "Heroes and Generals", zamysł projektu to przedstawienie graczom w prosty i przejrzysty sposób wszelkich danych dotyczących broni (w przyszłości może nawet pojazdów) w przyjemnym i czytelnym interfejsie.  
+Projekt HandGExpert powstał z myślą o społeczności gry "Heroes and Generals", zamysł projektu to przedstawienie graczom w prosty i przejrzysty sposób wszelkich danych dotyczących broni (w przyszłości może nawet pojazdów) w przyjemnym i czytelnym interfejsie oraz możliwość porównania każdej z nich - porównywane bronie zapisują się nawet dla niezalogowanych użytkowników.  
 Kolejny zamysł to dodanie na stronę bardzo 'technicznych' poradników do gry, czyli poradniki jak wykorzystać wiedzę techniczną na własną korzyść (nie chodzi o exploity)  
-Gracz może sprawdzić statystyki spośród 36 broni palnych dostępnych w grze.  
+Dzięki temu projektowi gracz może sprawdzić statystyki spośród 36 broni palnych dostępnych w grze.  
 ### Statystyki takie jak:  
 Obrażenia  
 Prędkość wylotowa pocisku  
@@ -27,20 +27,27 @@ Jaki wpływ na rozrzut ma stanie, kucanie, leżenie czy strzelanie z biodra.
 O ile zwiększa koszta eksploatacji dany modyfikator.  
 
 
-![HandGExpert](https://imgur.com/KaXXHl7.png)
-![HandGExpert](https://imgur.com/Bx1CWo8.png)
-![HandGExpert](https://imgur.com/OUAtTW3.png)
-![HandGExpert](https://imgur.com/2kigRxT.png)
-![HandGExpert](https://imgur.com/MmvPG4T.png)
-![HandGExpert](https://imgur.com/TZEZyd3.png)
-![HandGExpert](https://imgur.com/Sc7tDWR.png)
-![HandGExpert](https://imgur.com/sXbn3KV.png)
-![HandGExpert](https://imgur.com/ZftCW5a.png)
-![HandGExpert](https://imgur.com/bl89qLj.png)
-![HandGExpert](https://imgur.com/vNJ1E3C.png)
-![HandGExpert](https://imgur.com/aN5YSC3.png)
-![HandGExpert](https://imgur.com/jblpUZo.png)
-![HandGExpert](https://imgur.com/ZJ6SPM9.png)
-![HandGExpert](https://imgur.com/5ZiDn5X.png)
-![HandGExpert](https://imgur.com/mIJtm7R.png)
-![HandGExpert](https://imgur.com/6AqIp0A.png)
+![HandGExpert](https://imgur.com/cDMe6FO.png)
+![HandGExpert](https://imgur.com/mk4joys.png)
+![HandGExpert](https://imgur.com/1jYFkak.png)
+![HandGExpert](https://imgur.com/zqYcJC1.png)
+![HandGExpert](https://imgur.com/LA7U9fN.png)
+![HandGExpert](https://imgur.com/Gfem0mF.png)
+![HandGExpert](https://imgur.com/mG3vMi9.png)
+![HandGExpert](https://imgur.com/XWWKiNA.png)
+![HandGExpert](https://imgur.com/irl0aoN.png)
+![HandGExpert](https://imgur.com/9RTVBlv.png)
+![HandGExpert](https://imgur.com/qO1u5dA.png)
+![HandGExpert](https://imgur.com/GOPEhF1.png)
+![HandGExpert](https://imgur.com/B8Zw3wC.png)
+
+### Porównać ze sobą różne bronie:
+![HandGExpert](https://imgur.com/ivwDsYM.png)
+![HandGExpert](https://imgur.com/8fRxktd.png)
+![HandGExpert](https://imgur.com/ya8rcHU.png)
+
+### Przeglądać poradniki bardzo doświadczonych graczy.
+![HandGExpert](https://imgur.com/6IYo5Zn.png)
+![HandGExpert](https://imgur.com/7JjzQro.png)
+![HandGExpert](https://imgur.com/wL8a6d4.png)
+![HandGExpert](https://imgur.com/XGBWyXX.png)
