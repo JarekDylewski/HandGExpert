@@ -1,13 +1,14 @@
 class CompareStatistics {
 
     /**
-     * @param weapons[] - array with weapon objects
-     * @param key - key in weapon object example: {"key1":50, "key2":40, "foo":10,"bar":20}
-     * @param changePlaceColor - class or Id where the color will be changed
-     * @param colors[] - array with colors
-     * @param moreOrLess - determines, "more" - is better or "less" - is better
+     * @param {array} weapons[] - array with weapon objects
+     * @param {string} key - key in weapon object example: {"key1":50, "key2":40, "foo":10,"bar":20}
+     * @param {string} changePlaceColor - class or Id where the color will be changed
+     * @param {array} colors[] - array with colors
+     * @param {string} moreOrLess - determines, "more" - is better or "less" - is better
+     * @param {boolean} numbering - numbering the order best - worst
      */
-    compareAllStatistics(weapons, key, changePlaceColor, colors, moreOrLess = 'more') {
+    compareAllStatistics(weapons, key, changePlaceColor, colors, moreOrLess = 'more', numbering = false) {
 
         let length = weapons.length;
         let weaponValues = [];
@@ -43,6 +44,9 @@ class CompareStatistics {
                 valueOrderDesc.forEach(function (ordValue, ordIndex) {
                     if (parseFloat(value[key]) === parseFloat(ordValue)) {
                         $(changePlaceColor + index).css('color', colors[ordIndex]);
+                        if (numbering === true) {
+                            $(changePlaceColor + index).prepend('<span class="text-secondary mr-2 ml-1">#' + parseFloat(ordIndex + 1) + ' </span>')
+                        }
                     }
                 })
 
