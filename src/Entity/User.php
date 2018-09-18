@@ -104,6 +104,14 @@ class User implements UserInterface, \Serializable
     private $roles;
 
     /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\WeaponStorage", mappedBy="user")
      */
     private $weaponStorages;
@@ -153,6 +161,7 @@ class User implements UserInterface, \Serializable
         return serialize(array(
             $this->id,
             $this->username,
+            $this->email,
             $this->password,
             $this->roles
         ));
@@ -164,6 +173,7 @@ class User implements UserInterface, \Serializable
         list (
             $this->id,
             $this->username,
+            $this->email,
             $this->password,
             $this->roles
             ) = unserialize($serialized, array('allowed_classes' => false));
