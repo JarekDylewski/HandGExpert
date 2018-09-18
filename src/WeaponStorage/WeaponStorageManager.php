@@ -28,9 +28,18 @@ class WeaponStorageManager implements WeaponStorageInterface
         ?int $barrelId,
         ?User $user
     ): void {
+
         $weaponStorage = new WeaponStorage();
-        $category = new WeaponCategory();
-        $category->setName($weaponCategory);
+        $categoryInDB = $this->doctrineManager->getRepository(WeaponCategory::class)->findOneBy(['name' => $weaponCategory]);
+        $entityManager = $this->doctrineManager->getManager();
+
+        if ($categoryInDB) {
+            $category = $categoryInDB->getId();
+        } else {
+            $category = new WeaponCategory();
+            $category->setName($weaponCategory);
+            $entityManager->persist($category);
+        }
 
         $weaponStorage
             ->setWeaponCategory($category)
@@ -42,8 +51,6 @@ class WeaponStorageManager implements WeaponStorageInterface
             ->setBarrelId($barrelId)
             ->setUser($user);
 
-        $entityManager = $this->doctrineManager->getManager();
-        $entityManager->persist($category);
         $entityManager->persist($weaponStorage);
         $entityManager->flush();
     }
