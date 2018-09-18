@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -102,6 +104,11 @@ class User implements UserInterface, \Serializable
     private $roles;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\WeaponStorage", mappedBy="user")
+     */
+    private $weaponStorages;
+
+    /**
      * @return mixed
      */
     public function getEmail()
@@ -113,6 +120,7 @@ class User implements UserInterface, \Serializable
     {
         $this->roles = array('ROLE_USER');
         $this->isActive = true;
+        $this->weaponStorages = new ArrayCollection();
     }
 
     public function getUsername()
@@ -159,5 +167,36 @@ class User implements UserInterface, \Serializable
             $this->password,
             $this->roles
             ) = unserialize($serialized, array('allowed_classes' => false));
+    }
+
+    /**
+     * @return Collection|WeaponStorage[]
+     */
+    public function getWeaponStorages(): Collection
+    {
+        return $this->weaponStorages;
+    }
+
+    public function addWeaponStorage(WeaponStorage $weaponStorage): self
+    {
+        if (!$this->weaponStorages->contains($weaponStorage)) {
+            $this->weaponStorages[] = $weaponStorage;
+            $weaponStorage->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWeaponStorage(WeaponStorage $weaponStorage): self
+    {
+        if ($this->weaponStorages->contains($weaponStorage)) {
+            $this->weaponStorages->removeElement($weaponStorage);
+            // set the owning side to null (unless already changed)
+            if ($weaponStorage->getUser() === $this) {
+                $weaponStorage->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }
