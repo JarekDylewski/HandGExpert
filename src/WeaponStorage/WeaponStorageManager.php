@@ -34,7 +34,7 @@ class WeaponStorageManager implements WeaponStorageInterface
         $entityManager = $this->doctrineManager->getManager();
 
         if ($categoryInDB) {
-            $category = $categoryInDB->getId();
+            $category = $categoryInDB;
         } else {
             $category = new WeaponCategory();
             $category->setName($weaponCategory);
