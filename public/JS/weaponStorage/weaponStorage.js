@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $('#addWeaponToStorage').on('click', function (e) {
-        // e.preventDefault();
+        e.preventDefault();
 
         $.ajax({
             url: $(e.currentTarget).attr('href'),
@@ -26,10 +26,7 @@ $(document).ready(function () {
             `);
 
             let weaponStorage = $data.weaponStorage;
-            let len = weaponStorage.length;
-            for (let i = 0; i <= len; i++) {
-                $('#weaponStorageMessages').append(weaponStorage[i].message + "<br>");
-            }
+            $('#weaponStorageMessages').append(weaponStorage.message);
 
             setTimeout(function () {
                 $('#weaponStorageMessages').animate({
