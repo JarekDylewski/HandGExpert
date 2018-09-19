@@ -1,11 +1,11 @@
 function ModsAndGunSelectedByUser() {
-    this.weaponCategory = '';
-    this.gunId = '';
-    this.ammoId = '';
-    this.crosshairId = '';
-    this.triggerId = '';
-    this.springId = '';
-    this.barrelId = '';
+    this.weaponCategory = null;
+    this.gunId = 0;
+    this.ammoId = 0;
+    this.crosshairId = 0;
+    this.triggerId = 0;
+    this.springId = 0;
+    this.barrelId = 0;
 
     this.setWeaponCategory = function (category) {
         this.weaponCategory = category;
