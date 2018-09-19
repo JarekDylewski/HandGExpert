@@ -27,7 +27,7 @@ class WeaponStorageManager implements WeaponStorageInterface
         ?int $springId,
         ?int $barrelId,
         ?User $user
-    ) {
+    ): array {
 
         $itemsInUserStorage = $user->getWeaponStorages()->getKeys();
         if (!is_null($itemsInUserStorage)) {
@@ -70,7 +70,7 @@ class WeaponStorageManager implements WeaponStorageInterface
         return $success;
     }
 
-    public function removeWeaponFromStorage(int $weaponStorageId)
+    public function removeWeaponFromStorage(int $weaponStorageId): array
     {
         $weaponToRemove = $this->doctrineManager->getRepository(WeaponStorage::class)->find($weaponStorageId);
         $entityManager = $this->doctrineManager->getManager();
