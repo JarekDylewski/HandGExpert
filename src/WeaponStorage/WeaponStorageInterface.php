@@ -15,8 +15,8 @@ interface WeaponStorageInterface
         ?int $springId,
         ?int $barrelId,
         ?User $user
-    ): void;
+    ): array;
 
-    public function removeWeaponFromStorage(int $weaponStorageId): void;
+    public function removeWeaponFromStorage(int $weaponStorageId): array;
 
 }
