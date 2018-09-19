@@ -15,28 +15,29 @@ $(document).ready(function () {
             modsAndGunSelectedByUser.setGunId(data.gunId);
             modsAndGunSelectedByUser.setAmmoId(data.ammoID[clickedID]);
             let category = '';
+
             switch (data.gunData['weaponcategoryid']) {
-                case 11:
+                case "11":
                     category = 'Semi-auto riffle';
                     break;
 
-                case 12:
+                case "12":
                     category = 'Bolt action riffle';
                     break;
 
-                case 13:
+                case "13":
                     category = 'Assault riffle';
                     break;
 
-                case 14:
+                case "14":
                     category = 'Light machine gun';
                     break;
 
-                case 16:
+                case "16":
                     category = 'Submachine gun';
                     break;
 
-                case 17:
+                case "17":
                     category = 'Handgun';
                     break;
             }
