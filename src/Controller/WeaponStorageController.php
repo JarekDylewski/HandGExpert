@@ -7,6 +7,7 @@ use App\WeaponStorage\WeaponStorageManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -26,26 +27,22 @@ class WeaponStorageController extends Controller
     public function addWeaponToStorage(Request $request)
     {
 
-        $this->weaponStorageManager->addWeaponToStorage(
-            $request->get('weaponCategory'),
-            $request->get('gunId'),
-            $request->get('ammoId'),
-            $request->get('crosshairId'),
-            $request->get('triggerId'),
-            $request->get('springId'),
-            $request->get('barrelId'),
+        $addWeapon = $this->weaponStorageManager->addWeaponToStorage(
+
+            $request->query->get('weaponCategory'),
+            $request->query->get('gunId'),
+            $request->query->get('ammoId'),
+            $request->query->get('crosshairId'),
+            $request->query->get('triggerId'),
+            $request->query->get('springId'),
+            $request->query->get('barrelId'),
             $this->getUser()
-//            'semi-auto riffle',
-//            40,
-//            14,
-//            null,
-//            null,
-//            null,
-//            null,
-//            $this->getUser()
         );
 
         $this->addFlash('weaponStorage', 'Weapon added to storage!');
+        return new JsonResponse([
+            'weaponStorage' => $addWeapon
+        ]);
     }
 
     /**
@@ -55,5 +52,18 @@ class WeaponStorageController extends Controller
     public function weaponStorage()
     {
         return $this->render('weaponStorage/weaponStorage.html.twig');
+
+    }
+
+    /**
+     *
+     */
+    public function removeWeaponFromStorage(Request $request)
+    {
+        $removeWeapon = $this->weaponStorageManager->removeWeaponFromStorage($request->get('weaponStorageId'));
+
+        return new JsonResponse([
+            'weaponStorage' => $removeWeapon
+        ]);
     }
 }
