@@ -34,10 +34,9 @@ class WeaponStorageManager implements WeaponStorageInterface
             $itemsInUserStorage = count($itemsInUserStorage);
         }
 
-        $errors = [];
         if ($itemsInUserStorage >= 20) {
-            $errors[] = ['message' => 'Lack of space. Please free some space and try again (max 20 weapons in storage)'];
-            return $errors;
+
+            return ['message' => 'Lack of space. Please free some space and try again (max 20 weapons in storage)'];
         }
 
         $weaponStorage = new WeaponStorage();
@@ -66,8 +65,7 @@ class WeaponStorageManager implements WeaponStorageInterface
         $entityManager->persist($weaponStorage);
         $entityManager->flush();
 
-        $success[] = ['message' => 'Success! Weapon added to storage.'];
-        return $success;
+        return ['message' => 'Success! Weapon added to storage.'];
     }
 
     public function removeWeaponFromStorage(int $weaponStorageId): array
@@ -77,7 +75,6 @@ class WeaponStorageManager implements WeaponStorageInterface
         $entityManager->remove($weaponToRemove);
         $entityManager->flush();
 
-        $success[] = ['message' => 'Success! Weapon removed from storage.'];
-        return $success;
+        return ['message' => 'Success! Weapon removed from storage.'];
     }
 }
