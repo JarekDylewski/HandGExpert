@@ -767,9 +767,9 @@
                                         Assault riffle
                                     {% elseif gunData['weaponcategoryid'] == 14 %}
                                         Light machine gun
-                                    {% elseif gunData['weaponcategoryid'] == 16%}
+                                    {% elseif gunData['weaponcategoryid'] == 16 %}
                                         Submachine gun
-                                    {% elseif gunData['weaponcategoryid'] == 17%}
+                                    {% elseif gunData['weaponcategoryid'] == 17 %}
                                         Handgun
                                     {% else %}
                                         from the menu
@@ -875,64 +875,12 @@
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12 w-100 mt-5 border-top">
                 <div class="row w-100 p-0 m-0 compare-nav mt-2">
-
                 </div>
                 <div class="row w-100 p-0 comparison">
                     <div class="row w-100 p-0 m-0 compareSpace compareWeaponDesc1"></div>
                     <div class="row w-100 p-0 m-0 statisticsForTwoWeapons compareStatistics1">
                     </div>
-
-
                 </div>
-                {#
-                <div class="row w-100 pt-3">
-                    <div class="col-4 p-0 border-bottom">Damage:</div><div id="damage1" class="col-2 border-left border-bottom p-0 text-center">test</div><div id="damage2" class="col-2 border-left border-bottom  p-0 text-center">test</div>
-                </div>
-                <div class="row w-100">
-                    <div class="col-4 p-0">Muzzle velocity:</div><div id="muzzleVelocity1" class="col-2 border-right border-bottom  p-0 text-center">test</div><div id="muzzleVelocity2" class="col-2 border-left border-bottom  p-0 text-center">test</div>
-                </div>
-                <div class="row w-100">
-                    <div class="col-4 p-0 border-bottom">Rate of fire:</div><div id="rateOfFire1" class="col-2 border-right border-bottom  p-0 text-center">test</div><div id="rateOfFire2" class="col-2 border-left border-bottom  p-0 text-center">test</div>
-                </div>
-                <div class="row w-100">
-                    <div class="col-4 p-0">Range:</div><div id="range1" class="col-2 border-right border-bottom  p-0 text-center">test</div><div id="range2" class="col-2 border-left border-bottom  p-0 text-center">test</div>
-                </div>
-                <div class="row w-100">
-                    <div class="col-4 p-0 border-bottom">Recoil:</div><div id="recoil1" class="col-2 border-right border-bottom  p-0 text-center">test</div><div id="recoil2" class="col-2 border-left border-bottom  p-0 text-center">test</div>
-                </div>
-                <div class="row w-100">
-                    <div class="col-4 p-0">Time to kill:</div><div id="timeToKill1" class="col-2 border-right border-bottom  p-0 text-center">test</div><div id="timeToKill2" class="col-2 border-left border-bottom  p-0 text-center">test</div>
-                </div>
-                <div class="row w-100">
-                    <div class="col-4 p-0 border-bottom">Costs:</div><div id="costs1" class="col-2 border-right border-bottom  p-0 text-center">test</div><div id="costs2" class="col-2 border-left border-bottom  p-0 text-center">test</div>
-                </div>
-                <div class="row w-100">
-                    <div class="col-4 p-0">Spawn delay:</div><div id="spawnDelay1" class="col-2 border-right border-bottom  p-0 text-center">test</div><div id="spawnDelay2" class="col-2 border-left border-bottom  p-0 text-center">test</div>
-                </div>
-                <div class="row w-100">
-                    <div class="col-4 p-0 border-bottom">Reload time:</div><div id="reloadTime1" class="col-2 border-right border-bottom  p-0 text-center">test</div><div id="reloadTime2" class="col-2 border-left border-bottom  p-0 text-center">test</div>
-                </div>
-                <div class="row w-100">
-                    <div class="col-4 p-0">Equipment points:</div><div id="equipmentPoint1" class="col-2 border-right border-bottom  p-0 text-center">test</div><div id="equipmentPoint2" class="col-2 border-left border-bottom  p-0 text-center">test</div>
-                </div>
-                <div class="row w-100">
-                    <div class="col-4 p-0 border-bottom">Ammo capacity:</div><div id="ammoCapacity1" class="col-2 border-right border-bottom  p-0 text-center">test</div><div id="ammoCapacity2" class="col-2 border-left border-bottom  p-0 text-center">test</div>
-                </div>
-                <div class="row w-100">
-                    <div class="col-4 p-0">Magazines:</div><div id="magazines1" class="col-2 border-right border-bottom  p-0 text-center">test</div><div id="magazines2" class="col-2 border-left border-bottom  p-0 text-center">test</div>
-                </div>
-                <div class="row w-100">
-                    <div class="col-4 p-0 border-bottom">Equip time:</div><div id="equipTime1" class="col-2 border-right border-bottom  p-0 text-center">test</div><div id="equipTime2" class="col-2 border-left border-bottom  p-0 text-center">test</div>
-                </div>
-                <div class="row w-100">
-                    <div class="col-4 p-0">Additional fatigue:</div><div id="additionalFatigue1" class="col-2 border-right border-bottom  p-0 text-center">test</div><div id="additionalFatigue2" class="col-2 border-left border-bottom  p-0 text-center">test</div>
-                </div>
-                <div class="row w-100">
-                    <div class="col-4 p-0 border-bottom">Aiming time:</div><div id="aimingTime1" class="col-2 border-right border-bottom  p-0 text-center">test</div><div id="aimingTime2" class="col-2 border-left border-bottom  p-0 text-center">test</div>
-                </div>
-                <div class="row w-100">
-                    <div class="col-4 p-0">Use while running:</div><div id="useWhileRunning1" class="col-2 border-right  p-0 text-center">test</div><div id="useWhileRunning2" class="col-2 border-left  p-0 text-center">test</div>
-                </div>#}
             </div>
         </div>
     </div>
@@ -963,6 +911,7 @@
     <script src="{{ asset('JS/compare/DataProviderForCompareTemplate.js') }}"></script>
     <script src="{{ asset('JS/compare/compareItemDelete.js') }}"></script>
     <script src="{{ asset('JS/ModsAndGunSelectedByUser.js') }}"></script>
+    <script src="{{ asset('JS/weaponStorage/weaponStorage.js') }}"></script>
 {% endblock %}
 </body>
 </html>
