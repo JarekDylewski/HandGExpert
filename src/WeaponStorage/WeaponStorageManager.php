@@ -27,11 +27,23 @@ class WeaponStorageManager implements WeaponStorageInterface
         ?int $springId,
         ?int $barrelId,
         ?User $user
-    ): void {
+    ) {
+
+        $itemsInUserStorage = $user->getWeaponStorages()->getKeys();
+        if (!is_null($itemsInUserStorage)) {
+            $itemsInUserStorage = count($itemsInUserStorage);
+        }
+
+        $errors = [];
+        if ($itemsInUserStorage >= 20) {
+            $errors[] = ['message' => 'Lack of space. Please free some space and try again (max 20 weapons in storage)'];
+            return $errors;
+        }
 
         $weaponStorage = new WeaponStorage();
         $categoryInDB = $this->doctrineManager->getRepository(WeaponCategory::class)->findOneBy(['name' => $weaponCategory]);
         $entityManager = $this->doctrineManager->getManager();
+
 
         if ($categoryInDB) {
             $category = $categoryInDB;
@@ -53,13 +65,19 @@ class WeaponStorageManager implements WeaponStorageInterface
 
         $entityManager->persist($weaponStorage);
         $entityManager->flush();
+
+        $success[] = ['message' => 'Success! Weapon added to storage.'];
+        return $success;
     }
 
-    public function removeWeaponFromStorage(int $weaponStorageId): void
+    public function removeWeaponFromStorage(int $weaponStorageId)
     {
         $weaponToRemove = $this->doctrineManager->getRepository(WeaponStorage::class)->find($weaponStorageId);
         $entityManager = $this->doctrineManager->getManager();
         $entityManager->remove($weaponToRemove);
         $entityManager->flush();
+
+        $success[] = ['message' => 'Success! Weapon removed from storage.'];
+        return $success;
     }
 }
