@@ -1,4 +1,15 @@
 {% extends "home.html.twig" %}
 {% block main %}
-    tutaj będzie siedziała lista z zapisanymi zestawami użytkownika
+    <div class="container-fluid text-white">
+        <div class="row w-100 no-gutters weaponStorageSpace d-flex ml-auto mr-auto center justify-content-center">
+
+        </div>
+    </div>
 {% endblock main %}
+{% block javascriptAssets %}
+    {{ parent() }}
+{% endblock javascriptAssets %}
+{% block javascripts %}
+    <script src="{{ asset('/JS/weaponStorage/weaponStorage.js') }}"></script>
+    <script src="{{ asset('/JS/compare/CompareTemplates.js') }}"></script>
+{% endblock javascripts %}
