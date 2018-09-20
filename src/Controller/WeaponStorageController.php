@@ -9,7 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class WeaponStorageController extends Controller
 {
@@ -49,14 +48,20 @@ class WeaponStorageController extends Controller
      * @Route("/WeaponStorage", name="weaponStorage")
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
-    public function weaponStorage()
+    public function weaponStorage(Request $request)
     {
-        return $this->render('weaponStorage/weaponStorage.html.twig');
+        $storage = $this->weaponStorageManager->getAllWeaponFromStorage($this->getUser());
 
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse(['storage' => $storage]);
+        }
+
+        return $this->render('weaponStorage/weaponStorage.html.twig', ['storage' => $storage]);
     }
 
     /**
-     *
+     * @Route("/WeaponStorage"), name"removeWeaponFromStorage", methods={DELETE})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
     public function removeWeaponFromStorage(Request $request)
     {
