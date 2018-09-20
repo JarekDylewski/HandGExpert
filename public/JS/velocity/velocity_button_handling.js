@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('.velocity_panel').on('click', function () {
+    $('.velocity_panel').on('click', function (e) {
         //button cleaning
         let currentTarget = $(e.currentTarget);
         if (currentTarget.hasClass('btn-statistics-panel')) {
