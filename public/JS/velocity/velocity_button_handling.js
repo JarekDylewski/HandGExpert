@@ -1,15 +1,12 @@
 $(document).ready(function () {
     $('.velocity_panel').on('click', function () {
         //button cleaning
-        //cant use loop index in nth-child/eq filter
-        if ($('div ul li[class*="list-item-statistics"]:eq(2)').hasClass('btn-statistics-panel')) {
-            $('div ul li[class*="list-item-statistics"]:gt(2)').removeClass('btn-statistics-panel');
-            $('div ul li[class*="list-item-statistics"]:lt(2)').removeClass('btn-statistics-panel');
+        let currentTarget = $(e.currentTarget);
+        if (currentTarget.hasClass('btn-statistics-panel')) {
             //do nothing
         } else {
-            $('div ul li[class*="list-item-statistics"]:eq(2)').toggleClass('btn-statistics-panel');
-            $('div ul li[class*="list-item-statistics"]:gt(2)').removeClass('btn-statistics-panel');
-            $('div ul li[class*="list-item-statistics"]:lt(2)').removeClass('btn-statistics-panel');
+            $('div ul li[class*="list-item-statistics"]').removeClass('btn-statistics-panel');
+            $(currentTarget).toggleClass('btn-statistics-panel');
         }
         //dodanie etykiet podpowiedzi
         $(function () {
