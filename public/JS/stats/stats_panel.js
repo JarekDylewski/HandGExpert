@@ -1,12 +1,12 @@
 $(document).ready(function () {
-    $('.stats_panel').on('click', function () {
+    $('.stats_panel').on('click', function (e) {
         //button cleaning
-        if ($('div ul li[class*="list-item-statistics"]:eq(0)').hasClass('btn-statistics-panel')) {
-            $('div ul li[class*="list-item-statistics"]:gt(0)').removeClass('btn-statistics-panel');
+        let currentTarget = $(e.currentTarget);
+        if (currentTarget.hasClass('btn-statistics-panel')) {
             //do nothing
         } else {
-            $('div ul li[class*="list-item-statistics"]:eq(0)').toggleClass('btn-statistics-panel');
-            $('div ul li[class*="list-item-statistics"]:gt(0)').removeClass('btn-statistics-panel');
+            $('div ul li[class*="list-item-statistics"]').removeClass('btn-statistics-panel');
+            $(currentTarget).toggleClass('btn-statistics-panel');
         }
         //dodanie etykiet podpowiedzi
         $(function () {
