@@ -35,7 +35,6 @@ $(document).ready(function () {
                     $('.weaponStorageAlert').remove();
                 })
             }, 5000)
-
         })
     });
 });
