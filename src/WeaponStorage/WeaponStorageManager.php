@@ -6,6 +6,8 @@ namespace App\WeaponStorage;
 use App\Entity\User;
 use App\Entity\WeaponCategory;
 use App\Entity\WeaponStorage;
+use App\Guns\FileAmmoRepository;
+use App\Guns\FileGunRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 class WeaponStorageManager implements WeaponStorageInterface
@@ -76,5 +78,41 @@ class WeaponStorageManager implements WeaponStorageInterface
         $entityManager->flush();
 
         return ['message' => 'Success! Weapon removed from storage.'];
+    }
+
+    public function getAllWeaponFromStorage(User $user)
+    {
+        $weapons = $this->doctrineManager->getRepository(WeaponStorage::class)->findBy(['user' => $user]);
+        if (isset($weapons)) {
+            $weaponRepo = new FileGunRepository('../src/Data/gunsData.ser');
+            $ammoRepo = new FileAmmoRepository('../src/Data/ammoData.ser');
+        }
+
+        $dataToShow = [];
+        foreach ($weapons as $key => $value) {
+            $gunId = $value->getGunId();
+            $ammoId = $value->getAmmoId();
+            $crosshairId = $value->getCrosshairId();
+            $triggerId = $value->getTriggerId();
+            $springId = $value->getSpringId();
+            $barrelId = $value->getBarrelId();
+            $dataToShow[] = [
+                'gunName' => $weaponRepo->findById($gunId)['name'],
+                'ammoName' => $ammoRepo->findById($ammoId)['name'],
+                'crosshairName' => '',//TODO uzupełnić kiedy dotrze reszta danych
+                'triggerName' => '',
+                'springName' => '',
+                'barrelName' => '',
+                'weaponCategory' => $value->getWeaponCategory()->getName(),
+                'gunId' => $gunId,
+                'ammoId' => $ammoId,
+                'crosshairId' => $crosshairId,
+                'triggerId' => $triggerId,
+                'springId' => $springId,
+                'barrelId' => $barrelId
+            ];
+        }
+
+        return $dataToShow;
     }
 }
