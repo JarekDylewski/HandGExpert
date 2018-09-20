@@ -33,9 +33,11 @@
                         <div class="dropdown">
                             <button class="btn btn-outline-light dropdown-toggle text-dark" type="button" id="przykladowaLista"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{ app.user.username }}
+                                {{ app.user.username|escape }}
                             </button>
-                            <div class="dropdown-menu" aria-labelledby="przykladowaLista">
+                            <div class="dropdown-menu">
+                                <a href="{{ path('weaponStorage') }}" class="dropdown-item text-dark"><i
+                                            class="icon-docs"></i>Weapon storage</a>
                                 <a href="{{ path('logout') }}" class="dropdown-item text-dark-orange"><i
                                             class="icon-logout"></i>Logout</a>
                             </div>
@@ -886,10 +888,7 @@
     </div>
 {% endblock main %}
 {% endblock %}
-{% block javascripts %}
-    <script src="{{ asset('JS/CollectingStatistics.js') }}"></script>
-    <script src="{{ asset('JS/DamageCalculation.js') }}"></script>
-    <script src="{{ asset('JS/ImpactOfTheBadge.js') }}"></script>
+{% block javascriptAssets %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
             integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
             crossorigin="anonymous">
@@ -900,6 +899,11 @@
             integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
             crossorigin="anonymous">
     </script>
+{% endblock javascriptAssets %}
+{% block javascripts %}
+    <script src="{{ asset('JS/CollectingStatistics.js') }}"></script>
+    <script src="{{ asset('JS/DamageCalculation.js') }}"></script>
+    <script src="{{ asset('JS/ImpactOfTheBadge.js') }}"></script>
     <script src="{{ asset('JS/profit_calculations.js') }}"></script>
     <script src="{{ asset('JS/StatisticsPanelTemplates.js') }}"></script>
     <script src="{{ asset('JS/search_gunBar.js') }}"></script>
@@ -911,7 +915,7 @@
     <script src="{{ asset('JS/compare/DataProviderForCompareTemplate.js') }}"></script>
     <script src="{{ asset('JS/compare/compareItemDelete.js') }}"></script>
     <script src="{{ asset('JS/ModsAndGunSelectedByUser.js') }}"></script>
-    <script src="{{ asset('JS/weaponStorage/weaponStorage.js') }}"></script>
+    <script src="{{ asset('JS/weaponStorage/weaponStorageAddItem.js') }}"></script>
 {% endblock %}
 </body>
 </html>
