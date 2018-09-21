@@ -1,0 +1,14 @@
+.menuItem {
+    font-size: 22px;
+    font-variant: small-caps;
+}
+
+.menuItem:hover {
+    color: #9da4a8;
+    background-color: white;
+    cursor: pointer;
+}
+
+.nav-link {
+    font-size: 19px !important;
+}
