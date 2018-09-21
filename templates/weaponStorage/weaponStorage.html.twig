@@ -1,7 +1,91 @@
 {% extends "home.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/weaponStorage.css') }}">
+{% endblock stylesheets %}
 {% block main %}
     <div class="container-fluid text-white">
         <div class="row w-100 no-gutters weaponStorageSpace d-flex ml-auto mr-auto center justify-content-center">
+
+            {% for weapons in storage %}
+                <div class="col-2 w-100 mx-2 my-2">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item pr-1 ammo-nav">
+                            <a class="nav-link p-1 active text-secondary" id="home-tab" data-toggle="tab"
+                               href="#weaponCard{{ loop.index0 }}" role="tab" aria-selected="true"><i
+                                        class="icon-star-empty"></i> Weapon </a>
+                        </li>
+                        <li class="nav-item pr-1">
+                            <a class="nav-link p-1 text-secondary" id="profile-tab" data-toggle="tab"
+                               href="#weaponMenu{{ loop.index0 }}" role="tab"> <i class="icon-cog-alt"></i> Menu </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade active show border rounded-bottom" id="weaponCard{{ loop.index0 }}"
+                             role="tabpanel" aria-labelledby="home-tab">
+                            <div class="row w-100 m-0 border-bottom border-secondary text-right">
+                                <img style="opacity: 0.6;" class="position-absolute mw-100 mh-100" width="150"
+                                     height="80"
+                                     src='../img/gunRibbonsByID/{{ storage[loop.index0].gunId }}.png'>
+                                <span style="z-index: 2;"
+                                      class="w-100 text-right font-size-14 mt-4 pt-4 mr-1"> {{ storage[loop.index0].gunName }} </span>
+                            </div>
+                            <div class="row w-100 m-0 border-bottom border-right border-secondary">
+                                <div class="col-2 ml-0 mr-auto p-0 border-right border-secondary d-flex justify-content-center">
+                                    <img class="mw-100 mh-100" width="30px" height="30px"
+                                         src='/img/mody/ammo.png'
+                                         alt="ammo"
+                                         data-placement="top"
+                                    ></div>
+                                <div class="col-10 text-left pl-1"> {{ storage[loop.index0].ammoName }}  </div>
+                            </div>
+                            <div class="row w-100 m-0 border-bottom border-right border-secondary">
+                                <div class="col-2 ml-0 mr-auto p-0 border-right border-secondary d-flex justify-content-center">
+                                    <img class="mw-100 mh-100" width="30px" height="30px"
+                                         src='/img/mody/crosshair.png'
+                                         alt="crosshair"
+                                         data-placement="top"
+                                    ></div>
+                                <div class="col-10 text-left pl-1"> {{ storage[loop.index0].crosshairName }} </div>
+                            </div>
+                            <div class="row w-100 m-0 border-bottom border-right border-secondary">
+                                <div class="col-2 ml-0 mr-auto p-0 border-right border-secondary d-flex justify-content-center">
+                                    <img class="mw-100 mh-100" width="30px" height="30px"
+                                         src='/img/mody/trigger.png'
+                                         alt="trigger"></div>
+                                <div class="col-10 text-left pl-1"> {{ storage[loop.index0].triggerName }} </div>
+                            </div>
+                            <div class="row w-100 m-0 border-bottom border-right border-secondary">
+                                <div class="col-2 ml-0 mr-auto p-0 border-right border-secondary d-flex justify-content-center">
+                                    <img class="mw-100 mh-100" width="30px" height="30px"
+                                         src='/img/mody/spring.png'
+                                         alt="spring"
+                                    ></div>
+                                <div class="col-10 text-left pl-1"> {{ storage[loop.index0].springName }} </div>
+                            </div>
+                            <div class="row w-100 m-0 border-bottom border-right border-secondary">
+                                <div class="col-2 ml-0 mr-auto p-0 border-right border-secondary d-flex justify-content-center">
+                                    <img class="mw-100 mh-100" width="30px" height="30px"
+                                         src='/img/mody/barrel.png'
+                                         alt="barrel"
+                                    ></div>
+                                <div class="col-10 text-left pl-1"> {{ storage[loop.index0].barrelName }} </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade border border-white rounded-bottom" id="weaponMenu{{ loop.index0 }}"
+                             role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="row w-100 ml-auto mr-auto">
+                                <div class="col-12 text-left border-bottom menuItem"><i class="icon-sliders"></i> Modify
+                                </div>
+                                <div class="col-12 text-left border-bottom menuItem"><i class="icon-trash-empty"></i>Delete
+                                </div>
+                                <div class="col-12 text-left border-bottom menuItem"><i class="icon-ok"></i> Save</div>
+                                <div class="col-12 text-left menuItem"><i class="icon-link-1"></i> Get share link</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
 
         </div>
     </div>
@@ -11,5 +95,4 @@
 {% endblock javascriptAssets %}
 {% block javascripts %}
     <script src="{{ asset('/JS/weaponStorage/weaponStorage.js') }}"></script>
-    <script src="{{ asset('/JS/compare/CompareTemplates.js') }}"></script>
 {% endblock javascripts %}
