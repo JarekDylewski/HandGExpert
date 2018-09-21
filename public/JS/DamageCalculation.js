@@ -32,7 +32,7 @@ function DamageCalculation(damage) {
     this.setBodyHit = function (multiplierBodyPart) {
         multiplier = multiplierBodyPart;
     };
-    this.getBodyHit = function f() {
+    this.getBodyHit = function () {
         return multiplier;
     };
 
