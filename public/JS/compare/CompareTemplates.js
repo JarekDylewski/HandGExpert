@@ -37,7 +37,7 @@ function CompareTemplates() {
             
         </div>
         <div class="row w-100 m-0 border-bottom border-right">
-            <div class="col-2 ml-0 mr-auto p-0 border-right border-left"><img width="30px" height="30px"
+            <div class="col-2 ml-0 mr-auto p-0 border-right border-left d-flex justify-content-center"><img class="mw-100 mh-100" width="30px" height="30px"
                                                                   src='/img/mody/ammo.png'
                                                                   alt="ammo"
                                                                   data-placement="top"
@@ -45,7 +45,7 @@ function CompareTemplates() {
             <div id="compareAmmoMod${weaponIndexInStorage}" class="col-10 text-left pl-1"> - </div>
         </div>
         <div class="row w-100 m-0 border-bottom border-right">
-            <div class="col-2 ml-0 mr-auto p-0 border-right border-left"><img width="30px" height="30px"
+            <div class="col-2 ml-0 mr-auto p-0 border-right border-left d-flex justify-content-center"><img class="mw-100 mh-100" width="30px" height="30px"
                                                                   src='/img/mody/crosshair.png'
                                                                   alt="crosshair"
                                                                   data-placement="top"
@@ -53,20 +53,20 @@ function CompareTemplates() {
             <div id="compareCrosshairMod${weaponIndexInStorage}" class="col-10 text-left pl-1"> - </div>
         </div>
         <div class="row w-100 m-0 border-bottom border-right">
-            <div class="col-2 ml-0 mr-auto p-0 border-right border-left"><img width="30px" height="30px"
+            <div class="col-2 ml-0 mr-auto p-0 border-right border-left d-flex justify-content-center"><img class="mw-100 mh-100" width="30px" height="30px"
                                                                   src='/img/mody/trigger.png'
                                                                   alt="trigger"></div>
             <div id="compareTriggerMod${weaponIndexInStorage}" class="col-10 text-left pl-1"> - </div>
         </div>
         <div class="row w-100 m-0 border-bottom border-right">
-            <div class="col-2 ml-0 mr-auto p-0 border-right border-left"><img width="30px" height="30px"
+            <div class="col-2 ml-0 mr-auto p-0 border-right border-left d-flex justify-content-center"><img class="mw-100 mh-100" width="30px" height="30px"
                                                                   src='/img/mody/spring.png'
                                                                   alt="spring"
                 ></div>
             <div id="compareSpringMod${weaponIndexInStorage}" class="col-10 text-left pl-1"> - </div>
         </div>
         <div class="row w-100 m-0 border-bottom border-right">
-            <div class="col-2 ml-0 mr-auto p-0 border-right border-left"><img width="30px" height="30px"
+            <div class="col-2 ml-0 mr-auto p-0 border-right border-left d-flex justify-content-center"><img class="mw-100 mh-100" width="30px" height="30px"
                                                                   src='/img/mody/barrel.png'
                                                                   alt="barrel"
                 ></div>
