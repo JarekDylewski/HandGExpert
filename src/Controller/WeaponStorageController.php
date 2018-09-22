@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\WeaponStorage\WeaponStorageManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -20,7 +21,7 @@ class WeaponStorageController extends Controller
     }
 
     /**
-     * @Route("/AddWeaponToStorage", name="addWeaponToStorage")
+     * @Route("/AddWeaponToStorage", name = "addWeaponToStorage")
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
     public function addWeaponToStorage(Request $request)
@@ -45,8 +46,9 @@ class WeaponStorageController extends Controller
     }
 
     /**
-     * @Route("/WeaponStorage", name="weaponStorage")
+     * @Route("/WeaponStorage", name = "weaponStorage", methods={"GET"})
      * @IsGranted("IS_AUTHENTICATED_FULLY")
+     * @Cache(expires="tomorrow", public="true")
      */
     public function weaponStorage(Request $request)
     {
@@ -60,15 +62,23 @@ class WeaponStorageController extends Controller
     }
 
     /**
-     * @Route("/WeaponStorage"), name"removeWeaponFromStorage", methods={DELETE})
+     * @Route("/WeaponStorage", name = "removeWeaponFromStorage")
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
     public function removeWeaponFromStorage(Request $request)
     {
         $removeWeapon = $this->weaponStorageManager->removeWeaponFromStorage($request->get('weaponStorageId'));
 
-        return new JsonResponse([
-            'weaponStorage' => $removeWeapon
-        ]);
+        return new JsonResponse(['weaponStorage' => $removeWeapon]);
+    }
+
+    /**
+     * @Route("/WeaponStorage/{shareLink}", name = "weaponStorageShareLink")
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     * @Cache(expires="tomorrow", public="true")
+     */
+    public function weaponFromShareLink($shareLink)
+    {
+        return new JsonResponse($this->weaponStorageManager->showWeaponFromShareLink($shareLink));
     }
 }
