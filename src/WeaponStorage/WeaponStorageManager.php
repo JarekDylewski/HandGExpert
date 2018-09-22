@@ -6,8 +6,6 @@ namespace App\WeaponStorage;
 use App\Entity\User;
 use App\Entity\WeaponCategory;
 use App\Entity\WeaponStorage;
-use App\Guns\FileAmmoRepository;
-use App\Guns\FileGunRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 class WeaponStorageManager implements WeaponStorageInterface
@@ -53,7 +51,16 @@ class WeaponStorageManager implements WeaponStorageInterface
             $category->setName($weaponCategory);
             $entityManager->persist($category);
         }
+        //TODO wprowadzić możliwość nadania nazwy przez użytkownika
 
+        //TODO ten link powinien byc unikalny
+
+        $textToRandom = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F'];
+        $shareLink = [];
+        for ($i = 0; $i <= 9; $i++) {
+            $shareLink[] = $textToRandom[random_int(0, 16)];
+        }
+        $shareLink = implode('', $shareLink);
         $weaponStorage
             ->setWeaponCategory($category)
             ->setGunId($gunId)
@@ -62,6 +69,7 @@ class WeaponStorageManager implements WeaponStorageInterface
             ->setTriggerId($triggerId)
             ->setSpringId($springId)
             ->setBarrelId($barrelId)
+            ->setShareLink($shareLink)
             ->setUser($user);
 
         $entityManager->persist($weaponStorage);
@@ -80,39 +88,46 @@ class WeaponStorageManager implements WeaponStorageInterface
         return ['message' => 'Success! Weapon removed from storage.'];
     }
 
-    public function getAllWeaponFromStorage(User $user)
+    public function getAllWeaponFromStorage(User $user): array
     {
         $weapons = $this->doctrineManager->getRepository(WeaponStorage::class)->findBy(['user' => $user]);
-        if (isset($weapons)) {
-            $weaponRepo = new FileGunRepository('../src/Data/gunsData.ser');
-            $ammoRepo = new FileAmmoRepository('../src/Data/ammoData.ser');
-        }
 
         $dataToShow = [];
         foreach ($weapons as $key => $value) {
-            $gunId = $value->getGunId();
-            $ammoId = $value->getAmmoId();
-            $crosshairId = $value->getCrosshairId();
-            $triggerId = $value->getTriggerId();
-            $springId = $value->getSpringId();
-            $barrelId = $value->getBarrelId();
-            $dataToShow[] = [
-                'gunName' => $weaponRepo->findById($gunId)['name'],
-                'ammoName' => $ammoRepo->findById($ammoId)['name'],
-                'crosshairName' => '',//TODO uzupełnić kiedy dotrze reszta danych
-                'triggerName' => '',
-                'springName' => '',
-                'barrelName' => '',
-                'weaponCategory' => $value->getWeaponCategory()->getName(),
-                'gunId' => $gunId,
-                'ammoId' => $ammoId,
-                'crosshairId' => $crosshairId,
-                'triggerId' => $triggerId,
-                'springId' => $springId,
-                'barrelId' => $barrelId
-            ];
+            $weaponToUpdateView = new WeaponViewUpdateDataProvider(
+                $value->getWeaponCategory()->getName(),
+                $value->getGunId(),
+                $value->getAmmoId(),
+                $value->getCrosshairId(),
+                $value->getTriggerId(),
+                $value->getSpringId(),
+                $value->getBarrelId(),
+                $value->getShareLink(),
+                $this->doctrineManager
+            );
+
+            $dataToShow[] = $weaponToUpdateView->getDataForViewUpdate();
         }
 
         return $dataToShow;
+    }
+
+    public function showWeaponFromShareLink(string $shareLink): array
+    {
+        $weapon = $this->doctrineManager->getRepository(WeaponStorage::class)->findBy(['shareLink' => $shareLink])[0];
+
+        $dataToUpdate = new WeaponViewUpdateDataProvider(
+            $weapon->getWeaponCategory()->getName(),
+            $weapon->getGunId(),
+            $weapon->getAmmoId(),
+            $weapon->getCrosshairId(),
+            $weapon->getTriggerId(),
+            $weapon->getSpringId(),
+            $weapon->getBarrelId(),
+            $weapon->getShareLink(),
+            $this->doctrineManager
+        );
+
+        return $dataToUpdate->getDataForViewUpdate();
     }
 }
