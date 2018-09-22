@@ -53,14 +53,26 @@ class WeaponStorageManager implements WeaponStorageInterface
         }
         //TODO wprowadzić możliwość nadania nazwy przez użytkownika
 
-        //TODO ten link powinien byc unikalny
-
-        $textToRandom = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F'];
-        $shareLink = [];
-        for ($i = 0; $i <= 9; $i++) {
-            $shareLink[] = $textToRandom[random_int(0, 16)];
+        function link()
+        {
+            $textToRandom = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F'];
+            $shareLink = [];
+            for ($i = 0; $i <= 9; $i++) {
+                $shareLink[] = $textToRandom[random_int(0, 15)];
+            }
+            $shareLink = implode('', $shareLink);
+            return $shareLink;
         }
-        $shareLink = implode('', $shareLink);
+
+        $i = 1;
+        while ($i < 2) {
+            $shareLink = link();
+            if (empty($this->doctrineManager->getRepository(WeaponStorage::class)->findBy(['shareLink' => $shareLink]))) {
+                $i = 2;
+            }
+
+        };
+
         $weaponStorage
             ->setWeaponCategory($category)
             ->setGunId($gunId)
@@ -69,11 +81,11 @@ class WeaponStorageManager implements WeaponStorageInterface
             ->setTriggerId($triggerId)
             ->setSpringId($springId)
             ->setBarrelId($barrelId)
-            ->setShareLink($shareLink)
+            ->setShareLink('113')
             ->setUser($user);
 
         $entityManager->persist($weaponStorage);
-        $entityManager->flush();
+        //$entityManager->flush();
 
         return ['message' => 'Success! Weapon added to storage.'];
     }
