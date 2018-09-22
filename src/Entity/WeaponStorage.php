@@ -57,6 +57,11 @@ class WeaponStorage
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="string", length=40, nullable=true)
+     */
+    private $shareLink;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -154,6 +159,18 @@ class WeaponStorage
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getShareLink(): ?string
+    {
+        return $this->shareLink;
+    }
+
+    public function setShareLink(?string $shareLink): self
+    {
+        $this->shareLink = $shareLink;
 
         return $this;
     }
