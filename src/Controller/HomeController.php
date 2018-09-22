@@ -5,13 +5,11 @@ namespace App\Controller;
 use App\Exceptions\src\Data\GunsNotFoundException;
 use App\Guns\FileGunRepository;
 use App\Guns\GunManager;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class HomeController extends Controller
 {
@@ -29,15 +27,14 @@ class HomeController extends Controller
      */
     public function showHome(Request $request)
     {
-        dump($this->getUser());
         return $this->render('home.html.twig', [
             'title' => 'H&GExpert',
         ]);
     }
 
     /**
-     * @Route("/GunList/{gunID}", name="GunList", requirements={"gunID"="\d+"})
-     * @Cache(expires="tomorrow", public=true)
+     * @Route("/GunList/{gunID}", name="GunList", requirements={"gunID"="\d+"}, methods={"GET", "HEAD"})
+     * @Cache(expires="tomorrow", public=true, vary={"X-Requested-With"})
      */
     public function dataPreparation(Request $request, int $gunID)
     {
