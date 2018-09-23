@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class WeaponStorageController extends Controller
 {
@@ -65,9 +66,9 @@ class WeaponStorageController extends Controller
      * @Route("/WeaponStorage/{shareLink}/delete", name = "removeWeaponFromStorage")
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
-    public function removeWeaponFromStorage(Request $request, string $shareLink)
+    public function removeWeaponFromStorage(Request $request, string $shareLink, Response $response)
     {
-        $removeWeapon = $this->weaponStorageManager->removeWeaponFromStorage($shareLink, $this->getUser());
+        $this->weaponStorageManager->removeWeaponFromStorage($shareLink, $this->getUser());
 
         if ($request->isXmlHttpRequest()) {
             $removeWeapon = $this->weaponStorageManager->removeWeaponFromStorage($request->get('shareLink'),
@@ -75,7 +76,7 @@ class WeaponStorageController extends Controller
             return new JsonResponse(['weaponStorage' => $removeWeapon]);
         }
 
-        return $this->render('weaponStorage/weaponStorage.html.twig', $removeWeapon);
+        return $this->redirectToRoute('weaponStorage');
     }
 
     /**
