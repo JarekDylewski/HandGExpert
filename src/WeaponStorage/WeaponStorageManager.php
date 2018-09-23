@@ -85,14 +85,19 @@ class WeaponStorageManager implements WeaponStorageInterface
             ->setUser($user);
 
         $entityManager->persist($weaponStorage);
-        //$entityManager->flush();
+        $entityManager->flush();
 
         return ['message' => 'Success! Weapon added to storage.'];
     }
 
-    public function removeWeaponFromStorage(int $weaponStorageId): array
+    public function removeWeaponFromStorage(string $shareLink, User $user): array
     {
-        $weaponToRemove = $this->doctrineManager->getRepository(WeaponStorage::class)->find($weaponStorageId);
+
+        $weaponToRemove = $this->doctrineManager->getRepository(WeaponStorage::class)->findBy(['shareLink' => $shareLink]);
+        if (!$user === $weaponToRemove[0]->getUser()) {
+            return ['message' => 'You can\'t remove someone\'s set, he would be sad :('];
+        }
+
         $entityManager = $this->doctrineManager->getManager();
         $entityManager->remove($weaponToRemove);
         $entityManager->flush();
