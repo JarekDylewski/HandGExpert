@@ -20,13 +20,13 @@ $(document).ready(function () {
             $('.gun-bar').before(`
                   <div class="row w-100 position-absolute weaponStorageAlert">
                         <div style="z-index: 10;" id="weaponStorageMessages" class="col-7 offset-5 alert alert-info border border-info">
-                             
+                             <a href="/WeaponStorage" class="text-secondary cursor-pointer"><i class="icon-eye"></i> <b>Show storage</b></a>
                         </div>
                    </div>
             `);
 
             let weaponStorage = $data.weaponStorage;
-            $('#weaponStorageMessages').append(weaponStorage.message);
+            $('#weaponStorageMessages').prepend(weaponStorage.message);
 
             setTimeout(function () {
                 $('#weaponStorageMessages').animate({
