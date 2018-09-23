@@ -62,14 +62,20 @@ class WeaponStorageController extends Controller
     }
 
     /**
-     * @Route("/WeaponStorage", name = "removeWeaponFromStorage")
+     * @Route("/WeaponStorage/{shareLink}/delete", name = "removeWeaponFromStorage")
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
-    public function removeWeaponFromStorage(Request $request)
+    public function removeWeaponFromStorage(Request $request, string $shareLink)
     {
-        $removeWeapon = $this->weaponStorageManager->removeWeaponFromStorage($request->get('weaponStorageId'));
+        $removeWeapon = $this->weaponStorageManager->removeWeaponFromStorage($shareLink, $this->getUser());
 
-        return new JsonResponse(['weaponStorage' => $removeWeapon]);
+        if ($request->isXmlHttpRequest()) {
+            $removeWeapon = $this->weaponStorageManager->removeWeaponFromStorage($request->get('shareLink'),
+                $this->getUser());
+            return new JsonResponse(['weaponStorage' => $removeWeapon]);
+        }
+
+        return $this->render('weaponStorage/weaponStorage.html.twig', $removeWeapon);
     }
 
     /**
