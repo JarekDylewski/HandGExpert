@@ -10,13 +10,13 @@
             {% for weapons in storage %}
                 <div class="col-2 w-100 mx-2 my-2">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item pr-1 ammo-nav">
-                            <a class="nav-link p-1 active text-secondary" id="home-tab" data-toggle="tab"
+                        <li class="nav-item pr-1">
+                            <a class="nav-link p-1 active text-secondary cardHeader" id="home-tab" data-toggle="tab"
                                href="#weaponCard{{ loop.index0 }}" role="tab" aria-selected="true"><i
                                         class="icon-star-empty"></i> Weapon </a>
                         </li>
                         <li class="nav-item pr-1">
-                            <a class="nav-link p-1 text-secondary" id="profile-tab" data-toggle="tab"
+                            <a class="nav-link p-1 text-secondary cardHeader" id="profile-tab" data-toggle="tab"
                                href="#weaponMenu{{ loop.index0 }}" role="tab"> <i class="icon-cog-alt"></i> Menu </a>
                         </li>
                     </ul>
@@ -77,10 +77,17 @@
                             <div class="row w-100 ml-auto mr-auto">
                                 <div class="col-12 text-left border-bottom menuItem"><i class="icon-sliders"></i> Modify
                                 </div>
-                                <div class="col-12 text-left border-bottom menuItem"><i class="icon-trash-empty"></i>Delete
-                                </div>
+                                <a class="text-white w-100"
+                                   href="{{ path('removeWeaponFromStorage',{shareLink:storage[loop.index0].shareLink}) }}">
+                                    <div class="col-12 text-left border-bottom menuItem"><i
+                                                class="icon-trash-empty"></i> Delete
+                                    </div>
+                                </a>
                                 <div class="col-12 text-left border-bottom menuItem"><i class="icon-ok"></i> Save</div>
-                                <div class="col-12 text-left menuItem"><i class="icon-link-1"></i> Get share link</div>
+                                <div class="col-12 text-left menuItem getShareLink{{ loop.index0 }}"
+                                     data-shareLink="{{ storage[loop.index0].shareLink }}"><i class="icon-link-1"></i>
+                                    Get share link
+                                </div>
                             </div>
                         </div>
                     </div>
