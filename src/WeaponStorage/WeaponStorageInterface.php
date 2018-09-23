@@ -17,6 +17,11 @@ interface WeaponStorageInterface
         ?User $user
     ): array;
 
-    public function removeWeaponFromStorage(int $weaponStorageId): array;
+    public function removeWeaponFromStorage(string $shareLink, User $user): array;
+
+    public function getAllWeaponFromStorage(User $user): array;
+
+    public function showWeaponFromShareLink(string $shareLink): array;
+
 
 }
