@@ -4,13 +4,15 @@ var DMGCalculations = new DamageCalculation;
 $(document).ready(function () {
     $('#modMenu').on('click', 'a', function (e) {
         e.preventDefault();
-        var $link = $(e.currentTarget);
-        var clickedID = e.target.id;
+
+        let $clickedA = $(e.currentTarget);
+        let clickedID = this.id.substr(-1);
 
 
         $.ajax({
             method: 'get',
-            url: $link.attr('href')
+            contentType: "application/json",
+            url: $clickedA.attr('href')
         }).done(function (data) {
             modsAndGunSelectedByUser.setGunId(data.gunId);
             modsAndGunSelectedByUser.setAmmoId(data.ammoID[clickedID]);
@@ -157,7 +159,6 @@ $(document).ready(function () {
                 $('.dropdown-not-active-' + clickedID).toggleClass('dropdown-active');
             }
         });
-
-
+        $('.stats_panel').trigger('click');
     });
 });
