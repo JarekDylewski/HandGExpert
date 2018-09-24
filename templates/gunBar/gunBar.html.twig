@@ -58,12 +58,13 @@
 {% block modifications %}
     <div class="list-group mr-3" id="modMenu">
         {% for ammo in ammoData %}
-            <a href="{{ path('GunList',{gunID: gunId}) }}"
+            <a id="ammo{{ loop.index0 }}" href="{{ path('GunList',{gunID: gunId}) }}"
                class="list-group-item list-group-item-action p-0">
                 <div class="row"> {#TODO - pozmieniać id na jakieś sensowniejsze, np ammo_mod_ID_0 a potem w js usunac prefix ammo_mod_ID_ tak zeby skrypt dzialal poprawnie #}
-                    <div class="col-9 pr-0 pl-4" id="{{ loop.index0 }}">
-                        <img height="60px" width="107px" src="{{ asset('img/mody/ammo/'~ ammoID[loop.index0] ~'.png') }}" id="{{ loop.index0 }}"> <br>
-                        <span class="mod-menu-ammo-{{ loop.index0 }}" id="{{ loop.index0 }}">{{ ammoData[loop.index0]['name'] }}</span><br>
+                    <div class="col-9 pr-0 pl-4">
+                        <img height="60px" width="107px"
+                             src="{{ asset('img/mody/ammo/'~ ammoID[loop.index0] ~'.png') }}"> <br>
+                        <span class="mod-menu-ammo-{{ loop.index0 }}">{{ ammoData[loop.index0]['name'] }}</span><br>
                         Price per shot: <span class="text-orange">{{ ammoData[loop.index0]['pricePerShot'] }}</span>
                     </div>
                     <div class="col-1 p-0 h-100 w-100">
@@ -134,23 +135,34 @@
     <script src="{{ asset('JS/recoil/recoil_panel.js') }}"></script>
     <script src="{{ asset('JS/RecoilCalculations.js') }}"></script>
     <script src="{{ asset('JS/stats/stats_panel.js') }}"></script>
-    {#Każda broń musi mieć standardowo amunicję, więc przy ładowaniu tej strony (po wybraniu broni z listy) #}
-    {#standardowo 'klikana' jest standardowa amunicja#}
-    {#TODO tutaj też trzeba pamiętać ze nie moze być id=0 (#0) trzeba to zmienić na ammo_lis_id_0 czy cos w tym stylu#}
-    {#TODO ten skrypt trzeba przeniesc oraz zmodyfikować go tak aby działał na podstawie obiektu ModsAndGunSelectedByUser #}
+
     <script>
 
         $(document).ready(function () {
+            let path = location.href;
             $('.ammo-tab-list').trigger('click');
-            let IsItClicked = $('a div div span[class*="mod-active"]').html();
-            if(IsItClicked){ //Do nothing
-            }else if(!IsItClicked){
-                //trigger click first modification
-                $('#0').trigger('click');
+            $('.mod-menu-ammo-0').trigger('click');
+
+            if (path.substr(-11, 1) === '=') {
+
+                var shareLink = path.substr(-10);
+                $.ajax({
+                    url: '/WeaponStorage/' + shareLink
+                }).done(function (data) {
+
+                    let ammo = $('span[class *= "mod-menu-ammo-"]');
+                    for (let i = 0; i < ammo.length; i++) {
+                        if (data.ammoName == $('.mod-menu-ammo-' + i).html()) {
+                            ammo.removeClass('mod-active');
+                            $('.mod-menu-ammo-' + i).trigger('click');
+                        }
+                    }
+
+                    //TODO uzupelnic kiedy dotrze reszta danych.
+                }).fail(function () {
+                    alert("Wrong link")
+                })
             }
-            setTimeout(function () {
-                $('.stats_panel').trigger('click');
-            },500);
         });
     </script>
 {% endblock %}
