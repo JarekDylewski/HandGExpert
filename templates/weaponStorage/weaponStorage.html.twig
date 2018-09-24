@@ -6,7 +6,12 @@
 {% block main %}
     <div class="container-fluid text-white">
         <div class="row w-100 no-gutters weaponStorageSpace d-flex ml-auto mr-auto center justify-content-center">
-
+            {% for message in app.flashes %}
+                <div id="flashMessage"
+                     class="col-6 mt-3 alert alert-info border border-info rounded-bottom text-center">
+                    <b>{{ message[loop.index0] }}</b>
+                </div>
+            {% endfor %}
             {% for weapons in storage %}
                 <div class="col-2 w-100 mx-2 my-2">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -78,7 +83,7 @@
                                 <div class="col-12 text-left border-bottom menuItem"><i class="icon-sliders"></i> Modify
                                 </div>
                                 <a class="text-white w-100"
-                                   href="{{ path('removeWeaponFromStorage',{shareLink:storage[loop.index0].shareLink}) }}">
+                                   href="{{ path('removeWeaponFromStorage', {shareLink:storage[loop.index0].shareLink}) }}">
                                     <div class="col-12 text-left border-bottom menuItem"><i
                                                 class="icon-trash-empty"></i> Delete
                                     </div>
@@ -101,5 +106,17 @@
     {{ parent() }}
 {% endblock javascriptAssets %}
 {% block javascripts %}
+    <script>
+        $(document).ready(function () {
+            setTimeout(function () {
+                $('#flashMessage').animate({
+                    opacity: 0.05
+                }, 1000, function () {
+                    this.remove();
+                })
+            }, 6000)
+        });
+
+    </script>
     <script src="{{ asset('/JS/weaponStorage/weaponStorage.js') }}"></script>
 {% endblock javascripts %}
