@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Entity\WeaponCategory;
 use App\Entity\WeaponStorage;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class WeaponStorageManager implements WeaponStorageInterface
 {
@@ -95,7 +96,11 @@ class WeaponStorageManager implements WeaponStorageInterface
     {
 
         $weaponToRemove = $this->doctrineManager->getRepository(WeaponStorage::class)->findBy(['shareLink' => $shareLink]);
-        if (!$user === $weaponToRemove[0]->getUser()) {
+        if (empty($weaponToRemove)) {
+            throw new NotFoundHttpException('weapon doesn\'t exists', null, 404);
+        }
+
+        if ($user->getId() !== $weaponToRemove[0]->getUser()->getId()) {
             return ['message' => 'You can\'t remove someone\'s set, he would be sad :('];
         }
 
