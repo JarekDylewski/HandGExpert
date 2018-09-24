@@ -64,6 +64,7 @@ class WeaponStorageManager implements WeaponStorageInterface
             return $shareLink;
         }
 
+        $shareLink = '';
         $i = 1;
         while ($i < 2) {
             $shareLink = link();
@@ -81,7 +82,7 @@ class WeaponStorageManager implements WeaponStorageInterface
             ->setTriggerId($triggerId)
             ->setSpringId($springId)
             ->setBarrelId($barrelId)
-            ->setShareLink('113')
+            ->setShareLink($shareLink)
             ->setUser($user);
 
         $entityManager->persist($weaponStorage);
@@ -99,7 +100,7 @@ class WeaponStorageManager implements WeaponStorageInterface
         }
 
         $entityManager = $this->doctrineManager->getManager();
-        $entityManager->remove($weaponToRemove);
+        $entityManager->remove($weaponToRemove[0]);
         $entityManager->flush();
 
         return ['message' => 'Success! Weapon removed from storage.'];
