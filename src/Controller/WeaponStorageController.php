@@ -40,10 +40,13 @@ class WeaponStorageController extends Controller
             $this->getUser()
         );
 
+
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse(['weaponStorage' => $addWeapon]);
+        }
+
         $this->addFlash('weaponStorage', 'Weapon added to storage!');
-        return new JsonResponse([
-            'weaponStorage' => $addWeapon
-        ]);
+        return $this->redirectToRoute('weaponStorage');
     }
 
     /**
@@ -66,9 +69,9 @@ class WeaponStorageController extends Controller
      * @Route("/WeaponStorage/{shareLink}/delete", name = "removeWeaponFromStorage")
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
-    public function removeWeaponFromStorage(Request $request, string $shareLink, Response $response)
+    public function removeWeaponFromStorage(Request $request, string $shareLink)
     {
-        $this->weaponStorageManager->removeWeaponFromStorage($shareLink, $this->getUser());
+        $removeWeapon = $this->weaponStorageManager->removeWeaponFromStorage($shareLink, $this->getUser());
 
         if ($request->isXmlHttpRequest()) {
             $removeWeapon = $this->weaponStorageManager->removeWeaponFromStorage($request->get('shareLink'),
@@ -76,6 +79,7 @@ class WeaponStorageController extends Controller
             return new JsonResponse(['weaponStorage' => $removeWeapon]);
         }
 
+        $this->addFlash('message', $removeWeapon['message']);
         return $this->redirectToRoute('weaponStorage');
     }
 
@@ -84,8 +88,14 @@ class WeaponStorageController extends Controller
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Cache(expires="tomorrow", public="true")
      */
-    public function weaponFromShareLink($shareLink)
+    public function weaponFromShareLink($shareLink, Request $request)
     {
-        return new JsonResponse($this->weaponStorageManager->showWeaponFromShareLink($shareLink));
+        $weaponData = $this->weaponStorageManager->showWeaponFromShareLink($shareLink);
+
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse($weaponData);
+        }
+
+        return $this->redirectToRoute('GunList', ['gunID' => $weaponData['gunId'], 'shareLink' => $shareLink]);
     }
 }
