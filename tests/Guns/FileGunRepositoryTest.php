@@ -7,7 +7,7 @@ use App\Exceptions\src\Data\GunsNotFoundException;
 use App\Guns\FileGunRepository;
 use PHPUnit\Framework\TestCase;
 
-class PrepareDataTest extends TestCase
+class FileGunRepositoryTest extends TestCase
 {
     private $PrepareData;
 
