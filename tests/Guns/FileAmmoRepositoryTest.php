@@ -12,32 +12,28 @@ class FileAmmoRepositoryTest extends TestCase
 
     public function setUp()
     {
-        $this->ammoRepository = new FileAmmoRepository('../Data/ammoData.ser');
+        $this->ammoRepository = new FileAmmoRepository('./src/Data/ammoData.ser');
     }
 
-    public function findAllIsArrayTest()
+    public function testFindAllReturnArray()
     {
         $array = $this->ammoRepository->findAll();
 
         $this->assertInternalType('array', $array);
+        $this->assertArrayHasKey('speed', $array[5], 'ammo data must contain speed key');
     }
 
-    public function findAllReturnsExpectedArrayKeys()
-    {
-        $array = $this->ammoRepository->findAll();
 
-        $this->assertArrayHasKey('speed', $array, 'ammo data must contain speed key');
-    }
-
-    public function findByIdReturnsExpectedValueTest()
+    public function testFindByIdReturnsExpectedResult()
     {
         $array = $this->ammoRepository->findById(14);
 
-        $this->assertEquals('[.30-06 Springfield] M2 .30-06 Ball', $array['name'],
-            'findById(14) must return "[.30-06 Springfield] M2 .30-06 Ball" string');
+        $this->assertEquals('M2 .30-06 Ball', $array['name'],
+            'findById(14) must return "M2 .30-06 Ball" string "' . $array['name'] . '" returned');
+
     }
 
-    public function saveTest()
+    public function testSave()
     {
         $data = ["id" => 999, "type" => 35, "name" => "test123", "speed" => 852.0];
 
@@ -45,14 +41,33 @@ class FileAmmoRepositoryTest extends TestCase
         $this->assertEquals('test123', $this->ammoRepository->findById(999)['name']);
     }
 
-    public function deleteTest()
+    public function testDelete()
     {
         $data = ["id" => 999, "type" => 35, "name" => "test123", "speed" => 852.0];
         $this->ammoRepository->save($data, 999);
 
         $this->ammoRepository->delete(999);
 
-        $this->assertNull($this->ammoRepository->findById(999));
+        $this->assertArrayNotHasKey(999, $this->ammoRepository->findAll());
+    }
+
+    public function testFindException()
+    {
+        $this->expectException("\\ArithmeticError");
+        $this->ammoRepository->findById(-1);
+        $this->fail('we dont have ammo with -1 ID');
+    }
+
+    public function testSaveException()
+    {
+        $this->expectException("\\ArithmeticError");
+        $this->ammoRepository->save(['test'], -1);
+        $this->fail('we cant save ammo with -1 ID');
+    }
+
+    protected function tearDown()
+    {
+        unset($this->ammoRepository);
     }
 
 
