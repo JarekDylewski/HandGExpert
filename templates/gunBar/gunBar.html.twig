@@ -143,9 +143,11 @@
             $('.ammo-tab-list').trigger('click');
             $('.mod-menu-ammo-0').trigger('click');
 
-            if (path.substr(-11, 1) === '=') {
+            let reg = /\?shareLink=/;
+            let regResult = reg.exec(path);
 
-                var shareLink = path.substr(-10);
+            if (regResult !== null) {
+                var shareLink = path.substr(regResult.index + 11, 10);
                 $.ajax({
                     url: '/WeaponStorage/' + shareLink
                 }).done(function (data) {
