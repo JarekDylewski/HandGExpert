@@ -158,7 +158,7 @@ $(document).ready(function () {
                 $('.mod-menu-ammo-' + clickedID).toggleClass('mod-active');
                 $('.dropdown-not-active-' + clickedID).toggleClass('dropdown-active');
             }
+            $('.stats_panel').trigger('click');
         });
-        $('.stats_panel').trigger('click');
     });
 });
