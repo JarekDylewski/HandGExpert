@@ -33,4 +33,9 @@ $(document).ready(function () {
 
     });
 
+    $('div [id *= "showWeapon"]').on('click', function (e) {
+        let shareLink = $(e.currentTarget).parent().children()[1].getAttribute('data-sharelink');
+        shareLink = location.origin + "/WeaponStorage/" + shareLink;
+        location.replace(shareLink)
+    })
 });
