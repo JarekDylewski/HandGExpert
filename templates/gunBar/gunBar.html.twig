@@ -148,6 +148,7 @@
                     if (modNamesJSON.ammoName == $('.' + divClass + i).html()) {
                         modsCollection.removeClass('mod-active');
                         $('.' + divClass + i).trigger('click');
+                        $('.' + divClass + i).addClass('mod-active')
                     }
                     //TODO uzupelnic kiedy dotrze reszta danych.
                 }
@@ -173,13 +174,19 @@
                     alert("Wrong link")
                 })
             } else if (localStorage.getItem('lastSelectedWeapon')) {
-
+                let weapon = JSON.parse(localStorage.getItem('lastSelectedWeapon'));
                 onLoadModSetter('ammo', weapon);
 
             }
         });
+
         $(window).on('unload', function () {
             let gunId = location.href.split('/')[4];
+            let reg = /\D/;
+            let match = gunId.match(reg);
+            if (match) {
+                gunId = gunId.substr(0, match.index);
+            }
             let lastSelected = {
                 "gunId": gunId,
                 "ammoName": $('.js-mod-name-list-ammo').html(),
@@ -190,6 +197,12 @@
             };
             localStorage.setItem('lastSelectedWeapon', JSON.stringify(lastSelected));
         });
+
+        $('#resetWeaponSettings').on('click', function () {
+            $('.mod-menu-ammo-0').trigger('click');
+            //TODO kiedy juz będzie reszta danych usunąć w tym przypadku klasę mod-active z reszty modyfikacji
+            localStorage.removeItem('lastSelectedWeapon');
+        })
     </script>
 {% endblock %}
 {#57 /                       #}
