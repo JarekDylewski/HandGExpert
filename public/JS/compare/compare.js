@@ -154,7 +154,7 @@ $(document).ready(function () {
     });
 
     $('.compare-nav').on('click', '#clear_compare', function () {
-        localStorage.clear();
+        localStorage.removeItem('weapons');
         $('.compareSpace').empty();
         $('.statisticsForTwoWeapons').empty();
         length = 0;
