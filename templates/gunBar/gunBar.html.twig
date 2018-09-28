@@ -139,11 +139,25 @@
     <script>
 
         $(document).ready(function () {
+
+            function onLoadModSetter(modName, modNamesJSON) {
+                let divClass = "mod-menu-" + modName + "-";
+                let modsCollection = $("span[class *= " + divClass + "]");
+
+                for (let i = 0; i < modsCollection.length; i++) {
+                    if (modNamesJSON.ammoName == $('.' + divClass + i).html()) {
+                        modsCollection.removeClass('mod-active');
+                        $('.' + divClass + i).trigger('click');
+                    }
+                    //TODO uzupelnic kiedy dotrze reszta danych.
+                }
+            }
+
             let path = location.href;
             $('.ammo-tab-list').trigger('click');
             $('.mod-menu-ammo-0').trigger('click');
 
-            let reg = /\?shareLink=/;
+            let reg = /\?shareLink=/i;
             let regResult = reg.exec(path);
 
             if (regResult !== null) {
@@ -152,19 +166,29 @@
                     url: '/WeaponStorage/' + shareLink
                 }).done(function (data) {
 
-                    let ammo = $('span[class *= "mod-menu-ammo-"]');
-                    for (let i = 0; i < ammo.length; i++) {
-                        if (data.ammoName == $('.mod-menu-ammo-' + i).html()) {
-                            ammo.removeClass('mod-active');
-                            $('.mod-menu-ammo-' + i).trigger('click');
-                        }
-                    }
+                    onLoadModSetter('ammo', data)
 
-                    //TODO uzupelnic kiedy dotrze reszta danych.
+
                 }).fail(function () {
                     alert("Wrong link")
                 })
+            } else if (localStorage.getItem('lastSelectedWeapon')) {
+
+                onLoadModSetter('ammo', weapon);
+
             }
+        });
+        $(window).on('unload', function () {
+            let gunId = location.href.split('/')[4];
+            let lastSelected = {
+                "gunId": gunId,
+                "ammoName": $('.js-mod-name-list-ammo').html(),
+                "crosshairName": $('.js-mod-name-list-crosshair').html(),
+                "triggerName": $('.js-mod-name-list-trigger').html(),
+                "springName": $('.js-mod-name-list-spring').html(),
+                "barrelName": $('.js-mod-name-list-barrel').html()
+            };
+            localStorage.setItem('lastSelectedWeapon', JSON.stringify(lastSelected));
         });
     </script>
 {% endblock %}
