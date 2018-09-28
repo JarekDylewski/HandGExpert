@@ -7,10 +7,12 @@
     <div class="container-fluid text-white">
         <div class="row w-100 no-gutters weaponStorageSpace d-flex ml-auto mr-auto center justify-content-center">
             {% for message in app.flashes %}
-                <div id="flashMessage"
-                     class="col-6 mt-3 alert alert-info border border-info rounded-bottom text-center">
-                    <b>{{ message[loop.index0] }}</b>
+                <div id="flashMessage" class="row w-100">
+                    <div class="col-6 mt-3 alert alert-info border border-info rounded-bottom text-center ml-auto mr-auto">
+                        <b>{{ message[loop.index0] }}</b>
+                    </div>
                 </div>
+
             {% endfor %}
             {% for weapons in storage %}
                 <div class="col-2 w-100 mx-2 my-2">
