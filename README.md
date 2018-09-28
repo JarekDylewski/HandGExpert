@@ -54,5 +54,5 @@ O ile zwiększa koszta eksploatacji dany modyfikator.
 ![HandGExpert](https://imgur.com/wL8a6d4.png)
 ![HandGExpert](https://imgur.com/XGBWyXX.png)
 
-### Oraz zapisywać oraz udostępniać własną konfigurację.
+### Oraz zapisywać i udostępniać własną konfigurację.
 ![HandGExpert](https://imgur.com/JHb8uBx.png)
