@@ -12,6 +12,7 @@ $(document).ready(function () {
     $('div [class *= getShareLink]').on('click', function (e) {
         let clickedArea = $(e.currentTarget);
         let shareLink = clickedArea.attr('data-shareLink');
+        shareLink = location.host + "/WeaponStorage/" + shareLink;
 
         clickedArea.append(`<input type="text" class="copyPlaceholder position-fixed" value="${shareLink}">`);
         let el = document.getElementsByClassName('copyPlaceholder');
