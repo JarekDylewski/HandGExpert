@@ -23,10 +23,13 @@ class WeaponStorageController extends Controller
 
     /**
      * @Route("/AddWeaponToStorage", name = "addWeaponToStorage")
-     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     * @IsGranted("IS_AUTHENTICATED_FULLY", statusCode=302)
      */
     public function addWeaponToStorage(Request $request)
     {
+        if (is_null($request->query->get('gunId'))) {
+            return $this->redirectToRoute('home', [], 302);
+        }
 
         $addWeapon = $this->weaponStorageManager->addWeaponToStorage(
 

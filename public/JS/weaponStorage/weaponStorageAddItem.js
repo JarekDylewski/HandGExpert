@@ -14,6 +14,11 @@ $(document).ready(function () {
                 triggerId: modsAndGunSelectedByUser.getTriggerId(),
                 springId: modsAndGunSelectedByUser.getSpringId(),
                 barrelId: modsAndGunSelectedByUser.getBarrelId()
+            },
+            error: function (res) {
+                if (res.status === 302) {
+                    location.replace(location.origin + "/login");
+                }
             }
         }).done(function ($data) {
 
