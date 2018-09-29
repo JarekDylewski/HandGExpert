@@ -12,7 +12,9 @@ class FileAmmoRepositoryTest extends TestCase
 
     public function setUp()
     {
-        $this->ammoRepository = new FileAmmoRepository('./src/Data/ammoData.ser');
+        $data = unserialize(file_get_contents('../../src/Data/ammoData.ser'));
+        file_put_contents('ammoDataCopyForTest.ser', serialize($data));
+        $this->ammoRepository = new FileAmmoRepository('./ammoDataCopyForTest.ser');
     }
 
     public function testFindAllReturnArray()
@@ -67,8 +69,7 @@ class FileAmmoRepositoryTest extends TestCase
 
     protected function tearDown()
     {
+        unlink('./ammoDataCopyForTest.ser');
         unset($this->ammoRepository);
     }
-
-
 }

@@ -13,7 +13,9 @@ class FileGunRepositoryTest extends TestCase
 
     protected function setUp()
     {
-        $this->PrepareData = new FileGunRepository('src/Data/gunsData.ser');
+        $data = unserialize(file_get_contents('../../src/Data/gunsData.ser'));
+        file_put_contents('gunsDataCopyForTest.ser', serialize($data));
+        $this->PrepareData = new FileGunRepository('./gunsDataCopyForTest.ser');
     }
 
     public function testWhatArrayReturnsGetGunsData()
@@ -46,6 +48,7 @@ class FileGunRepositoryTest extends TestCase
 
     protected function tearDown()
     {
+        unlink('./gunsDataCopyForTest.ser');
         unset($this->PrepareData);
     }
 }
