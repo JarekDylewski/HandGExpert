@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 
+use App\Security\WarningPointsInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity(fields="email", message="Email already taken")
  * @UniqueEntity(fields="username", message="Username already taken")
  */
-class User implements UserInterface, \Serializable
+class User implements UserInterface, \Serializable, WarningPointsInterface
 {
     /**
      * @ORM\Column(type="integer")
@@ -117,6 +118,16 @@ class User implements UserInterface, \Serializable
     private $weaponStorages;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $lastSensitiveActivity;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $warningPoints;
+
+    /**
      * @return mixed
      */
     public function getEmail()
@@ -208,5 +219,25 @@ class User implements UserInterface, \Serializable
         }
 
         return $this;
+    }
+
+    public function getLastSensitiveActivity(): \DateTime
+    {
+        return $this->lastSensitiveActivity;
+    }
+
+    public function setLastSensitiveActivity(\DateTime $lastSensitiveActivity): void
+    {
+        $this->lastSensitiveActivity = $lastSensitiveActivity;
+    }
+
+    public function getWarningPoints(): int
+    {
+        return $this->warningPoints;
+    }
+
+    public function setWarningPoints(int $warningPoints): void
+    {
+        $this->warningPoints = $warningPoints;
     }
 }
