@@ -1,4 +1,4 @@
-###### (Jeśli masz jakieś uwagi co do kodu, śmiało pisz - np na mojego e-maila)
+Uwaga! Kod jest bardzo chaotyczny i słabej jakości, pragnę na wstępie podkreślić, że na tym projekcie uczyłem się programować :)
 
 Projekt HandGExpert powstał z myślą o społeczności gry "Heroes and Generals", zamysł projektu to przedstawienie graczom w prosty i przejrzysty sposób wszelkich danych dotyczących broni (w przyszłości może nawet pojazdów) w przyjemnym i czytelnym interfejsie oraz możliwość porównania każdej z nich - porównywane bronie zapisują się nawet dla niezalogowanych użytkowników.  
 Kolejny zamysł to dodanie na stronę bardzo 'technicznych' poradników do gry, czyli poradniki jak wykorzystać wiedzę techniczną na własną korzyść (nie chodzi o exploity)  
